@@ -1,0 +1,135 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".EditActivity" >
+
+    <SeekBar
+        android:id="@+id/seekBarPencil"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonEraser"
+        android:layout_alignLeft="@+id/buttonEraser"
+        android:layout_alignParentRight="true" />
+
+    <Button
+        android:id="@+id/buttonPencil"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/seekBarPencil"
+        android:layout_alignLeft="@+id/seekBarPencil"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="20dp"
+        android:paddingRight="20dp"
+        android:text="@string/button_pencil" />
+
+    <TextView
+        android:id="@+id/textViewScoreP2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewP2"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textViewP2"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewCategoryType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewCategory"
+        android:layout_alignRight="@+id/textViewScoreP1"
+        android:layout_alignTop="@+id/textViewCategory"
+        android:layout_toRightOf="@+id/textViewCategory"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/buttonDone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:onClick="onDone"
+        android:paddingLeft="40dp"
+        android:paddingRight="40dp"
+        android:text="@string/button_done" />
+
+    <SeekBar
+        android:id="@+id/seekBarEraser"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonDone"
+        android:layout_alignLeft="@+id/buttonDone"
+        android:layout_alignParentRight="true" />
+
+    <Button
+        android:id="@+id/buttonEraser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/seekBarEraser"
+        android:layout_alignLeft="@+id/seekBarEraser"
+        android:layout_alignParentRight="true"
+        android:text="@string/button_eraser" />
+
+    <TextView
+        android:id="@+id/textViewP1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:paddingBottom="10dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/text_scoreP1"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/buttonDone"
+        android:layout_alignBottom="@+id/buttonDone"
+        android:layout_alignParentLeft="true"
+        android:paddingBottom="10dp"
+        android:paddingRight="5dp"
+        android:paddingLeft="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/text_category"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewScoreP1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewP1"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textViewCategory"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewP2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textViewScoreP1"
+        android:paddingBottom="10dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/text_scoreP2"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/buttonColor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonPencil"
+        android:layout_alignLeft="@+id/buttonPencil"
+        android:layout_alignParentRight="true"
+        android:onClick="onColor"
+        android:text="@string/button_color" />
+
+</RelativeLayout>
