@@ -14,6 +14,7 @@ public class DialogDone extends Activity {
 		setContentView(R.layout.dialog_done);
 	}
 	
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
