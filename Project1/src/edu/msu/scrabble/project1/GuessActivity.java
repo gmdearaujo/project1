@@ -2,7 +2,8 @@ package edu.msu.scrabble.project1;
 
 import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.content.Intent;
+import android.view.View;
 
 public class GuessActivity extends Activity {
 
@@ -11,12 +12,11 @@ public class GuessActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_guess);
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_guess, menu);
-		return true;
+	
+	public void onDone(View view)
+	{
+		Intent intent = new Intent(this, EditActivity.class);
+		startActivity(intent);
 	}
 
 }

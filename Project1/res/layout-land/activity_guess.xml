@@ -10,6 +10,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
+        android:onClick="onDone"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
         android:text="@string/button_done" />
