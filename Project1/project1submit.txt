@@ -1,0 +1,36 @@
+
+Project 1 Submission
+
+Group Name:   Scrabble
+
+When you have completed the project, complete the following form and include it with your project. Include this file as a text file in the folder with your project when you turn it in. 
+
+Names of all classes responsible for storing the drawing:
+
+DrawingViewTemp
+	**Completed drawing view class was wiped during a commit, the class submitted for the checkpoint 
+	    is a basic outline of how the class DrawingView works
+
+Member 1: Malcolm Doering
+
+Responsiblity: Editing Activity
+
+
+
+Member 2: Guilherme deAraujo
+
+Responsiblity: Editing/Display view control
+
+
+
+Member 3: Alex Seling
+
+Responsiblity: Guessing Activity
+
+
+
+Member 4 (if applicable): 
+
+Responsiblity:
+
+
