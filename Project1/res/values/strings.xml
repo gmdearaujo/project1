@@ -29,5 +29,8 @@
     <string name="title_activity_done">DoneActivity</string>
     <string name="title_activity_dialog_done">DialogDoneActivity</string>
     <string name="plane_description">Quick Draw main page image</string>
+    <string name="text_winner">Congratulations, you won!</string>
+    <string name="text_restart">Restart</string>
+    <string name="text_score">Final score:</string>
 
 </resources>
