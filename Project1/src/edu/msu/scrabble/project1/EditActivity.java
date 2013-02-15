@@ -77,7 +77,7 @@ public class EditActivity extends Activity {
            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                @Override
                public void onClick(DialogInterface dialog, int id) {
-            	   
+            	   onOk();
                }
            })
            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -92,7 +92,7 @@ public class EditActivity extends Activity {
     	
     }
     
-    public void onDialogOk(View view) {
+    public void onOk() {
     	Intent intent = new Intent(this, GuessActivity.class);
 		startActivity(intent);
 	}
