@@ -73,7 +73,7 @@ public class GuessActivity extends Activity {
 	}
     
     public void onRestart() {
-    	Intent intent = new Intent(this, GuessActivity.class);
+    	Intent intent = new Intent(this, EditActivity.class);
 		startActivity(intent);
 	}
 	
