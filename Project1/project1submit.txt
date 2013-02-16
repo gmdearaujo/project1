@@ -1,32 +1,31 @@
 
 Project 1 Submission
 
-Group Name:   Scrabble
+Group Name:   Team Pictionary
 
 When you have completed the project, complete the following form and include it with your project. Include this file as a text file in the folder with your project when you turn it in. 
 
 Names of all classes responsible for storing the drawing:
+DrawingView
+	Drawing (declared inside DrawingView)
 
-DrawingViewTemp
-	**Completed drawing view class was wiped during a commit, the class submitted for the checkpoint 
-	    is a basic outline of how the class DrawingView works
 
 Member 1: Malcolm Doering
 
-Responsiblity: Editing Activity
+Responsiblity:
+	The editing activity
 
 
+Member 2: Alex Seling
 
-Member 2: Guilherme deAraujo
-
-Responsiblity: Editing/Display view control
-
+Responsiblity:
+	The guessing activity
 
 
-Member 3: Alex Seling
+Member 3: Guilherme deAraujo
 
-Responsiblity: Guessing Activity
-
+Responsiblity:
+	The editing/display view control
 
 
 Member 4 (if applicable): 
