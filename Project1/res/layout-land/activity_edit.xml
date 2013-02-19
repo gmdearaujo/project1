@@ -132,4 +132,13 @@
         android:onClick="onColor"
         android:text="@string/button_color" />
 
+    <edu.msu.scrabble.project1.DrawingView
+        android:id="@+id/drawingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewCategoryType"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewScoreP2"
+        android:layout_toLeftOf="@+id/seekBarPencil" />
+
 </RelativeLayout>
