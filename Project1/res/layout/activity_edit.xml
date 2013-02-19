@@ -131,4 +131,13 @@
         android:text="@string/text_scoreP1"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
+    <edu.msu.scrabble.project1.DrawingView
+        android:id="@+id/drawingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/buttonDone"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/buttonColor" />
+
 </RelativeLayout>
