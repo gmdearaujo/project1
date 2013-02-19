@@ -16,7 +16,7 @@ public class DrawingView extends View {
 	
 	private class Drawing {
 		// the paint for the freehand drawing - color and width
-		private Paint linePaint;
+		private Paint linePaint = new Paint();
 		
 		// the location of a Drawing is a list of x and y coordinates
 		// that a touch passes through while drawing.
@@ -37,6 +37,18 @@ public class DrawingView extends View {
 			for (int i=1; i<this.xLocations.size(); i++) {
 				canvas.drawLine(this.xLocations.get(i-1), this.yLocations.get(i-1), 
 						this.xLocations.get(i), this.yLocations.get(i), linePaint);
+			}
+		}
+		
+		public void RotateDrawing(float ca, float sa, float x1, float y1)
+		{
+			float xp, yp;
+			for (int i=0; i<this.xLocations.size(); i++) {
+				xp = (this.xLocations.get(i) - x1) * ca - (this.yLocations.get(i) - y1) * sa + x1;
+		        yp = (this.xLocations.get(i) - x1) * sa + (this.yLocations.get(i) - y1) * ca + y1;
+				
+		        this.xLocations.set(i, this.xLocations.get(i) + xp);
+		        this.yLocations.set(i, this.yLocations.get(i) + yp);
 			}
 		}
 	}
@@ -117,9 +129,9 @@ public class DrawingView extends View {
     /**
      * Paint to set when different color/line width is selected
      */
-    private Paint currentPaint = new Paint();
+    private Paint currentPaint;
 	
-	
+    float angle = 0;
 	
 	
 	public DrawingView(Context context) {
@@ -142,7 +154,16 @@ public class DrawingView extends View {
      * @param context
      */
     private void init(Context context) {
-        currentPaint.setColor(Color.BLACK);
+    	initializePaint(Color.BLACK, (float)4);
+    }
+    
+    /**
+     * Create new paint
+     */
+    private void initializePaint(int color, float width) {
+    	currentPaint = new Paint();
+        currentPaint.setColor(color);
+        currentPaint.setStrokeWidth(width);
     }
 
 	@Override
@@ -154,6 +175,8 @@ public class DrawingView extends View {
 		
 		if (currentDrawing != null) 
 			currentDrawing.DrawLine(canvas);
+		
+		//canvas.rotate(angle);
 		
 	}
 
@@ -169,10 +192,10 @@ public class DrawingView extends View {
             touch1.copyToLast();
             // start new drawing, add to list of drawings
             currentDrawing = new Drawing();
-            currentDrawing.xLocations.add(touch1.x);
-            currentDrawing.yLocations.add(touch1.y);
             // set color and line width
             currentDrawing.linePaint = currentPaint;
+            currentDrawing.xLocations.add(touch1.x);
+            currentDrawing.yLocations.add(touch1.y);
             return true;
             
         case MotionEvent.ACTION_POINTER_DOWN:
@@ -180,6 +203,13 @@ public class DrawingView extends View {
                 touch2.id = id;
                 getPositions(event);
                 touch2.copyToLast();
+                // finish current drawing, now rotating/scaling not drawing
+                if (currentDrawing != null)
+                {
+    	            drawings.add(currentDrawing);
+    	            currentDrawing = null;
+    	            invalidate();
+                }
                 return true;
             }
             break;
@@ -188,15 +218,20 @@ public class DrawingView extends View {
         case MotionEvent.ACTION_CANCEL:
         	touch1.id = -1;
             touch2.id = -1;
-            drawings.add(currentDrawing);
-            currentDrawing = null;
-            invalidate();
-            return true;
+            // finish current drawing
+            if (currentDrawing != null)
+            {
+	            drawings.add(currentDrawing);
+	            currentDrawing = null;
+	            invalidate();
+            }
+	        return true;
             
         case MotionEvent.ACTION_POINTER_UP:
         	if(id == touch2.id) {
                 touch2.id = -1;
-            } else if(id == touch1.id) {
+            }
+        	else if(id == touch1.id) {
                 // Make what was touch2 now be touch1 by 
                 // swapping the objects.
                 Touch t = touch1;
@@ -209,8 +244,11 @@ public class DrawingView extends View {
             
         case MotionEvent.ACTION_MOVE:
         	getPositions(event);
-        	currentDrawing.xLocations.add(touch1.x);
-            currentDrawing.yLocations.add(touch1.y);
+        	if (touch2.id < 0 && currentDrawing != null) {
+        		currentDrawing.xLocations.add(touch1.x);
+        		currentDrawing.yLocations.add(touch1.y);
+        	}
+        	move();
             return true;
         }
         
@@ -244,13 +282,98 @@ public class DrawingView extends View {
         
         invalidate();
     }
+    
+    /**
+     * Handle movement of the touches
+     */
+    private void move() {
+    	// If no touch1, we have nothing to do
+        // This should not happen, but it never hurts
+        // to check.
+        if(touch1.id < 0) { 
+            return;
+        }
 
-	public Paint getCurrentPaint() {
-		return currentPaint;
+        // when one finger is down we want to draw, not move.
+    	// so, do not do anything unless two fingers are down
+        if(touch1.id >= 0 && touch2.id >= 0) {
+            // Two touches
+            
+            /*
+             * Rotation
+             */
+            float angle1 = angle(touch1.lastX, touch1.lastY, touch2.lastX, touch2.lastY);
+            float angle2 = angle(touch1.x, touch1.y, touch2.x, touch2.y);
+            float da = angle2 - angle1;
+            rotate(da, touch1.x, touch1.y);
+            
+            /*
+             * Scaling
+             */
+            //float distLast = (float) Math.sqrt(Math.pow((touch2.lastX - touch1.lastX), 2) + Math.pow((touch2.lastY - touch1.lastY), 2));
+            //float distNow = (float) Math.sqrt(Math.pow((touch2.x - touch1.x), 2) + Math.pow((touch2.y - touch1.y), 2));
+            //float scaleFactor = distNow / distLast;
+            //params.hatScale = scaleFactor * params.hatScale;
+        }
+    }
+    
+    /**
+     * Rotate the image around the point x1, y1
+     * @param dAngle Angle to rotate in degrees
+     * @param x1 rotation point x
+     * @param y1 rotation point y
+     */
+    public void rotate(float dAngle, float x1, float y1) {
+        //params.hatAngle += dAngle;
+        this.angle += dAngle;
+    	
+        
+        // Compute the radians angle
+        double rAngle = Math.toRadians(dAngle);
+        float ca = (float) Math.cos(rAngle);
+        float sa = (float) Math.sin(rAngle);
+
+        // do the rotation operations to each point in each Drawing in Drawings
+        for (Drawing drawing : drawings)
+			drawing.RotateDrawing(ca,sa,x1,y1);
+        
+        /**
+        float xp = (params.hatX - x1) * ca - (params.hatY - y1) * sa + x1;
+        float yp = (params.hatX - x1) * sa + (params.hatY - y1) * ca + y1;
+
+        params.hatX = xp;
+        params.hatY = yp;
+        **/
+    }
+    
+    /**
+     * Determine the angle for two touches
+     * @param x1 Touch 1 x
+     * @param y1 Touch 1 y
+     * @param x2 Touch 2 x
+     * @param y2 Touch 2 y
+     * @return computed angle in degrees
+     */
+    private float angle(float x1, float y1, float x2, float y2) {
+        float dx = x2 - x1;
+        float dy = y2 - y1;
+        return (float) Math.toDegrees(Math.atan2(dy, dx));
+    }
+
+	public int getCurrentPaintColor() {
+		return currentPaint.getColor();
 	}
 
-	public void setCurrentPaint(Paint currentPaint) {
-		this.currentPaint = currentPaint;
+	public void setCurrentPaintColor(int color) {
+		initializePaint(color, currentPaint.getStrokeWidth());
 	}
     
+	public float getCurrentPaintWidth() {
+		return currentPaint.getStrokeWidth();
+	}
+
+	public void setCurrentPaintWidth(float width) {
+		initializePaint(currentPaint.getColor(), width);
+	}
+	
 }

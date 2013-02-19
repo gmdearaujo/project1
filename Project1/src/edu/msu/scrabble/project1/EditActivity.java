@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.SeekBar;
 
 public class EditActivity extends Activity {
 	
@@ -18,9 +19,36 @@ public class EditActivity extends Activity {
     private Button colorButton = null;
     
     /**
+     * The drawing width seekbar
+     */
+    SeekBar pencilSeekBar;
+    
+    private class SeekBarListener implements SeekBar.OnSeekBarChangeListener {
+    	@Override
+    	public void onStopTrackingTouch(SeekBar arg0) {
+    		
+    	}
+    	
+    	@Override
+    	public void onStartTrackingTouch(SeekBar arg0)  {
+    		
+    	}
+    	
+    	@Override
+    	public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
+    		drawingView.setCurrentPaintWidth((float)progress);
+    	}
+    }
+    
+    /**
      * Request code when selecting a color
      */
     private static final int SELECT_COLOR = 1;
+    
+    /**
+     * The DrawingView
+     */
+    private DrawingView drawingView = null;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +58,21 @@ public class EditActivity extends Activity {
 		/*
          * Get some of the views we'll keep around
          */
+		drawingView = (DrawingView)findViewById(R.id.drawingView);
+		
+		pencilSeekBar = (SeekBar)findViewById(R.id.seekBarPencil);
+		pencilSeekBar.setOnSeekBarChangeListener(new SeekBarListener() {
+			@Override
+	    	public void onStopTrackingTouch(SeekBar arg0) {}
+			
+	    	@Override
+	    	public void onStartTrackingTouch(SeekBar arg0) {}
+	    	
+	    	@Override
+	    	public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
+	    		drawingView.setCurrentPaintWidth((float)progress);
+	    	}
+		});
 		
 	}
 	
@@ -41,7 +84,9 @@ public class EditActivity extends Activity {
         if(requestCode == SELECT_COLOR && resultCode == Activity.RESULT_OK) {
             // This is a color response
             int color = data.getIntExtra(ColorSelectActivity.COLOR, Color.BLACK);
+            drawingView.setCurrentPaintColor(color);
         }
+        
 	}
 
 	/**
@@ -96,5 +141,13 @@ public class EditActivity extends Activity {
     	Intent intent = new Intent(this, GuessActivity.class);
 		startActivity(intent);
 	}
-
+    
+    public void onStartTrackingTouch(SeekBar seekBar) {
+    	
+    }    
+    
+    public void onStopTrackingTouch(SeekBar seekBar) {
+    	
+    }
+    
 }
