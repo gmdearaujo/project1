@@ -9,7 +9,9 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 public class EditActivity extends Activity {
 	
@@ -18,10 +20,30 @@ public class EditActivity extends Activity {
      */
     private Button colorButton = null;
     
+    private TextView p1Name = null;
+    private TextView p2Name = null;
+    
     /**
      * The drawing width seekbar
      */
     SeekBar pencilSeekBar;
+    
+    
+    /**
+     * Request code when selecting a color
+     */
+    private static final int SELECT_COLOR = 1;
+    
+    /**
+     * The DrawingView
+     */
+    private DrawingView drawingView = null;
+    
+    /**
+     * The game class
+     */
+    private Game game;
+    
     
     private class SeekBarListener implements SeekBar.OnSeekBarChangeListener {
     	@Override
@@ -40,25 +62,23 @@ public class EditActivity extends Activity {
     	}
     }
     
-    /**
-     * Request code when selecting a color
-     */
-    private static final int SELECT_COLOR = 1;
-    
-    /**
-     * The DrawingView
-     */
-    private DrawingView drawingView = null;
-    
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit);
+
+		Intent intent = getIntent();
+		game = (Game)intent.getSerializableExtra("GAME");
 		
 		/*
          * Get some of the views we'll keep around
          */
 		drawingView = (DrawingView)findViewById(R.id.drawingView);
+		
+		p1Name = (TextView)findViewById(R.id.textViewP1);
+		p2Name = (TextView)findViewById(R.id.textViewP2);
+		p1Name.setText(game.getPlayer1Name() + ":");
+		p2Name.setText(game.getPlayer2Name() + ":");
 		
 		pencilSeekBar = (SeekBar)findViewById(R.id.seekBarPencil);
 		pencilSeekBar.setOnSeekBarChangeListener(new SeekBarListener() {
@@ -122,7 +142,13 @@ public class EditActivity extends Activity {
            .setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                @Override
                public void onClick(DialogInterface dialog, int id) {
-            	   onOk();
+	               	EditText answerText = (EditText)((AlertDialog) dialog).findViewById(R.id.editTextAnswer);
+	            	EditText tipText = (EditText)((AlertDialog) dialog).findViewById(R.id.editTextTip);
+	            	
+	            	game.setAnswer(answerText.getText().toString());
+	            	game.setTip(tipText.getText().toString());
+	            	
+	            	onOk();
                }
            })
            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -138,8 +164,12 @@ public class EditActivity extends Activity {
     }
     
     public void onOk() {
-    	Intent intent = new Intent(this, GuessActivity.class);
-		startActivity(intent);
+    	
+    	if (game.checkAnswerAndTip()) {
+        	Intent intent = new Intent(this, GuessActivity.class);
+        	intent.putExtra("GAME", game);
+    		startActivity(intent);
+    	}
 	}
     
     public void onStartTrackingTouch(SeekBar seekBar) {
@@ -148,6 +178,11 @@ public class EditActivity extends Activity {
     
     public void onStopTrackingTouch(SeekBar seekBar) {
     	
+    }
+    @Override
+    public void onPause() {
+    	super.onPause();
+    	finish();
     }
     
 }

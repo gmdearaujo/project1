@@ -1,9 +1,11 @@
 package edu.msu.scrabble.project1;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -13,51 +15,7 @@ import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 
 public class DrawingView extends View {
-	
-	private class Drawing {
-		// the paint for the freehand drawing - color and width
-		private Paint linePaint = new Paint();
-		
-		// the location of a Drawing is a list of x and y coordinates
-		// that a touch passes through while drawing.
-		// to rotate the drawing, etc, each of these points must be changed
-		// according to the rotation, etc, function
-		public ArrayList<Float> xLocations = new ArrayList<Float>();
-		public ArrayList<Float> yLocations = new ArrayList<Float>();
-		
-		// should scale and rotation variables be kept here?
-		
-		
-		// to draw a Drawing each of the coordinates in xLocations
-		// and yLocations must be connected in order by a line of
-		// 'color' and 'lineWidth'
-		public void DrawLine(Canvas canvas) {
-			// connect the points with a line of the specified color
-			// and width
-			for (int i=1; i<this.xLocations.size(); i++) {
-				canvas.drawLine(this.xLocations.get(i-1), this.yLocations.get(i-1), 
-						this.xLocations.get(i), this.yLocations.get(i), linePaint);
-			}
-		}
-		
-		public void RotateDrawing(float ca, float sa, float x1, float y1)
-		{
-			float xp, yp;
-			for (int i=0; i<this.xLocations.size(); i++) {
-				xp = (this.xLocations.get(i) - x1) * ca - (this.yLocations.get(i) - y1) * sa + x1;
-		        yp = (this.xLocations.get(i) - x1) * sa + (this.yLocations.get(i) - y1) * ca + y1;
-				
-		        this.xLocations.set(i, this.xLocations.get(i) + xp);
-		        this.yLocations.set(i, this.yLocations.get(i) + yp);
-			}
-		}
-	}
-	
-	// this list contains all the Drawings that should be shown in the view
-	private ArrayList<Drawing> drawings = new ArrayList<Drawing>();
-	
-	private Drawing currentDrawing = null;
-	
+
 	/**
      * Local class to handle the touch status for one touch.
      * We will have one object of this type for each of the 
@@ -132,7 +90,12 @@ public class DrawingView extends View {
     private Paint currentPaint;
 	
     float angle = 0;
-	
+    
+    private boolean isEditable = true;
+
+	// this list contains all the Drawings that should be shown in the view
+	public ArrayList<Drawing> drawings = new ArrayList<Drawing>();
+	public transient Drawing currentDrawing = null;
 	
 	public DrawingView(Context context) {
 		super(context);
@@ -186,17 +149,19 @@ public class DrawingView extends View {
         
         switch(event.getActionMasked()) {
         case MotionEvent.ACTION_DOWN:
-        	touch1.id = id;
-            touch2.id = -1;
-            getPositions(event);
-            touch1.copyToLast();
-            // start new drawing, add to list of drawings
-            currentDrawing = new Drawing();
-            // set color and line width
-            currentDrawing.linePaint = currentPaint;
-            currentDrawing.xLocations.add(touch1.x);
-            currentDrawing.yLocations.add(touch1.y);
-            return true;
+        	if (isEditable) {
+	        	touch1.id = id;
+	            touch2.id = -1;
+	            getPositions(event);
+	            touch1.copyToLast();
+	            // start new drawing, add to list of drawings
+	            currentDrawing = new Drawing();
+	            // set color and line width
+	            currentDrawing.linePaint = currentPaint;
+	            currentDrawing.addPoint(touch1.x, touch1.y);
+	            return true;
+        	}
+        	return false;
             
         case MotionEvent.ACTION_POINTER_DOWN:
         	if(touch1.id >= 0 && touch2.id < 0) {
@@ -206,8 +171,8 @@ public class DrawingView extends View {
                 // finish current drawing, now rotating/scaling not drawing
                 if (currentDrawing != null)
                 {
-    	            drawings.add(currentDrawing);
-    	            currentDrawing = null;
+                	drawings.add(currentDrawing);
+                	currentDrawing = null;
     	            invalidate();
                 }
                 return true;
@@ -221,8 +186,8 @@ public class DrawingView extends View {
             // finish current drawing
             if (currentDrawing != null)
             {
-	            drawings.add(currentDrawing);
-	            currentDrawing = null;
+            	drawings.add(currentDrawing);
+            	//currentDrawing = null;
 	            invalidate();
             }
 	        return true;
@@ -245,8 +210,7 @@ public class DrawingView extends View {
         case MotionEvent.ACTION_MOVE:
         	getPositions(event);
         	if (touch2.id < 0 && currentDrawing != null) {
-        		currentDrawing.xLocations.add(touch1.x);
-        		currentDrawing.yLocations.add(touch1.y);
+        		currentDrawing.addPoint(touch1.x, touch1.y);
         	}
         	move();
             return true;
@@ -371,9 +335,30 @@ public class DrawingView extends View {
 	public float getCurrentPaintWidth() {
 		return currentPaint.getStrokeWidth();
 	}
+	
+	public boolean getEditable() {
+		return isEditable;
+	}
+	
+	public void setEditable(boolean b) {
+		isEditable = b;
+	}
 
 	public void setCurrentPaintWidth(float width) {
 		initializePaint(currentPaint.getColor(), width);
 	}
 	
+	
+	/**
+	 * Alex's failed attempts at serializing drawingList
+	 */
+	public void putDrawings(Intent intent) {
+		//intent.putExtra("DRAWING_LIST", drawings);
+		//intent.putExtra("CURRENT_DRAWING", currentDrawing);
+	}
+	
+	public void getDrawings(Intent intent) {
+		//drawings = intent.getSerializableExtra("DRAWING_LIST");
+		//currentDrawing = (Drawing)intent.getSerializableExtra("CURRENT_DRAWING");
+	}
 }

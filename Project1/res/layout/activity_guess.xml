@@ -68,6 +68,7 @@
         android:id="@+id/textViewTimeLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@id/textViewTime"
         android:layout_alignBottom="@+id/textViewP1"
         android:layout_alignParentTop="true"
         android:layout_toLeftOf="@+id/textViewP1"
@@ -135,5 +136,52 @@
         android:paddingRight="25dp"
         android:paddingTop="37dp"
         android:text="@string/button_done" />
+
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/textViewTime"
+        android:layout_below="@+id/textViewTime"
+        android:text="@string/text_category"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    <TextView
+        android:id="@+id/textViewCategoryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textViewP2"
+        android:layout_toLeftOf="@+id/textViewP2"
+        android:layout_toRightOf="@+id/textViewCategory"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewTipText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewTip"
+        android:layout_alignBottom="@+id/textViewTip"
+        android:layout_toRightOf="@+id/textViewTip"
+        android:layout_toLeftOf="@+id/buttonDone"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <edu.msu.scrabble.project1.DrawingView
+        android:id="@+id/guessingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewCategory" />
 
 </RelativeLayout>

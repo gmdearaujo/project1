@@ -20,7 +20,7 @@
     <string name="title_activity_edit">Project 1</string>
     <string name="title_activity_guess">GuessActivity</string>
     <string name="text_time">Time:</string>
-    <string name="text_hint">What is this drawing?</string>
+    <string name="text_hint">Enter Guess</string>
     <string name="text_done">Nice drawing!</string>
     <string name="text_instruction">Now, tell us about it:</string>
     <string name="text_tip">Tip</string>
@@ -32,5 +32,8 @@
     <string name="text_winner">Congratulations, you won!</string>
     <string name="text_restart">Restart</string>
     <string name="text_score">Final score:</string>
+    <string name="title_activity_final">FinalActivity</string>
+    <string name="game_over">Game Over!</string>
+    <string name="winner_string">Player X Wins!</string>
 
 </resources>
