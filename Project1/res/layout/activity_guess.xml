@@ -8,11 +8,12 @@
         android:id="@+id/textViewScoreP1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewP1"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:layout_alignBaseline="@id/textViewP1"
+        android:paddingBottom="10dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -31,11 +32,12 @@
         android:id="@+id/textViewScoreP2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewP2"
+        android:layout_alignBaseline="@id/textViewP2"
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/textViewP2"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
+        android:paddingBottom="10dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
