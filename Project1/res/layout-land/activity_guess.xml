@@ -32,25 +32,11 @@
         android:id="@+id/textViewScoreP2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewP2"
+        android:layout_alignBaseline="@+id/textViewP2"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/textViewP2"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewAnswer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonDone"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="108dp"
-        android:paddingBottom="10dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="10dp"
-        android:text="@string/text_answer"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <EditText
@@ -70,22 +56,9 @@
         android:id="@+id/textViewHintDescription"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewAnswer"
-        android:layout_alignLeft="@+id/textViewAnswer"
+        android:layout_above="@+id/editTextAnswer"
+        android:layout_alignLeft="@+id/buttonDone"
         android:layout_alignParentRight="true"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewTip"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/textViewHintDescription"
-        android:layout_alignLeft="@+id/textViewHintDescription"
-        android:paddingBottom="10dp"
-        android:paddingLeft="5dp"
-        android:paddingRight="5dp"
-        android:paddingTop="10dp"
-        android:text="@string/text_tip"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -105,9 +78,9 @@
         android:id="@+id/textViewTimeLeft"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignTop="@+id/textViewTime"
         android:layout_toRightOf="@+id/textViewTime"
+        android:layout_alignBaseline="@+id/textViewTime"
         android:paddingLeft="30dp"
         android:paddingRight="30dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
@@ -116,7 +89,7 @@
         android:id="@+id/textViewScoreP1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewP1"
+        android:layout_alignBaseline="@+id/textViewP1"
         android:layout_alignParentTop="true"
         android:layout_toRightOf="@+id/textViewP1"
         android:paddingLeft="30dp"
@@ -133,6 +106,71 @@
         android:paddingRight="5dp"
         android:paddingTop="10dp"
         android:text="@string/text_scoreP2"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewCategory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewP2"
+        android:layout_alignBottom="@+id/textViewP2"
+        android:layout_toRightOf="@+id/textViewScoreP2"
+        android:text="@string/text_category"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"  />
+
+    <TextView
+        android:id="@+id/textViewCategoryName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewCategory"
+        android:layout_alignBottom="@+id/textViewCategory"
+        android:layout_toRightOf="@+id/textViewCategory"
+        android:text="@string/text_category"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:textAppearance="?android:attr/textAppearanceMedium"  />
+
+    <edu.msu.scrabble.project1.DrawingView
+        android:id="@+id/guessingView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewTime"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/textViewCategory"
+        android:layout_toLeftOf="@+id/buttonDone" />
+
+    <TextView
+        android:id="@+id/textViewTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_toRightOf="@+id/textViewTimeLeft"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/text_tip"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+    
+    
+    <TextView
+        android:id="@+id/textViewTipText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewTip"
+        android:layout_alignBottom="@+id/textViewTip"
+        android:layout_toRightOf="@+id/textViewTip"
+        android:layout_toLeftOf="@+id/buttonDone"
+        android:paddingBottom="10dp"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

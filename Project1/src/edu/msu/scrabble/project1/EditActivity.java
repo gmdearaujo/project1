@@ -170,6 +170,7 @@ public class EditActivity extends Activity {
         	Intent intent = new Intent(this, GuessActivity.class);
         	intent.putExtra("GAME", game);
     		startActivity(intent);
+        	finish();
     	}
 	}
     
@@ -179,11 +180,6 @@ public class EditActivity extends Activity {
     
     public void onStopTrackingTouch(SeekBar seekBar) {
     	
-    }
-    @Override
-    public void onPause() {
-    	super.onPause();
-    	finish();
     }
     
     @Override

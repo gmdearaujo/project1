@@ -1,14 +1,12 @@
 package edu.msu.scrabble.project1;
 
-
-import java.util.Timer;
-
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -72,7 +70,7 @@ public class GuessActivity extends Activity {
 		
 		@Override
 		public void onFinish() {
-			
+			onGuessFail();
 		}
 		
 		@Override
@@ -92,9 +90,18 @@ public class GuessActivity extends Activity {
 		setContentView(R.layout.activity_guess);
 		
 		Intent intent = getIntent();
-		game = (Game)intent.getSerializableExtra("GAME");
+		if (intent != null) {
+			game = (Game)intent.getSerializableExtra("GAME");
+		}
 		drawingView = (DrawingView)findViewById(R.id.guessingView);
 		drawingView.setEditable(false);
+
+        /*
+         * Restore any state
+         */
+        if(savedInstanceState != null) {
+            loadUi(savedInstanceState);
+        }
 		
 		p1Name = (TextView)findViewById(R.id.textViewP1);
 		p2Name = (TextView)findViewById(R.id.textViewP2);
@@ -116,6 +123,7 @@ public class GuessActivity extends Activity {
 		
 		gtimer = new GameTimer(130*1000);
 		gtimer.start();
+		Log.i("End of oncreate", "True");
 	}
 	
 	/**
@@ -138,6 +146,7 @@ public class GuessActivity extends Activity {
 	        	Intent intent = new Intent(this, FinalActivity.class);
 	        	intent.putExtra("GAME", game);
 	    		startActivity(intent);
+	        	finish();
 			} else {
 				
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -160,17 +169,35 @@ public class GuessActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * Timer ran out
+	 */
+	public void onGuessFail() {
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+				drawingView.getContext());
+
+		// set title
+		alertDialogBuilder.setTitle("Time's up!");
+		alertDialogBuilder.setMessage("The correct answer was: " + game.getAnswer());
+
+        alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+               @Override
+               public void onClick(DialogInterface dialog, int id) {
+            	   onOk();
+               }
+        });
+        
+        // Create the dialog box and show it
+        AlertDialog alertDialog = alertDialogBuilder.create();
+        alertDialog.show();
+	}
+	
 	public void onOk() {
     	Intent intent = new Intent(this, EditActivity.class);
     	intent.putExtra("GAME", game);
 		startActivity(intent);
-	}
-
-    @Override
-    public void onPause() {
-    	super.onPause();
     	finish();
-    }
+	}
     
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) 
@@ -203,4 +230,30 @@ public class GuessActivity extends Activity {
         return true;
     }
 
+    /* (non-Javadoc)
+	 * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
+	 */
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		saveUi(outState);
+	}
+	
+    /**
+     * Save the view state to a bundle
+     * @param key key name to use in the bundle
+     * @param bundle bundle to save to
+     */
+    public void saveUi(Bundle bundle) {
+    	bundle.putSerializable("GAME", game);
+    }
+    
+    /**
+     * Get the view state from a bundle
+     * @param key key name to use in the bundle
+     * @param bundle bundle to load from
+     */
+    public void loadUi(Bundle bundle) {
+    	game = (Game)bundle.getSerializable("GAME");
+    }
 }
