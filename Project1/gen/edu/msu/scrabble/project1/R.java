@@ -87,6 +87,7 @@ public final class R {
         public static final int hint_player2=0x7f040004;
         public static final int menu_settings=0x7f040001;
         public static final int plane_description=0x7f04001b;
+        public static final int quit=0x7f040022;
         public static final int start_game=0x7f040002;
         public static final int text_answer=0x7f040017;
         public static final int text_category=0x7f040009;

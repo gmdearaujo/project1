@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -170,4 +171,36 @@ public class GuessActivity extends Activity {
     	super.onPause();
     	finish();
     }
+    
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) 
+    {
+        if (keyCode == KeyEvent.KEYCODE_BACK)
+        {
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(drawingView.getContext());
+ 
+			// set title
+			alertDialogBuilder.setTitle(R.string.quit);
+
+	        alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	               @Override
+	               public void onClick(DialogInterface dialog, int id) {
+	            	   finish();
+	               }
+	        })
+	        
+           .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
+               public void onClick(DialogInterface dialog, int id) {
+                   
+               }
+           });
+	        
+	        // Create the dialog box and show it
+	        AlertDialog alertDialog = alertDialogBuilder.create();
+	        alertDialog.show();
+		}
+
+        return true;
+    }
+
 }

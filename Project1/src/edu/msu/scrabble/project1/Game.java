@@ -11,8 +11,8 @@ public class Game implements Serializable {
 	
 	private final int maxScore = 500;
 	
-	private int editingPlayer = 0;
-	private int guessingPlayer = 1;
+	private int editingPlayer = 1;
+	private int guessingPlayer = 2;
 	
 	private String player1Name = "";
 	
