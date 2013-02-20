@@ -36,5 +36,22 @@
     <string name="game_over">Game Over!</string>
     <string name="winner_string">Player X Wins!</string>
     <string name="quit">Quit to Main?</string>
+    <string name="how_to_play">How To Play</string>
+    <string name="how_to_play_text">
+        Winning:\n\n
+        
+        The first player to 500 points wins. Points are awarded based on the time remaining on the clock.\n\n
+        
+        Gameplay:\n\n
+        
+        Player 1 always draws first.\n\n 
+        
+        The drawing player creates a drawing in the given category. Once they are finished, they press \'Done\' and supply the name of the drawing as well as 
+        a hint for the other player. These must be entered for play to continue. Once this is complete, press \'Ok\' and pass to the guessing player.\n\n
+        
+        The guessing player has 2:20 to guess the correct answer. After 1:10, the previously entered hint appears. If the guessing player fails to correctly 
+        guess the answer in the allotted time, no points are awarded. After time expires or the player guesses correctly, it is now their turn to draw.\n\n
+        
+        </string>
 
-</resources>
+</resources> 

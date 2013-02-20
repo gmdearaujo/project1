@@ -79,7 +79,7 @@ public class GuessActivity extends Activity {
 			remainingTime = (int)timeSeconds;
 			timeText.setText(Long.toString(timeSeconds));
 			
-			if (timeSeconds < 70)
+			if (timeSeconds < 60)
 				tipText.setVisibility(View.VISIBLE);
 		}
 	}
