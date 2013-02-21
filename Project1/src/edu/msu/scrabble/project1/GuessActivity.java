@@ -103,6 +103,9 @@ public class GuessActivity extends Activity {
             loadUi(savedInstanceState);
         }
 		
+        /*
+         * Get some of the views we'll keep around
+         */
 		p1Name = (TextView)findViewById(R.id.textViewP1);
 		p2Name = (TextView)findViewById(R.id.textViewP2);
 		timeText = (TextView)findViewById(R.id.textViewTimeLeft);
@@ -112,7 +115,9 @@ public class GuessActivity extends Activity {
 		p1Score = (TextView)findViewById(R.id.textViewScoreP1);
 		p2Score = (TextView)findViewById(R.id.textViewScoreP2);
 		
-		// Set text boxes
+		/*
+		 *  Set text boxes
+		 */
 		p1Name.setText(game.getPlayer1Name() + ":");
 		p2Name.setText(game.getPlayer2Name() + ":");
 		categoryText.setText(game.getCategory());

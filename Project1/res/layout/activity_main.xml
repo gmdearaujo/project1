@@ -19,6 +19,7 @@
 
         <EditText
             android:id="@+id/editTextPlayer2"
+            android:maxLength="10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/buttonLayout"
@@ -32,6 +33,7 @@
 
         <EditText
             android:id="@+id/editTextPlayer1"
+            android:maxLength="10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/editTextPlayer2"

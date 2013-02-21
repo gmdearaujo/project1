@@ -2,11 +2,8 @@ package edu.msu.scrabble.project1;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.os.Parcel;
-import android.os.Parcelable;
 
 public class Drawing implements Serializable {
 	

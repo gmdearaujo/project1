@@ -37,10 +37,9 @@
     <string name="winner_string">Player X Wins!</string>
     <string name="quit">Quit to Main?</string>
     <string name="how_to_play">How To Play</string>
-    <string name="how_to_play_text">
-        Winning:\n\n
-        
-        The first player to 500 points wins. Points are awarded based on the time remaining on the clock.\n\n
+    <string name="how_to_play_text">  \n Winning:\n\n
+       
+       The first player to 500 points wins. Points are awarded based on the time remaining on the clock.\n\n
         
         Gameplay:\n\n
         
