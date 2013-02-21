@@ -1,5 +1,6 @@
 package edu.msu.scrabble.project1;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -27,5 +28,16 @@ public class Picture implements Serializable {
 	public void setDrawings(ArrayList<Drawing> drawings) {
 		this.drawings = drawings;
 	}
+
+	private void writeObject(java.io.ObjectOutputStream out) throws IOException {
+        out.defaultWriteObject();
+    }
+
+	private void readObject(java.io.ObjectInputStream in) throws IOException, ClassNotFoundException {
+		//in.registerValidation(this, 0);
+		in.defaultReadObject();
+	}
+	 
+
 
 }
