@@ -109,7 +109,7 @@ public class GuessActivity extends Activity {
 		p1Name = (TextView)findViewById(R.id.textViewP1);
 		p2Name = (TextView)findViewById(R.id.textViewP2);
 		timeText = (TextView)findViewById(R.id.textViewTimeLeft);
-		categoryText = (TextView)findViewById(R.id.textViewCategoryName);
+		categoryText = (TextView)findViewById(R.id.textViewCategoryType);
 		tipText = (TextView)findViewById(R.id.textViewTipText);
 		answerText = (EditText)findViewById(R.id.editTextAnswer);
 		p1Score = (TextView)findViewById(R.id.textViewScoreP1);

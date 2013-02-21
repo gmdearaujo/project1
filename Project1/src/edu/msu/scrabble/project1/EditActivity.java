@@ -19,8 +19,22 @@ public class EditActivity extends Activity {
 	/**
      * The color select button
      */
-    private Button colorButton = null;
+    //private Button colorButton = null;
     
+    /**
+     * The pencil select button
+     */
+    //private Button pencilButton = null;
+    
+    /**
+     * The eraser select button
+     */
+    //private Button eraserButton = null;
+    
+	private int pencilColor;
+	
+	private static final int eraserColor = R.color.white;;
+	
     /**
 	 * Player Names
 	 */
@@ -92,6 +106,9 @@ public class EditActivity extends Activity {
 		p2Score = (TextView)findViewById(R.id.textViewScoreP2);
 		category = (TextView)findViewById(R.id.textViewCategoryType);
 		pencilSeekBar = (SeekBar)findViewById(R.id.seekBarPencil);
+		/*colorButton = (Button)findViewById(R.id.buttonColor);
+		pencilButton = (Button)findViewById(R.id.buttonPencil);
+		eraserButton = (Button)findViewById(R.id.buttonEraser);*/
 		
 		/*
 		 *  Set text boxes
@@ -119,13 +136,12 @@ public class EditActivity extends Activity {
 	
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		// TODO Auto-generated method stub
 		super.onActivityResult(requestCode, resultCode, data);
 		
         if(requestCode == SELECT_COLOR && resultCode == Activity.RESULT_OK) {
             // This is a color response
-            int color = data.getIntExtra(ColorSelectActivity.COLOR, Color.BLACK);
-            drawingView.setCurrentPaintColor(color);
+            pencilColor = data.getIntExtra(ColorSelectActivity.COLOR, Color.BLACK);
+            drawingView.setCurrentPaintColor(pencilColor);
         }
         
 	}
@@ -193,6 +209,14 @@ public class EditActivity extends Activity {
         	finish();
     	}
 	}
+    
+    public void onPencil() {
+    	//drawingView.setCurrentPaintColor(pencilColor);
+    }
+    
+    public void onEraser() {
+    	//drawingView.setCurrentPaintColor(eraserColor);
+    }
     
     public void onStartTrackingTouch(SeekBar seekBar) {
     	

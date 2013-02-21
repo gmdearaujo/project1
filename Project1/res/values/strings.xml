@@ -25,6 +25,8 @@
     <string name="text_instruction">Now, tell us about it:</string>
     <string name="text_tip">Tip</string>
     <string name="text_answer">Answer</string>
+    <string name="text_tip_guess">Tip:</string>
+    <string name="text_answer_guess">Answer:</string>
     <string name="title_activity_complete">CompleteActivity</string>
     <string name="title_activity_done">DoneActivity</string>
     <string name="title_activity_dialog_done">DialogDoneActivity</string>
