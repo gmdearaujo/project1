@@ -89,13 +89,14 @@ public class DrawingView extends View {
      */
     private Paint currentPaint;
 	
-    float angle = 0;
+    private float angle = 0;
     
     private boolean isEditable = true;
 
 	// this list contains all the Drawings that should be shown in the view
-	public ArrayList<Drawing> drawings = new ArrayList<Drawing>();
-	public transient Drawing currentDrawing = null;
+	//private ArrayList<Drawing> drawings = new ArrayList<Drawing>();
+	private Picture picture = new Picture();
+	private transient Drawing currentDrawing = null;
 	
 	public DrawingView(Context context) {
 		super(context);
@@ -133,7 +134,7 @@ public class DrawingView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
-		for (Drawing drawing : drawings)
+		for (Drawing drawing : picture.getDrawings())
 			drawing.DrawLine(canvas);
 		
 		if (currentDrawing != null) 
@@ -157,7 +158,7 @@ public class DrawingView extends View {
 	            // start new drawing, add to list of drawings
 	            currentDrawing = new Drawing();
 	            // set color and line width
-	            currentDrawing.linePaint = currentPaint;
+	            currentDrawing.setLinePaint(currentPaint);
 	            currentDrawing.addPoint(touch1.x, touch1.y);
 	            return true;
         	}
@@ -171,7 +172,7 @@ public class DrawingView extends View {
                 // finish current drawing, now rotating/scaling not drawing
                 if (currentDrawing != null)
                 {
-                	drawings.add(currentDrawing);
+                	picture.AddDrawing(currentDrawing);
                 	currentDrawing = null;
     	            invalidate();
                 }
@@ -186,7 +187,7 @@ public class DrawingView extends View {
             // finish current drawing
             if (currentDrawing != null)
             {
-            	drawings.add(currentDrawing);
+            	picture.AddDrawing(currentDrawing);
             	//currentDrawing = null;
 	            invalidate();
             }
@@ -298,7 +299,7 @@ public class DrawingView extends View {
         float sa = (float) Math.sin(rAngle);
 
         // do the rotation operations to each point in each Drawing in Drawings
-        for (Drawing drawing : drawings)
+        for (Drawing drawing : picture.getDrawings())
 			drawing.RotateDrawing(ca,sa,x1,y1);
     }
     
