@@ -30,7 +30,7 @@ public class Drawing implements Serializable {
 	
 	
 	// to draw a Drawing each of the coordinates in points
-	// and points must be connected in order by a line of
+	// must be connected, in order, by a line of
 	// 'color' and 'lineWidth'
 	public void DrawLine(Canvas canvas) {
 		// connect the points with a line of the specified color
@@ -45,14 +45,14 @@ public class Drawing implements Serializable {
 		}
 	}
 	
-	public void RotateDrawing(float ca, float sa, float x1, float y1)
+	public void RotateDrawing(final float ca, final float sa, final float x1, final float y1)
 	{
 		float xp, yp;
 		for (int i=0; i<this.points.size(); i++) {
 			xp = (this.points.get(i).x - x1) * ca - (this.points.get(i).y - y1) * sa + x1;
 	        yp = (this.points.get(i).x - x1) * sa + (this.points.get(i).y - y1) * ca + y1;
 			
-	        this.points.set(i, new Point(this.points.get(i).x + xp, this.points.get(i).y + yp));
+	        this.points.set(i, new Point(xp, yp));
 		}
 	}
 	

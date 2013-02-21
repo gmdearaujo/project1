@@ -300,14 +300,6 @@ public class DrawingView extends View {
         // do the rotation operations to each point in each Drawing in Drawings
         for (Drawing drawing : drawings)
 			drawing.RotateDrawing(ca,sa,x1,y1);
-        
-        /**
-        float xp = (params.hatX - x1) * ca - (params.hatY - y1) * sa + x1;
-        float yp = (params.hatX - x1) * sa + (params.hatY - y1) * ca + y1;
-
-        params.hatX = xp;
-        params.hatY = yp;
-        **/
     }
     
     /**
