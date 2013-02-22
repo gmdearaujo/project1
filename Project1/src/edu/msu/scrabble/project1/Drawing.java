@@ -16,7 +16,7 @@ public class Drawing implements Serializable {
 	// according to the rotation, etc, function
 	private ArrayList<Point> points = new ArrayList<Point>();
 	
-	public class Point implements Serializable {
+	private class Point implements Serializable {
 		public float x;
 		public float y;
 		
@@ -53,6 +53,14 @@ public class Drawing implements Serializable {
 	        yp = (this.points.get(i).x - x1) * sa + (this.points.get(i).y - y1) * ca + y1;
 			
 	        this.points.set(i, new Point(xp, yp));
+		}
+	}
+	
+	public void ScaleDrawing(final float scaleFactor, final float centerX, final float centerY) {
+		
+		for (int i=0; i<this.points.size(); i++) {
+			this.points.get(i).x *= scaleFactor;
+			this.points.get(i).y *= scaleFactor;
 		}
 	}
 	

@@ -89,7 +89,10 @@ public class DrawingView extends View {
      */
     private Paint currentPaint;
 	
-    private float angle = 0;
+    private float pictureAngle = 0;
+    private float pictureScale = 1;
+    private float offsetX = 0;
+    private float offsetY = 0;
     
     private boolean isEditable = true;
 
@@ -134,14 +137,18 @@ public class DrawingView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
+		//canvas.rotate(pictureAngle);
+		//canvas.scale(pictureScale, pictureScale);
+		
+		canvas.translate(offsetX, offsetY);
+		
 		for (Drawing drawing : picture.getDrawings())
 			drawing.DrawLine(canvas);
-		
 		if (currentDrawing != null) 
 			currentDrawing.DrawLine(canvas);
+		canvas.translate(offsetX, offsetY);
 		
-		//canvas.rotate(angle);
-		
+		//canvas.translate(offsetX, offsetY);
 	}
 
 	@Override
@@ -275,10 +282,13 @@ public class DrawingView extends View {
             /*
              * Scaling
              */
-            //float distLast = (float) Math.sqrt(Math.pow((touch2.lastX - touch1.lastX), 2) + Math.pow((touch2.lastY - touch1.lastY), 2));
-            //float distNow = (float) Math.sqrt(Math.pow((touch2.x - touch1.x), 2) + Math.pow((touch2.y - touch1.y), 2));
-            //float scaleFactor = distNow / distLast;
-            //params.hatScale = scaleFactor * params.hatScale;
+            float distLast = length(touch1.lastX, touch1.lastY, touch2.lastX, touch2.lastY);
+            float distNow = length(touch1.x, touch1.y, touch2.x, touch2.y);
+            
+            float centerX = (touch1.x + touch2.x) / 2;
+            float centerY = (touch1.y - touch2.y) / 2; 
+            
+            scale(distNow / distLast, touch1.x, touch1.y);
         }
     }
     
@@ -290,9 +300,8 @@ public class DrawingView extends View {
      */
     public void rotate(float dAngle, float x1, float y1) {
         //params.hatAngle += dAngle;
-        this.angle += dAngle;
+        pictureAngle += dAngle;
     	
-        
         // Compute the radians angle
         double rAngle = Math.toRadians(dAngle);
         float ca = (float) Math.cos(rAngle);
@@ -317,6 +326,23 @@ public class DrawingView extends View {
         return (float) Math.toDegrees(Math.atan2(dy, dx));
     }
 
+    private float length(float x1, float y1, float x2, float y2) {        
+    	float dx = x2 - x1;        
+    	float dy = y2 - y1;        
+    	return (float)Math.sqrt(dx * dx + dy * dy);
+    }
+    
+    public void scale(float scale, float x1, float y1) {        
+    	pictureScale *= scale;
+    	
+    	offsetX = x1 - (x1 * scale); // ?
+    	offsetY = y1 - (y1 * scale); // ?
+    	
+    	// do the rotation operations to each point in each Drawing in Drawings
+        for (Drawing drawing : picture.getDrawings())
+			drawing.ScaleDrawing(scale,x1,y1);	
+    }
+    
 	public int getCurrentPaintColor() {
 		return currentPaint.getColor();
 	}
@@ -340,6 +366,15 @@ public class DrawingView extends View {
 	public void setCurrentPaintWidth(float width) {
 		initializePaint(currentPaint.getColor(), width);
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	/**
