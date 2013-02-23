@@ -132,18 +132,14 @@ public class DrawingView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
-		//canvas.rotate(pictureAngle);
-		//canvas.scale(pictureScale, pictureScale);
-		
 		canvas.translate(offsetX, offsetY);
 		
 		for (Drawing drawing : picture.getDrawings())
 			drawing.DrawLine(canvas);
 		if (currentDrawing != null) 
 			currentDrawing.DrawLine(canvas);
-		canvas.translate(offsetX, offsetY);
 		
-		//canvas.translate(offsetX, offsetY);
+		canvas.scale(pictureScale, pictureScale);
 	}
 
 	@Override
@@ -162,6 +158,9 @@ public class DrawingView extends View {
 	            // set color and line width
 	            currentDrawing.setLinePaint(currentPaint);
 	            currentDrawing.addPoint(touch1.x, touch1.y);
+        	} else {
+        		offsetX += touch1.x - touch1.lastX;
+        		offsetY += touch1.y - touch1.lastY;
         	}
         	return true;
             
@@ -233,7 +232,7 @@ public class DrawingView extends View {
             int id = event.getPointerId(i);
             
             float x = event.getX(i); 
-            float y = event.getY(i);
+            float y = event.getY(i); 
             
             if(id == touch1.id) {
             	touch1.copyToLast();
@@ -259,6 +258,14 @@ public class DrawingView extends View {
         if(touch1.id < 0) { 
             return;
         }
+        
+    	if (touch1.id >= 0 && !isEditable) {
+    		// Moving
+    		touch1.computeDeltas();
+    		
+    		offsetX += touch1.dX;
+    		offsetY += touch1.dY;
+    	}
 
         // when one finger is down we want to draw, not move.
     	// so, do not do anything unless two fingers are down
@@ -278,9 +285,6 @@ public class DrawingView extends View {
              */
             float distLast = length(touch1.lastX, touch1.lastY, touch2.lastX, touch2.lastY);
             float distNow = length(touch1.x, touch1.y, touch2.x, touch2.y);
-            
-            float centerX = (touch1.x + touch2.x) / 2;
-            float centerY = (touch1.y - touch2.y) / 2; 
             
             scale(distNow / distLast, touch1.x, touch1.y);
         }
@@ -328,9 +332,6 @@ public class DrawingView extends View {
     
     public void scale(float scale, float x1, float y1) {        
     	pictureScale *= scale;
-    	
-    	offsetX = x1 - (x1 * scale); // ?
-    	offsetY = y1 - (y1 * scale); // ?
     	
     	// do the rotation operations to each point in each Drawing in Drawings
         for (Drawing drawing : picture.getDrawings())
