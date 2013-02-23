@@ -55,7 +55,7 @@ public class GuessActivity extends Activity {
 	 */
 	private DrawingView drawingView;
 	
-	private int remainingTime;
+	private int remainingTime = 130;
 	
 	private GameTimer gtimer;
 	
@@ -127,7 +127,7 @@ public class GuessActivity extends Activity {
 		p1Score.setText(Integer.toString(game.getPlayer1Score()));
 		p2Score.setText(Integer.toString(game.getPlayer2Score()));
 		
-		gtimer = new GameTimer(130*1000);
+		gtimer = new GameTimer(remainingTime*1000);
 		gtimer.start();
 	}
 	
@@ -269,6 +269,7 @@ public class GuessActivity extends Activity {
      */
     public void saveUi(Bundle bundle) {
     	bundle.putSerializable("GAME", game);
+    	bundle.putInt("TIME", remainingTime);
     }
     
     /**
@@ -278,5 +279,6 @@ public class GuessActivity extends Activity {
      */
     public void loadUi(Bundle bundle) {
     	game = (Game)bundle.getSerializable("GAME");
+    	remainingTime = bundle.getInt("TIME");
     }
 }
