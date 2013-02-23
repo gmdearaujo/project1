@@ -113,8 +113,8 @@ public class EditActivity extends Activity {
 		/*
 		 *  Set text boxes
 		 */
-		p1Name.setText(game.getPlayer1Name() + ":");
-		p2Name.setText(game.getPlayer2Name() + ":");
+		p1Name.setText(game.getPlayer1DisplayName() + ":");
+		p2Name.setText(game.getPlayer2DisplayName() + ":");
 		p1Score.setText(Integer.toString(game.getPlayer1Score()));
 		p2Score.setText(Integer.toString(game.getPlayer2Score()));
 		category.setText(game.getCategory());	
@@ -203,6 +203,7 @@ public class EditActivity extends Activity {
     public void onOk() {
     	
     	if (game.checkAnswerAndTip()) {
+    		game.switchRoles();
         	Intent intent = new Intent(this, GuessActivity.class);
         	intent.putExtra("GAME", game);
     		startActivity(intent);

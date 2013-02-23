@@ -4,12 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Random;
 
-import android.graphics.Canvas;
-import android.graphics.Paint;
-
 public class Game implements Serializable {
 	
-	private final int maxScore = 500;
+	private final int maxScore = 50;
 	
 	private int editingPlayer = 1;
 	private int guessingPlayer = 2;
@@ -17,6 +14,10 @@ public class Game implements Serializable {
 	private String player1Name = "";
 	
 	private String player2Name = "";
+	
+	private String player1DisplayName = "";
+	
+	private String player2DisplayName = "";
 	
 	private int player1Score = 0;
 	
@@ -82,6 +83,7 @@ public class Game implements Serializable {
 		} else {
 			this.player1Name = "Player 1";
 		}
+		player1DisplayName = "-->" + this.player1Name;
 	}
 
 	public String getPlayer2Name() {
@@ -94,6 +96,7 @@ public class Game implements Serializable {
 		} else {
 			this.player2Name = "Player 2";
 		}
+		player2DisplayName = this.player2Name;
 	}
 
 	public String getAnswer() {
@@ -104,6 +107,14 @@ public class Game implements Serializable {
 		if (!answer.equals(null) && !answer.equals("")) {
 			this.answer = answer;
 		}
+	}
+	
+	public String getPlayer1DisplayName() {
+		return player1DisplayName;
+	}
+	
+	public String getPlayer2DisplayName() {
+		return player2DisplayName;
 	}
 
 	public int getPlayer1Score() {
@@ -154,5 +165,15 @@ public class Game implements Serializable {
 			return true;
 		}
 		return false;
+	}
+	
+	public void switchRoles() {
+		if (player1Name.length() < player1DisplayName.length()) {
+			player1DisplayName = player1Name;
+			player2DisplayName = "-->" + player2Name;
+		} else {
+			player1DisplayName = "-->" + player1Name;
+			player2DisplayName = player2Name;
+		}
 	}
 }

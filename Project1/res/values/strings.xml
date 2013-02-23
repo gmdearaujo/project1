@@ -54,5 +54,6 @@
         guess the answer in the allotted time, no points are awarded. After time expires or the player guesses correctly, it is now their turn to draw.\n\n
         
         </string>
+    <string name="new_game">New game</string>
 
 </resources> 

@@ -118,8 +118,8 @@ public class GuessActivity extends Activity {
 		/*
 		 *  Set text boxes
 		 */
-		p1Name.setText(game.getPlayer1Name() + ":");
-		p2Name.setText(game.getPlayer2Name() + ":");
+		p1Name.setText(game.getPlayer1DisplayName() + ":");
+		p2Name.setText(game.getPlayer2DisplayName() + ":");
 		categoryText.setText(game.getCategory());
 		tipText.setText(game.getTip());
 		tipText.setVisibility(View.INVISIBLE);
@@ -171,6 +171,24 @@ public class GuessActivity extends Activity {
 		        AlertDialog alertDialog = alertDialogBuilder.create();
 		        alertDialog.show();
 			}
+		} else {
+			
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+					view.getContext());
+ 
+			// set title
+			alertDialogBuilder.setTitle("Inorrect!");
+
+	        alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+	               @Override
+	               public void onClick(DialogInterface dialog, int id) {
+	            	   
+	               }
+	        });
+	        
+	        // Create the dialog box and show it
+	        AlertDialog alertDialog = alertDialogBuilder.create();
+	        alertDialog.show();
 		}
 	}
 	
