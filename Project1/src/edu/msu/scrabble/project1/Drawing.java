@@ -7,6 +7,11 @@ import android.graphics.Paint;
 
 public class Drawing implements Serializable {
 	
+	/**
+	 * Compiler generated serialID
+	 */
+	private static final long serialVersionUID = 5453580233120382544L;
+
 	// the paint for the freehand drawing - color and width
 	private transient Paint linePaint = new Paint();
 	
@@ -19,11 +24,19 @@ public class Drawing implements Serializable {
 	private ArrayList<Point> points = new ArrayList<Point>();
 	
 	private class PaintParameters implements Serializable {
+		/**
+		 * Compiler generated serialID
+		 */
+		private static final long serialVersionUID = -7719719728244930024L;
 		int color;
 		float width;
 	}
 	
 	private class Point implements Serializable {
+		/**
+		 * Compiler generated serialID
+		 */
+		private static final long serialVersionUID = -4709952542099601585L;
 		public float x;
 		public float y;
 		

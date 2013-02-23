@@ -6,6 +6,10 @@ import java.util.ArrayList;
 
 public class Picture implements Serializable {
 
+	/**
+	 * Compiler generated serialID
+	 */
+	private static final long serialVersionUID = -7698564561406540923L;
 	// a list of the Drawings that make up the Picture
 	private ArrayList<Drawing> drawings = new ArrayList<Drawing>();
 	

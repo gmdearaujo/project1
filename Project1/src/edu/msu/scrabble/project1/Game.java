@@ -6,6 +6,11 @@ import java.util.Random;
 
 public class Game implements Serializable {
 	
+	/**
+	 * Compiler generated serialID
+	 */
+	private static final long serialVersionUID = -5154840961469873261L;
+
 	private final int maxScore = 500;
 	
 	private int editingPlayer = 1;

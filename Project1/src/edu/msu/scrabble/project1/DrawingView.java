@@ -1,11 +1,8 @@
 package edu.msu.scrabble.project1;
 
-import java.util.ArrayList;
-
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.graphics.Canvas;
@@ -134,7 +131,6 @@ public class DrawingView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
-		Log.i("TryingToDraw", "True");
 		
 		//canvas.rotate(pictureAngle);
 		//canvas.scale(pictureScale, pictureScale);
