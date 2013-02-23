@@ -8,13 +8,20 @@ import android.graphics.Paint;
 public class Drawing implements Serializable {
 	
 	// the paint for the freehand drawing - color and width
-	private Paint linePaint = new Paint();
+	private transient Paint linePaint = new Paint();
+	
+	PaintParameters params = new PaintParameters();
 	
 	// the location of a Drawing is a list of x and y coordinates
 	// that a touch passes through while drawing.
 	// to rotate the drawing, etc, each of these points must be changed
 	// according to the rotation, etc, function
 	private ArrayList<Point> points = new ArrayList<Point>();
+	
+	private class PaintParameters implements Serializable {
+		int color;
+		float width;
+	}
 	
 	private class Point implements Serializable {
 		public float x;
@@ -39,6 +46,11 @@ public class Drawing implements Serializable {
 			canvas.drawLine(this.points.get(i-1), this.points.get(i-1), 
 					this.points.get(i), this.points.get(i), linePaint);
 		}*/
+		if (linePaint == null) {
+			linePaint = new Paint();
+			linePaint.setColor(params.color);
+			linePaint.setStrokeWidth(params.width);
+		}
 		for (int i=1; i<this.points.size(); i++) {
 			canvas.drawLine(this.points.get(i-1).x, this.points.get(i-1).y, 
 					this.points.get(i).x, this.points.get(i).y, linePaint);
@@ -74,6 +86,8 @@ public class Drawing implements Serializable {
 
 	public void setLinePaint(Paint linePaint) {
 		this.linePaint = linePaint;
+		params.color = linePaint.getColor();
+		params.width = linePaint.getStrokeWidth();
 	}
 	
 }

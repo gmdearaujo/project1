@@ -6,7 +6,7 @@ import java.util.Random;
 
 public class Game implements Serializable {
 	
-	private final int maxScore = 50;
+	private final int maxScore = 500;
 	
 	private int editingPlayer = 1;
 	private int guessingPlayer = 2;

@@ -88,13 +88,15 @@ public class GuessActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_guess);
+
+		drawingView = (DrawingView)findViewById(R.id.guessingView);
+		drawingView.setEditable(false);
 		
 		Intent intent = getIntent();
 		if (intent != null) {
 			game = (Game)intent.getSerializableExtra("GAME");
+			drawingView.getDrawings(intent);
 		}
-		drawingView = (DrawingView)findViewById(R.id.guessingView);
-		drawingView.setEditable(false);
 
         /*
          * Restore any state

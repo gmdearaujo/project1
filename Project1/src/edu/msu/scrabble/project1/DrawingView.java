@@ -1,17 +1,15 @@
 package edu.msu.scrabble.project1;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 
 import android.content.Context;
 import android.content.Intent;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 
 public class DrawingView extends View {
@@ -136,6 +134,7 @@ public class DrawingView extends View {
 	@Override
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
+		Log.i("TryingToDraw", "True");
 		
 		//canvas.rotate(pictureAngle);
 		//canvas.scale(pictureScale, pictureScale);
@@ -157,19 +156,18 @@ public class DrawingView extends View {
         
         switch(event.getActionMasked()) {
         case MotionEvent.ACTION_DOWN:
+        	touch1.id = id;
+            touch2.id = -1;
+            getPositions(event);
+            touch1.copyToLast();
         	if (isEditable) {
-	        	touch1.id = id;
-	            touch2.id = -1;
-	            getPositions(event);
-	            touch1.copyToLast();
 	            // start new drawing, add to list of drawings
 	            currentDrawing = new Drawing();
 	            // set color and line width
 	            currentDrawing.setLinePaint(currentPaint);
 	            currentDrawing.addPoint(touch1.x, touch1.y);
-	            return true;
         	}
-        	return false;
+        	return true;
             
         case MotionEvent.ACTION_POINTER_DOWN:
         	if(touch1.id >= 0 && touch2.id < 0) {
@@ -381,12 +379,12 @@ public class DrawingView extends View {
 	 * Alex's failed attempts at serializing drawingList
 	 */
 	public void putDrawings(Intent intent) {
-		//intent.putExtra("DRAWING_LIST", drawings);
-		//intent.putExtra("CURRENT_DRAWING", currentDrawing);
+		intent.putExtra("PICTURE", picture);
 	}
 	
 	public void getDrawings(Intent intent) {
-		//drawings = intent.getSerializableExtra("DRAWING_LIST");
-		//currentDrawing = (Drawing)intent.getSerializableExtra("CURRENT_DRAWING");
+		if (intent.getSerializableExtra("PICTURE") != null) {
+			picture = (Picture)intent.getSerializableExtra("PICTURE");
+		}
 	}
 }

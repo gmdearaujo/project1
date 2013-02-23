@@ -95,6 +95,7 @@ public class EditActivity extends Activity {
 
 		Intent intent = getIntent();
 		game = (Game)intent.getSerializableExtra("GAME");
+		game.randomlySelectCategory();
 		
 		/*
          * Get some of the views we'll keep around
@@ -206,6 +207,7 @@ public class EditActivity extends Activity {
     		game.switchRoles();
         	Intent intent = new Intent(this, GuessActivity.class);
         	intent.putExtra("GAME", game);
+        	drawingView.putDrawings(intent);
     		startActivity(intent);
         	finish();
     	}
