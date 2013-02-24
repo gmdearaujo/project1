@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonEraser"
         android:background="@android:drawable/btn_default"
+        android:onClick="onPencil"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="@string/button_pencil" />
@@ -52,18 +53,6 @@
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
-        android:id="@+id/textViewScoreP1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewP1"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:paddingBottom="5dp"
-        android:paddingRight="50dp"
-        android:paddingTop="15dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
         android:id="@+id/textViewScoreP2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -72,7 +61,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/textViewP2"
         android:paddingBottom="15dp"
-        android:paddingRight="50dp"
         android:paddingTop="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -84,6 +72,7 @@
         android:layout_alignParentLeft="true"
         android:layout_alignRight="@+id/buttonPencil"
         android:background="@android:drawable/btn_default"
+        android:onClick="onEraser"
         android:text="@string/button_eraser" />
 
     <TextView
@@ -97,30 +86,6 @@
         android:paddingRight="5dp"
         android:paddingTop="15dp"
         android:text="@string/text_category"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewP2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewScoreP1"
-        android:layout_toLeftOf="@+id/textViewScoreP2"
-        android:paddingBottom="15dp"
-        android:paddingRight="5dp"
-        android:paddingTop="10dp"
-        android:text="@string/text_scoreP2"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewP1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/textViewScoreP1"
-        android:paddingBottom="15dp"
-        android:paddingRight="5dp"
-        android:paddingTop="15dp"
-        android:text="@string/text_scoreP1"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <edu.msu.scrabble.project1.DrawingView
@@ -153,5 +118,41 @@
         android:background="@android:drawable/btn_default"
         android:onClick="onColor"
         android:text="@string/button_color" />
+
+    <TextView
+        android:id="@+id/textViewP1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewScoreP2"
+        android:layout_toLeftOf="@+id/buttonDone"
+        android:paddingBottom="15dp"
+        android:paddingRight="5dp"
+        android:paddingTop="15dp"
+        android:text="@string/text_scoreP1"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewScoreP1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/textViewP2"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/textViewP2"
+        android:paddingBottom="5dp"
+        android:paddingTop="15dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewP2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewCategory"
+        android:layout_toLeftOf="@+id/buttonDone"
+        android:paddingBottom="15dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/text_scoreP2"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

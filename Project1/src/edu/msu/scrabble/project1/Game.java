@@ -14,6 +14,7 @@ public class Game implements Serializable {
 	private final int maxScore = 500;
 	
 	private int editingPlayer = 1;
+	
 	private int guessingPlayer = 2;
 	
 	private String player1Name = "";
@@ -46,12 +47,19 @@ public class Game implements Serializable {
 		categories.add("MSU");
 	}
 	
-	// randomly sets the category to one of the 5 available
+	/**
+     * Randomly sets the category
+     * @return category randomly selected
+     */
 	public void randomlySelectCategory() {
 		category = categories.get(randomNumberGenerator.nextInt(5) % 5);
 	}
 	
-	// returns true if the guess matches the answer
+	/**
+     * Compares guess to answer
+     * @param guess of what the drawing might be
+     * @return true if guess matches the answer
+     */
 	public Boolean guessAnswer(String guess) {
 		// change this so that it trims whitespace, etc. from the
 		// ends and is case insensitive
@@ -61,8 +69,12 @@ public class Game implements Serializable {
 		return false;
 	}
 	
-	// increments the chosen player's score
-	// returns false if the player number is not valid
+	/**
+     * Increment a player's score
+     * @param playerNumber the chosen player
+     * @param amount to increment player's score
+     * @return true if player's score is incremented
+     */
 	public Boolean incrementPlayerScore(int playerNumber, int amount) {
 		if (playerNumber == 1)
 		{

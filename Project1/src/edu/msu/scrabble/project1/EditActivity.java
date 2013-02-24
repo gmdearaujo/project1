@@ -36,17 +36,20 @@ public class EditActivity extends Activity {
 	private static final int eraserColor = R.color.white;;
 	
     /**
-	 * Player Names
+	 * Player names
 	 */
     private TextView p1Name = null;
     private TextView p2Name = null;
     
     /**
-	 * Player Scores
+	 * Player scores
 	 */
 	private TextView p1Score = null;
 	private TextView p2Score = null;
     
+	/**
+	 * Category
+	 */
     private TextView category = null;
     
     /**
@@ -107,6 +110,7 @@ public class EditActivity extends Activity {
 		p2Score = (TextView)findViewById(R.id.textViewScoreP2);
 		category = (TextView)findViewById(R.id.textViewCategoryType);
 		pencilSeekBar = (SeekBar)findViewById(R.id.seekBarPencil);
+		
 		/*colorButton = (Button)findViewById(R.id.buttonColor);
 		pencilButton = (Button)findViewById(R.id.buttonPencil);
 		eraserButton = (Button)findViewById(R.id.buttonEraser);*/
@@ -132,6 +136,13 @@ public class EditActivity extends Activity {
 	    		drawingView.setCurrentPaintWidth((float)progress);
 	    	}
 		});
+		
+        /*
+         * Restore any state
+         */
+        if(savedInstanceState != null) {
+            loadUi(savedInstanceState);
+        }
 		
 	}
 	
@@ -258,6 +269,31 @@ public class EditActivity extends Activity {
 		}
 
         return true;
+    }
+    
+	@Override
+	protected void onSaveInstanceState(Bundle outState) {
+		super.onSaveInstanceState(outState);
+		saveUi(outState);
+	}
+	
+    /**
+     * Save the view state to a bundle
+     * @param key key name to use in the bundle
+     * @param bundle bundle to save to
+     */
+    public void saveUi(Bundle bundle) {
+    	bundle.putSerializable("GAME", game);
+
+    }
+    
+    /**
+     * Get the view state from a bundle
+     * @param key key name to use in the bundle
+     * @param bundle bundle to load from
+     */
+    public void loadUi(Bundle bundle) {
+    	game = (Game)bundle.getSerializable("GAME");
     }
     
 }

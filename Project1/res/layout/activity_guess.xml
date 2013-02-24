@@ -17,30 +17,6 @@
         android:paddingTop="15dp"
         android:text="@string/text_category"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewP2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewScoreP1"
-        android:layout_toLeftOf="@+id/textViewScoreP2"
-        android:paddingBottom="15dp"
-        android:paddingRight="5dp"
-        android:paddingTop="10dp"
-        android:text="@string/text_scoreP2"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
-        android:id="@+id/textViewP1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_toLeftOf="@+id/textViewScoreP1"
-        android:paddingBottom="15dp"
-        android:paddingRight="5dp"
-        android:paddingTop="15dp"
-        android:text="@string/text_scoreP1"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
     
         <TextView
         android:id="@+id/textViewCategoryType"
@@ -60,10 +36,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@+id/textViewP1"
+        android:layout_alignLeft="@+id/textViewHintDescription"
         android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
         android:paddingBottom="5dp"
-        android:paddingRight="50dp"
         android:paddingTop="15dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -76,7 +52,6 @@
         android:layout_alignParentRight="true"
         android:layout_alignTop="@+id/textViewP2"
         android:paddingBottom="15dp"
-        android:paddingRight="50dp"
         android:paddingTop="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
@@ -187,11 +162,36 @@
         android:layout_toRightOf="@+id/textViewAnswer"
         android:ems="10"
         android:hint="@string/text_hint"
+        android:inputType="textPersonName"
         android:paddingBottom="15dp"
         android:paddingRight="5dp"
         android:paddingTop="15dp" >
 
         <requestFocus />
     </EditText>
+
+    <TextView
+        android:id="@+id/textViewP2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewP1"
+        android:layout_toLeftOf="@+id/buttonDone"
+        android:paddingBottom="15dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/text_scoreP2"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewP1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/buttonDone"
+        android:paddingBottom="15dp"
+        android:paddingRight="5dp"
+        android:paddingTop="15dp"
+        android:text="@string/text_scoreP1"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

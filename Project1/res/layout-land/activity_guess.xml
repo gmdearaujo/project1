@@ -71,6 +71,7 @@
         android:layout_above="@+id/buttonDone"
         android:layout_alignLeft="@+id/buttonDone"
         android:layout_alignParentRight="true"
+        android:inputType="textPersonName"
         android:ems="10"
         android:hint="@string/text_hint" >
 

@@ -325,8 +325,8 @@ public class DrawingView extends View {
     }
 
     private float length(float x1, float y1, float x2, float y2) {        
-    	float dx = x2 - x1;        
-    	float dy = y2 - y1;        
+    	float dx = x2 - x1;
+    	float dy = y2 - y1;
     	return (float)Math.sqrt(dx * dx + dy * dy);
     }
     
@@ -361,16 +361,6 @@ public class DrawingView extends View {
 	public void setCurrentPaintWidth(float width) {
 		initializePaint(currentPaint.getColor(), width);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Alex's failed attempts at serializing drawingList

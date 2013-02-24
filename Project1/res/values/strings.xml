@@ -11,7 +11,7 @@
     <string name="button_pencil">Pencil</string>
     <string name="button_eraser">Eraser</string>
     <string name="text_category">Category:</string>
-    <string name="button_done">Done!</string>
+    <string name="button_done">Done</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_color_select">ColorSelectActivity</string>
     <string name="text_start">Enter Players\' Names:</string>

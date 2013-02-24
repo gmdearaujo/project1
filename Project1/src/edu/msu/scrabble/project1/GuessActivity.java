@@ -116,6 +116,20 @@ public class GuessActivity extends Activity {
 		p1Score = (TextView)findViewById(R.id.textViewScoreP1);
 		p2Score = (TextView)findViewById(R.id.textViewScoreP2);
 		
+		answerText.setImeActionLabel("Done", KeyEvent.KEYCODE_ENTER);
+		
+		answerText.setOnKeyListener(new TextView.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                    (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                	onDone(v);
+                	return true;
+                }
+                return false;
+            }
+        });
+		
 		/*
 		 *  Set text boxes
 		 */

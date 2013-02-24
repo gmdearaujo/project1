@@ -48,17 +48,12 @@ public class Drawing implements Serializable {
 	
 	// should scale and rotation variables be kept here?
 	
-	
-	// to draw a Drawing each of the coordinates in points
-	// must be connected, in order, by a line of
-	// 'color' and 'lineWidth'
+	/**
+	 * Draw a drawing by connecting each coordinates in points
+	 * @param canvas where drawing appears
+	 */
 	public void DrawLine(Canvas canvas) {
-		// connect the points with a line of the specified color
-		// and width
-		/*for (int i=1; i<this.points.size(); i++) {
-			canvas.drawLine(this.points.get(i-1), this.points.get(i-1), 
-					this.points.get(i), this.points.get(i), linePaint);
-		}*/
+		
 		if (linePaint == null) {
 			linePaint = new Paint();
 			linePaint.setColor(params.color);
@@ -67,7 +62,11 @@ public class Drawing implements Serializable {
 		for (int i=1; i<this.points.size(); i++) {
 			canvas.drawLine(this.points.get(i-1).x, this.points.get(i-1).y, 
 					this.points.get(i).x, this.points.get(i).y, linePaint);
+			canvas.drawCircle(this.points.get(i-1).x, this.points.get(i-1).y, 
+					params.width/2, linePaint);
 		}
+		canvas.drawCircle(this.points.get(this.points.size()-1).x, this.points.get(this.points.size()-1).y, 
+				params.width/2, linePaint);
 	}
 	
 	public void RotateDrawing(final float ca, final float sa, final float x1, final float y1)
@@ -84,9 +83,9 @@ public class Drawing implements Serializable {
 	public void ScaleDrawing(final float scaleFactor, final float centerX, final float centerY) {
 		
 		for (int i=0; i<this.points.size(); i++) {
-
-			this.points.get(i).x += (this.points.get(i).x - centerX) * (scaleFactor - 1); 
-			this.points.get(i).y += (this.points.get(i).y - centerY) * (scaleFactor - 1);
+			this.points.get(i).x = (this.points.get(i).x - centerX) * scaleFactor + centerX; 
+			this.points.get(i).y = (this.points.get(i).y - centerY) * scaleFactor + centerY;
+			
 		}
 	}
 	

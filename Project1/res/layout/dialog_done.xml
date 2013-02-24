@@ -35,6 +35,6 @@
         android:layout_marginTop="4dp"
         android:fontFamily="sans-serif"
         android:hint="@string/text_answer"
-        android:inputType="textPassword" />
+        android:inputType="textShortMessage" />
 
 </LinearLayout>
