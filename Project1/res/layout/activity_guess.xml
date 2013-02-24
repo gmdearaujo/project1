@@ -83,6 +83,7 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/textViewTip"
         android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
         android:layout_below="@+id/textViewScoreP2"
         android:background="@color/white" />
 
