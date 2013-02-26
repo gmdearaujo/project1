@@ -85,10 +85,10 @@ public class DrawingView extends View {
      */
     private Paint currentPaint;
 	
-    private float pictureAngle = 0;
-    private float pictureScale = 1;
-    private float offsetX = 0;
-    private float offsetY = 0;
+    //private float pictureAngle = 0;
+    //private float pictureScale = 1;
+    //private float offsetX = 0;
+    //private float offsetY = 0;
     
     private boolean isEditable = true;
 
@@ -133,14 +133,14 @@ public class DrawingView extends View {
 	protected void onDraw(Canvas canvas) {
 		super.onDraw(canvas);
 		
-		canvas.translate(offsetX, offsetY);
+		canvas.translate(picture.getOffsetX(), picture.getOffsetY());
 		
 		for (Drawing drawing : picture.getDrawings())
 			drawing.DrawLine(canvas);
 		if (currentDrawing != null) 
 			currentDrawing.DrawLine(canvas);
 		
-		canvas.scale(pictureScale, pictureScale);
+		canvas.scale(picture.getScale(), picture.getScale());
 	}
 
 	@Override
@@ -159,9 +159,14 @@ public class DrawingView extends View {
 	            // set color and line width
 	            currentDrawing.setLinePaint(currentPaint);
 	            currentDrawing.addPoint(touch1.x, touch1.y);
+	            
+	            picture.setOffsetX(picture.getOffsetX() + touch1.x - touch1.lastX);
+	            picture.setOffsetY(picture.getOffsetY() + touch1.y - touch1.lastY);
         	} else {
-        		offsetX += touch1.x - touch1.lastX;
-        		offsetY += touch1.y - touch1.lastY;
+        		//offsetX += touch1.x - touch1.lastX;
+        		//offsetY += touch1.y - touch1.lastY;
+        		picture.setOffsetX(picture.getOffsetX() + touch1.x - touch1.lastX);
+	            picture.setOffsetY(picture.getOffsetY() + touch1.y - touch1.lastY);
         	}
         	return true;
             
@@ -264,14 +269,22 @@ public class DrawingView extends View {
     		// Moving
     		touch1.computeDeltas();
     		
-    		offsetX += touch1.dX;
-    		offsetY += touch1.dY;
+    		picture.setOffsetX(picture.getOffsetX() + touch1.dX);
+            picture.setOffsetY(picture.getOffsetY() + touch1.dY);
+    		//offsetX += touch1.dX;
+    		//offsetY += touch1.dY;
     	}
 
         // when one finger is down we want to draw, not move.
     	// so, do not do anything unless two fingers are down
         if(touch1.id >= 0 && touch2.id >= 0) {
             // Two touches
+        	touch1.computeDeltas();
+    		
+        	picture.setOffsetX(picture.getOffsetX() + touch1.dX);
+            picture.setOffsetY(picture.getOffsetY() + touch1.dY);
+    		//offsetX += touch1.dX;
+    		//offsetY += touch1.dY;
             
             /*
              * Rotation
@@ -298,8 +311,8 @@ public class DrawingView extends View {
      * @param y1 rotation point y
      */
     public void rotate(float dAngle, float x1, float y1) {
-        //params.hatAngle += dAngle;
-        pictureAngle += dAngle;
+        picture.setAngle(picture.getAngle() + dAngle);
+        //pictureAngle += dAngle;
     	
         // Compute the radians angle
         double rAngle = Math.toRadians(dAngle);
@@ -331,8 +344,9 @@ public class DrawingView extends View {
     	return (float)Math.sqrt(dx * dx + dy * dy);
     }
     
-    public void scale(float scale, float x1, float y1) {        
-    	pictureScale *= scale;
+    public void scale(float scale, float x1, float y1) {
+    	picture.setScale(picture.getScale() * scale);
+    	//pictureScale *= scale;
     	
     	// do the rotation operations to each point in each Drawing in Drawings
         for (Drawing drawing : picture.getDrawings())

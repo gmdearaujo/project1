@@ -77,7 +77,7 @@ public class MainActivity extends Activity {
 	}
 
     /**
-     * Handle a Haw To Play button
+     * Handle a How To Play button
      * @param view
      */
     public void onHowToPlay(View view) {
