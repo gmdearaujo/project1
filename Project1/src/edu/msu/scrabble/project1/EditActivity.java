@@ -16,6 +16,10 @@ import android.widget.TextView;
 
 public class EditActivity extends Activity {
 	
+	// for saving the state on rotation
+	// (with bundles)
+	private static final String PICTURE = "picture";
+	
 	/**
      * The color select button
      */
@@ -142,6 +146,7 @@ public class EditActivity extends Activity {
          */
         if(savedInstanceState != null) {
             loadUi(savedInstanceState);
+            drawingView.getFromBundle(PICTURE, savedInstanceState);
         }
 		
 	}
@@ -274,7 +279,9 @@ public class EditActivity extends Activity {
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		
 		saveUi(outState);
+		drawingView.putToBundle(PICTURE, outState);
 	}
 	
     /**
@@ -295,5 +302,7 @@ public class EditActivity extends Activity {
     public void loadUi(Bundle bundle) {
     	game = (Game)bundle.getSerializable("GAME");
     }
+    
+    
     
 }

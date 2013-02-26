@@ -2,6 +2,7 @@ package edu.msu.scrabble.project1;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.View;
@@ -10,7 +11,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 
 public class DrawingView extends View {
-
+	
 	/**
      * Local class to handle the touch status for one touch.
      * We will have one object of this type for each of the 
@@ -363,7 +364,7 @@ public class DrawingView extends View {
 	}
 	
 	/**
-	 * Alex's failed attempts at serializing drawingList
+	 * Alex's successful attempts at serializing picture
 	 */
 	public void putDrawings(Intent intent) {
 		intent.putExtra("PICTURE", picture);
@@ -374,4 +375,22 @@ public class DrawingView extends View {
 			picture = (Picture)intent.getSerializableExtra("PICTURE");
 		}
 	}
+	
+	/**
+     * Save the view state to a bundle
+     * @param key key name to use in the bundle
+     * @param bundle bundle to save to
+     */
+    public void putToBundle(String key, Bundle bundle) {
+    	bundle.putSerializable(key, picture);
+    }
+    
+    /**
+     * Get the view state from a bundle
+     * @param key key name to use in the bundle
+     * @param bundle bundle to load from
+     */
+    public void getFromBundle(String key, Bundle bundle) {
+    	picture = (Picture)bundle.getSerializable(key);
+    }
 }
