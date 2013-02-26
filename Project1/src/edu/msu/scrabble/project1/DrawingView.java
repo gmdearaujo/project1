@@ -84,6 +84,14 @@ public class DrawingView extends View {
      * Paint to set when different color/line width is selected
      */
     private Paint currentPaint;
+    
+    // holds the current paint when switching to eraser
+    private Paint tempPaint;
+    
+    // the eraser width
+    float eraserWidth = (float)4;
+    
+    Boolean eraserOn = false;
 	
     //private float pictureAngle = 0;
     //private float pictureScale = 1;
@@ -365,6 +373,19 @@ public class DrawingView extends View {
 		return currentPaint.getStrokeWidth();
 	}
 	
+	// fix these!
+	public int getPencilPaintColor() {
+		return currentPaint.getColor();
+	}
+
+	public void setPencilPaintColor(int color) {
+		initializePaint(color, currentPaint.getStrokeWidth());
+	}
+    
+	public float getPencilPaintWidth() {
+		return currentPaint.getStrokeWidth();
+	}
+	
 	public boolean getEditable() {
 		return isEditable;
 	}
@@ -406,5 +427,29 @@ public class DrawingView extends View {
      */
     public void getFromBundle(String key, Bundle bundle) {
     	picture = (Picture)bundle.getSerializable(key);
+    }
+
+	public float getEraserWidth() {
+		return eraserWidth;
+	}
+
+	public void setEraserWidth(float eraserWidth) {
+		this.eraserWidth = eraserWidth;
+		if (eraserOn)
+			currentPaint.setStrokeWidth(this.eraserWidth);
+	}
+    
+    public void switchToEraser() {
+    	tempPaint = currentPaint;
+    	initializePaint(Color.WHITE, eraserWidth);
+    	eraserOn = true;
+    }
+    
+    public void swtichToPencil() {
+    	if (tempPaint != null)
+    	{
+    		currentPaint = tempPaint;
+    		eraserOn = false;
+    	}
     }
 }

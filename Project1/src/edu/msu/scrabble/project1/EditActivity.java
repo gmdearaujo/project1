@@ -28,12 +28,12 @@ public class EditActivity extends Activity {
     /**
      * The pencil select button
      */
-    //private Button pencilButton = null;
+    private Button pencilButton = null;
     
     /**
      * The eraser select button
      */
-    //private Button eraserButton = null;
+    private Button eraserButton = null;
     
 	private int pencilColor;
 	
@@ -57,9 +57,10 @@ public class EditActivity extends Activity {
     private TextView category = null;
     
     /**
-     * The drawing width seekbar
+     * The drawing width seekbar, and eraser width seekbar
      */
     SeekBar pencilSeekBar;
+    SeekBar eraserSeekBar;
     
     
     /**
@@ -77,16 +78,14 @@ public class EditActivity extends Activity {
      */
     private Game game;
     
-    
+    // do i need this?
     private class SeekBarListener implements SeekBar.OnSeekBarChangeListener {
     	@Override
     	public void onStopTrackingTouch(SeekBar arg0) {
-    		
     	}
     	
     	@Override
-    	public void onStartTrackingTouch(SeekBar arg0)  {
-    		
+    	public void onStartTrackingTouch(SeekBar arg0)  {		
     	}
     	
     	@Override
@@ -114,10 +113,11 @@ public class EditActivity extends Activity {
 		p2Score = (TextView)findViewById(R.id.textViewScoreP2);
 		category = (TextView)findViewById(R.id.textViewCategoryType);
 		pencilSeekBar = (SeekBar)findViewById(R.id.seekBarPencil);
+		eraserSeekBar = (SeekBar)findViewById(R.id.seekBarEraser);
 		
-		/*colorButton = (Button)findViewById(R.id.buttonColor);
+		//colorButton = (Button)findViewById(R.id.buttonColor);
 		pencilButton = (Button)findViewById(R.id.buttonPencil);
-		eraserButton = (Button)findViewById(R.id.buttonEraser);*/
+		eraserButton = (Button)findViewById(R.id.buttonEraser);
 		
 		/*
 		 *  Set text boxes
@@ -128,6 +128,9 @@ public class EditActivity extends Activity {
 		p2Score.setText(Integer.toString(game.getPlayer2Score()));
 		category.setText(game.getCategory());	
 		
+		/*
+		 * Listeners for the sliders
+		 */
 		pencilSeekBar.setOnSeekBarChangeListener(new SeekBarListener() {
 			@Override
 	    	public void onStopTrackingTouch(SeekBar arg0) {}
@@ -140,6 +143,21 @@ public class EditActivity extends Activity {
 	    		drawingView.setCurrentPaintWidth((float)progress);
 	    	}
 		});
+		
+
+		eraserSeekBar.setOnSeekBarChangeListener(new SeekBarListener() {
+			@Override
+	    	public void onStopTrackingTouch(SeekBar arg0) {}
+			
+	    	@Override
+	    	public void onStartTrackingTouch(SeekBar arg0) {}
+	    	
+	    	@Override
+	    	public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
+	    		drawingView.setEraserWidth((float)progress);
+	    	}
+		});
+
 		
         /*
          * Restore any state
@@ -171,6 +189,14 @@ public class EditActivity extends Activity {
         // Get a color
         Intent intent = new Intent(this, ColorSelectActivity.class);
         startActivityForResult(intent, SELECT_COLOR);      
+    }
+    
+    public void onPencil(View view) {
+    	drawingView.swtichToPencil();
+    }
+    
+    public void onEraser(View view) {
+    	drawingView.switchToEraser();
     }
     
     /**
@@ -228,14 +254,6 @@ public class EditActivity extends Activity {
         	finish();
     	}
 	}
-    
-    public void onPencil() {
-    	//drawingView.setCurrentPaintColor(pencilColor);
-    }
-    
-    public void onEraser() {
-    	//drawingView.setCurrentPaintColor(eraserColor);
-    }
     
     public void onStartTrackingTouch(SeekBar seekBar) {
     	
