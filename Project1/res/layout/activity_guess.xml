@@ -17,19 +17,6 @@
         android:paddingTop="15dp"
         android:text="@string/text_category"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-    
-        <TextView
-        android:id="@+id/textViewCategoryType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewP1"
-        android:layout_alignParentTop="true"
-        android:paddingBottom="15dp"
-        android:paddingRight="5dp"
-        android:paddingTop="15dp"
-        android:layout_toLeftOf="@+id/textViewP1"
-        android:layout_toRightOf="@+id/textViewCategory"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
         android:id="@+id/textViewScoreP1"
@@ -101,18 +88,6 @@
         android:text="@string/text_time"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <TextView
-        android:id="@+id/textViewTimeLeft"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/textViewP2"
-        android:layout_alignRight="@+id/textViewCategoryType"
-        android:layout_alignTop="@+id/textViewTime"
-        android:layout_toRightOf="@+id/textViewTime"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
     <Button
         android:id="@+id/buttonDone"
         android:layout_width="wrap_content"
@@ -172,18 +147,6 @@
     </EditText>
 
     <TextView
-        android:id="@+id/textViewP2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textViewP1"
-        android:layout_toLeftOf="@+id/buttonDone"
-        android:paddingBottom="15dp"
-        android:paddingRight="5dp"
-        android:paddingTop="10dp"
-        android:text="@string/text_scoreP2"
-        android:textAppearance="?android:attr/textAppearanceMedium" />
-
-    <TextView
         android:id="@+id/textViewP1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -193,6 +156,41 @@
         android:paddingRight="5dp"
         android:paddingTop="15dp"
         android:text="@string/text_scoreP1"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewCategoryType"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toLeftOf="@+id/textViewP1"
+        android:layout_toRightOf="@+id/textViewCategory"
+        android:paddingBottom="15dp"
+        android:paddingRight="5dp"
+        android:paddingTop="15dp"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewP2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textViewScoreP1"
+        android:layout_toLeftOf="@+id/textViewScoreP2"
+        android:paddingBottom="15dp"
+        android:paddingRight="5dp"
+        android:paddingTop="10dp"
+        android:text="@string/text_scoreP2"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <TextView
+        android:id="@+id/textViewTimeLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/guessingView"
+        android:layout_toLeftOf="@+id/textViewP1"
+        android:layout_toRightOf="@+id/textViewTime"
+        android:paddingBottom="10dp"
+        android:paddingTop="10dp"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>
