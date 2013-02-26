@@ -45,6 +45,8 @@ public class Game implements Serializable {
 		categories.add("Object");
 		categories.add("Action");
 		categories.add("MSU");
+		
+		randomlySelectCategory();
 	}
 	
 	/**

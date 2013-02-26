@@ -102,7 +102,7 @@ public class EditActivity extends Activity {
 
 		Intent intent = getIntent();
 		game = (Game)intent.getSerializableExtra("GAME");
-		game.randomlySelectCategory();
+		//game.randomlySelectCategory();
 		
 		/*
          * Get some of the views we'll keep around

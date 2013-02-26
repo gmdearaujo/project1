@@ -157,6 +157,8 @@ public class GuessActivity extends Activity {
 
 			game.swapPlayers();
 			
+			game.randomlySelectCategory();
+			
 			// Freeze timer
 			int finalTime = remainingTime;
 			timeText.setText(Integer.toString(finalTime));
