@@ -172,15 +172,9 @@ public class DrawingView extends View {
 	            // set color and line width
 	            currentDrawing.setLinePaint(currentPaint);
 	            currentDrawing.addPoint(touch1.x, touch1.y);
-	            
-	            picture.setOffsetX(picture.getOffsetX() + touch1.x - touch1.lastX);
-	            picture.setOffsetY(picture.getOffsetY() + touch1.y - touch1.lastY);
-        	} else {
-        		//offsetX += touch1.x - touch1.lastX;
-        		//offsetY += touch1.y - touch1.lastY;
-        		picture.setOffsetX(picture.getOffsetX() + touch1.x - touch1.lastX);
-	            picture.setOffsetY(picture.getOffsetY() + touch1.y - touch1.lastY);
         	}
+        	picture.setOffsetX(picture.getOffsetX() + touch1.x - touch1.lastX);
+        	picture.setOffsetY(picture.getOffsetY() + touch1.y - touch1.lastY);
         	return true;
             
         case MotionEvent.ACTION_POINTER_DOWN:
@@ -282,10 +276,9 @@ public class DrawingView extends View {
     		// Moving
     		touch1.computeDeltas();
     		
+    		// for moving
     		picture.setOffsetX(picture.getOffsetX() + touch1.dX);
             picture.setOffsetY(picture.getOffsetY() + touch1.dY);
-    		//offsetX += touch1.dX;
-    		//offsetY += touch1.dY;
     	}
 
         // when one finger is down we want to draw, not move.
@@ -293,11 +286,6 @@ public class DrawingView extends View {
         if(touch1.id >= 0 && touch2.id >= 0) {
             // Two touches
         	touch1.computeDeltas();
-    		
-        	picture.setOffsetX(picture.getOffsetX() + touch1.dX);
-            picture.setOffsetY(picture.getOffsetY() + touch1.dY);
-    		//offsetX += touch1.dX;
-    		//offsetY += touch1.dY;
             
             /*
              * Rotation
