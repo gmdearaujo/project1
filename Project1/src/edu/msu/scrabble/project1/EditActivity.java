@@ -5,17 +5,16 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.PorterDuff;
 import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EditActivity extends Activity {
 	
@@ -168,6 +167,9 @@ public class EditActivity extends Activity {
             loadUi(savedInstanceState);
             drawingView.getFromBundle(PICTURE, savedInstanceState);
         }
+        
+        eraserButton.getBackground().setColorFilter(0xFFCED3CF, PorterDuff.Mode.MULTIPLY);
+        pencilButton.getBackground().setColorFilter(0xFFFFA11C, PorterDuff.Mode.MULTIPLY);
 		
 	}
 	
@@ -197,6 +199,8 @@ public class EditActivity extends Activity {
      */
     public void onPencil(View view) {
     	drawingView.switchToPencil();
+        eraserButton.getBackground().setColorFilter(0xFFCED3CF, PorterDuff.Mode.MULTIPLY);
+        pencilButton.getBackground().setColorFilter(0xFFFFA11C, PorterDuff.Mode.MULTIPLY);
     	colorButton.setEnabled(true);
     }
     
@@ -205,6 +209,8 @@ public class EditActivity extends Activity {
      */
     public void onEraser(View view) {
     	drawingView.switchToEraser();
+        eraserButton.getBackground().setColorFilter(0xFFFFA11C, PorterDuff.Mode.MULTIPLY);
+        pencilButton.getBackground().setColorFilter(0xFFCED3CF, PorterDuff.Mode.MULTIPLY);
     	colorButton.setEnabled(false);
     }
     
@@ -264,7 +270,9 @@ public class EditActivity extends Activity {
         	drawingView.putDrawings(intent);
     		startActivity(intent);
         	finish();
-    	}
+    	} else {
+			Toast.makeText(this,"Answer and tip required", Toast.LENGTH_LONG).show();
+		}
 	}
     
     @Override
