@@ -106,6 +106,7 @@
         android:id="@+id/textViewTipText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignBaseline="@+id/textViewTip"
         android:layout_alignBottom="@+id/textViewHintDescription"
         android:layout_below="@+id/guessingView"
         android:layout_toLeftOf="@+id/textViewHintDescription"
@@ -114,6 +115,7 @@
         android:paddingLeft="5dp"
         android:paddingRight="5dp"
         android:paddingTop="10dp"
+        android:text="@string/not_available"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
     <TextView
@@ -187,6 +189,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/guessingView"
+        android:layout_alignBaseline="@+id/textViewTime"
         android:layout_toLeftOf="@+id/textViewP1"
         android:layout_toRightOf="@+id/textViewTime"
         android:paddingBottom="10dp"

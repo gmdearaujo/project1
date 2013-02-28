@@ -10,9 +10,14 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class GuessActivity extends Activity {
 	
+	/**
+     * Tag used for saving bundle
+     */
+	private static final String PICTURE = "picture";
 	/**
 	 * The game
 	 */
@@ -60,7 +65,7 @@ public class GuessActivity extends Activity {
 	private GameTimer gtimer;
 	
 	/**
-	 * Timer
+	 * Countdown timer, counts frim time to 0
 	 */
 	public class GameTimer extends CountDownTimer {
 		public GameTimer (long time) {
@@ -78,8 +83,8 @@ public class GuessActivity extends Activity {
 			remainingTime = (int)timeSeconds;
 			timeText.setText(Long.toString(timeSeconds));
 			
-			if (timeSeconds < 60)
-				tipText.setVisibility(View.VISIBLE);
+			if (timeSeconds <= 60)
+				tipText.setText(game.getTip());
 		}
 	}
 	
@@ -102,6 +107,7 @@ public class GuessActivity extends Activity {
          */
         if(savedInstanceState != null) {
             loadUi(savedInstanceState);
+            drawingView.getFromBundle(PICTURE, savedInstanceState);
         }
 		
         /*
@@ -136,18 +142,19 @@ public class GuessActivity extends Activity {
 		p1Name.setText(game.getPlayer1DisplayName() + ":");
 		p2Name.setText(game.getPlayer2DisplayName() + ":");
 		categoryText.setText(game.getCategory());
-		tipText.setText(game.getTip());
-		tipText.setVisibility(View.INVISIBLE);
 		p1Score.setText(Integer.toString(game.getPlayer1Score()));
 		p2Score.setText(Integer.toString(game.getPlayer2Score()));
 		
+		/*
+		 * Start the timer
+		 */
 		gtimer = new GameTimer(remainingTime*1000);
 		gtimer.start();
 	}
 	
 	/**
      * Handle a Done button press
-     * @param view
+     * @param view The view that was pressed
      */
 	public void onDone(View view)
 	{
@@ -188,28 +195,12 @@ public class GuessActivity extends Activity {
 		        alertDialog.show();
 			}
 		} else {
-			
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
-					view.getContext());
- 
-			// set title
-			alertDialogBuilder.setTitle("Inorrect!");
-
-	        alertDialogBuilder.setPositiveButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-	               @Override
-	               public void onClick(DialogInterface dialog, int id) {
-	            	   
-	               }
-	        });
-	        
-	        // Create the dialog box and show it
-	        AlertDialog alertDialog = alertDialogBuilder.create();
-	        alertDialog.show();
+			Toast.makeText(this,"Incorrect", Toast.LENGTH_SHORT).show();
 		}
 	}
 	
 	/**
-	 * Timer ran out
+	 * Timer ran out, alert the player and swap roles
 	 */
 	public void onGuessFail() {
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
@@ -241,6 +232,9 @@ public class GuessActivity extends Activity {
     	finish();
 	}
     
+	/**
+	 * Handle a back key press
+	 */
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) 
     {
@@ -272,12 +266,13 @@ public class GuessActivity extends Activity {
         return true;
     }
 
-    /* (non-Javadoc)
-	 * @see android.app.Activity#onSaveInstanceState(android.os.Bundle)
-	 */
+    /**
+     * Handle a saveInstanceState
+     */
 	@Override
 	protected void onSaveInstanceState(Bundle outState) {
 		super.onSaveInstanceState(outState);
+		drawingView.putToBundle(PICTURE, outState);
 		saveUi(outState);
 	}
 	
@@ -288,6 +283,7 @@ public class GuessActivity extends Activity {
     public void saveUi(Bundle bundle) {
     	bundle.putSerializable("GAME", game);
     	bundle.putInt("TIME", remainingTime);
+    	
     }
     
     /**
