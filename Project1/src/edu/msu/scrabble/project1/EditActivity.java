@@ -93,7 +93,7 @@ public class EditActivity extends Activity {
     	
     	@Override
     	public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
-    		drawingView.setCurrentPaintWidth((float)progress);
+    		drawingView.setPencilPaintWidth((float)progress);
     	}
     }
     
@@ -141,7 +141,7 @@ public class EditActivity extends Activity {
 	    	
 	    	@Override
 	    	public void onProgressChanged(SeekBar arg0, int progress, boolean arg2) {
-	    		drawingView.setCurrentPaintWidth((float)progress);
+	    		drawingView.setPencilPaintWidth((float)progress);
 	    	}
 		});
 		
@@ -180,7 +180,7 @@ public class EditActivity extends Activity {
         if(requestCode == SELECT_COLOR && resultCode == Activity.RESULT_OK) {
             // This is a color response
             pencilColor = data.getIntExtra(ColorSelectActivity.COLOR, Color.BLACK);
-            drawingView.setCurrentPaintColor(pencilColor);
+            drawingView.setPencilPaintColor(pencilColor);
         }
         
 	}

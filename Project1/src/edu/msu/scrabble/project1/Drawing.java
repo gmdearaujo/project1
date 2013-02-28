@@ -54,11 +54,11 @@ public class Drawing implements Serializable {
 	 */
 	public void DrawLine(Canvas canvas) {
 		
-		if (linePaint == null) {
-			linePaint = new Paint();
-			linePaint.setColor(params.color);
-			linePaint.setStrokeWidth(params.width);
-		}
+		//if (linePaint == null) {
+		linePaint = new Paint();
+		linePaint.setColor(params.color);
+		linePaint.setStrokeWidth(params.width);
+		//}
 		for (int i=1; i<this.points.size(); i++) {
 			canvas.drawLine(this.points.get(i-1).x, this.points.get(i-1).y, 
 					this.points.get(i).x, this.points.get(i).y, linePaint);

@@ -130,13 +130,13 @@ public class DrawingView extends View {
      * @param context
      */
     private void init(Context context) {
-    	initializePaint(Color.BLACK, (float)4);
+    	initializeCurrentPaint(Color.BLACK, (float)4);
     }
     
     /**
      * Create new paint
      */
-    private void initializePaint(int color, float width) {
+    private void initializeCurrentPaint(int color, float width) {
     	currentPaint = new Paint();
         currentPaint.setColor(color);
         currentPaint.setStrokeWidth(width);
@@ -379,7 +379,7 @@ public class DrawingView extends View {
 	}
 
 	public void setCurrentPaintColor(int color) {
-		initializePaint(color, currentPaint.getStrokeWidth());
+		initializeCurrentPaint(color, currentPaint.getStrokeWidth());
 	}
     
 	public float getCurrentPaintWidth() {
@@ -388,15 +388,36 @@ public class DrawingView extends View {
 	
 	// fix these!
 	public int getPencilPaintColor() {
-		return currentPaint.getColor();
+		if (eraserOn) {
+			return tempPaint.getColor();
+		}
+		else
+			return currentPaint.getColor();
 	}
 
 	public void setPencilPaintColor(int color) {
-		initializePaint(color, currentPaint.getStrokeWidth());
+		if (eraserOn) {
+			tempPaint.setColor(color);
+		}
+		else
+			currentPaint.setColor(color);
 	}
+	
+	public void setPencilPaintWidth(float width) {
+		if (eraserOn) {
+			tempPaint.setStrokeWidth(width);
+		}
+		else
+			currentPaint.setStrokeWidth(width);
+	}
+	
     
 	public float getPencilPaintWidth() {
-		return currentPaint.getStrokeWidth();
+		if (eraserOn) {
+			return tempPaint.getStrokeWidth();
+		}
+		else
+			return currentPaint.getStrokeWidth();
 	}
 	
 	public boolean getEditable() {
@@ -408,7 +429,7 @@ public class DrawingView extends View {
 	}
 
 	public void setCurrentPaintWidth(float width) {
-		initializePaint(currentPaint.getColor(), width);
+		initializeCurrentPaint(currentPaint.getColor(), width);
 	}
 	
 	/**
@@ -449,12 +470,12 @@ public class DrawingView extends View {
 	public void setEraserWidth(float eraserWidth) {
 		this.eraserWidth = eraserWidth;
 		if (eraserOn)
-			initializePaint(Color.WHITE, eraserWidth);
+			initializeCurrentPaint(Color.WHITE, eraserWidth);
 	}
     
     public void switchToEraser() {
     	tempPaint = currentPaint;
-    	initializePaint(Color.WHITE, eraserWidth);
+    	initializeCurrentPaint(Color.WHITE, eraserWidth);
     	eraserOn = true;
     }
     
