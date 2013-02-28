@@ -21,6 +21,7 @@
         android:layout_alignLeft="@+id/seekBarPencil"
         android:layout_alignParentRight="true"
         android:background="@android:drawable/btn_default"
+        android:onClick="onPencil"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
         android:text="@string/button_pencil" />
@@ -53,6 +54,7 @@
         android:layout_alignLeft="@+id/seekBarEraser"
         android:layout_alignParentRight="true"
         android:background="@android:drawable/btn_default"
+        android:onClick="onEraser"
         android:text="@string/button_eraser" />
 
     <TextView
@@ -69,12 +71,12 @@
 
     <Button
         android:id="@+id/buttonColor"
-        android:background="@android:drawable/btn_default"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonPencil"
         android:layout_alignLeft="@+id/buttonPencil"
         android:layout_alignParentRight="true"
+        android:background="@android:drawable/btn_default"
         android:onClick="onColor"
         android:text="@string/button_color" />
 

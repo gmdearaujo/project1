@@ -11,7 +11,9 @@ public class Picture implements Serializable {
 	 */
 	private static final long serialVersionUID = -7698564561406540923L;
 	
-	// a list of the Drawings that make up the Picture
+	/**
+	 *  An array of the Drawings that make up the Picture
+	 */
 	private ArrayList<Drawing> drawings = new ArrayList<Drawing>();
 	
 	private float angle = 0;
@@ -23,18 +25,35 @@ public class Picture implements Serializable {
 		// TODO Auto-generated constructor stub
 	}
 	
+	/**
+	 * Add drawing to array of drawings
+	 * @param drawing to be added to array
+	 */
 	public void AddDrawing(Drawing drawing) {
 		drawings.add(drawing);
 	}
 	
+	/**
+	 * Get drawing from the drawings array
+	 * @param index of were the drawing is in the array
+	 * @return the drawing at the given index
+	 */
 	public Drawing GetDrawing(int index) {
 		return drawings.get(index);
 	}
 
+	/**
+	 * Get array containing drawing
+	 * @return drawings the array containing the drawings
+	 */
 	public ArrayList<Drawing> getDrawings() {
 		return drawings;
 	}
 
+	/**
+	 * Set the array of drawings
+	 * @param drawings the array of drawings
+	 */
 	public void setDrawings(ArrayList<Drawing> drawings) {
 		this.drawings = drawings;
 	}

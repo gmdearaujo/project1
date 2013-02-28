@@ -231,6 +231,9 @@ public class GuessActivity extends Activity {
         alertDialog.show();
 	}
 	
+	/**
+     * Handle an Ok button press
+     */
 	public void onOk() {
     	Intent intent = new Intent(this, EditActivity.class);
     	intent.putExtra("GAME", game);
@@ -280,7 +283,6 @@ public class GuessActivity extends Activity {
 	
     /**
      * Save the view state to a bundle
-     * @param key key name to use in the bundle
      * @param bundle bundle to save to
      */
     public void saveUi(Bundle bundle) {
@@ -290,7 +292,6 @@ public class GuessActivity extends Activity {
     
     /**
      * Get the view state from a bundle
-     * @param key key name to use in the bundle
      * @param bundle bundle to load from
      */
     public void loadUi(Bundle bundle) {

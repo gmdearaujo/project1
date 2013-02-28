@@ -102,7 +102,12 @@ public class DrawingView extends View {
 
 	// this list contains all the Drawings that should be shown in the view
 	//private ArrayList<Drawing> drawings = new ArrayList<Drawing>();
+    
+    /**
+     * The picture we are drawing
+     */
 	private Picture picture = new Picture();
+	
 	private transient Drawing currentDrawing = null;
 	
 	public DrawingView(Context context) {
@@ -346,6 +351,14 @@ public class DrawingView extends View {
         return (float) Math.toDegrees(Math.atan2(dy, dx));
     }
 
+    /**
+     * Determine the length for two touches
+     * @param x1 Touch 1 x
+     * @param y1 Touch 1 y
+     * @param x2 Touch 2 x
+     * @param y2 Touch 2 y
+     * @return computed length in pixels
+     */
     private float length(float x1, float y1, float x2, float y2) {        
     	float dx = x2 - x1;
     	float dy = y2 - y1;
@@ -445,11 +458,10 @@ public class DrawingView extends View {
     	eraserOn = true;
     }
     
-    public void swtichToPencil() {
-    	if (tempPaint != null)
-    	{
+    public void switchToPencil() {
+    	if(tempPaint != null) {
     		currentPaint = tempPaint;
-    		eraserOn = false;
     	}
+    	eraserOn = false;
     }
 }

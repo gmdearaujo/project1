@@ -8,7 +8,10 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
@@ -16,14 +19,15 @@ import android.widget.TextView;
 
 public class EditActivity extends Activity {
 	
-	// for saving the state on rotation
-	// (with bundles)
+	/**
+     * Tag used for saving bundle
+     */
 	private static final String PICTURE = "picture";
 	
 	/**
      * The color select button
      */
-    //private Button colorButton = null;
+    private Button colorButton = null;
     
     /**
      * The pencil select button
@@ -35,9 +39,10 @@ public class EditActivity extends Activity {
      */
     private Button eraserButton = null;
     
+    /**
+     * The pencil color
+     */
 	private int pencilColor;
-	
-	private static final int eraserColor = R.color.white;;
 	
     /**
 	 * Player names
@@ -62,7 +67,6 @@ public class EditActivity extends Activity {
     SeekBar pencilSeekBar;
     SeekBar eraserSeekBar;
     
-    
     /**
      * Request code when selecting a color
      */
@@ -71,14 +75,14 @@ public class EditActivity extends Activity {
     /**
      * The DrawingView
      */
-    private DrawingView drawingView = null;
+    private DrawingView drawingView;
     
     /**
      * The game class
      */
     private Game game;
     
-    // do i need this?
+    
     private class SeekBarListener implements SeekBar.OnSeekBarChangeListener {
     	@Override
     	public void onStopTrackingTouch(SeekBar arg0) {
@@ -101,7 +105,6 @@ public class EditActivity extends Activity {
 
 		Intent intent = getIntent();
 		game = (Game)intent.getSerializableExtra("GAME");
-		//game.randomlySelectCategory();
 		
 		/*
          * Get some of the views we'll keep around
@@ -114,19 +117,18 @@ public class EditActivity extends Activity {
 		category = (TextView)findViewById(R.id.textViewCategoryType);
 		pencilSeekBar = (SeekBar)findViewById(R.id.seekBarPencil);
 		eraserSeekBar = (SeekBar)findViewById(R.id.seekBarEraser);
-		
-		//colorButton = (Button)findViewById(R.id.buttonColor);
+		colorButton = (Button)findViewById(R.id.buttonColor);
 		pencilButton = (Button)findViewById(R.id.buttonPencil);
 		eraserButton = (Button)findViewById(R.id.buttonEraser);
 		
 		/*
-		 *  Set text boxes
+		 *  Set up text boxes
 		 */
 		p1Name.setText(game.getPlayer1DisplayName() + ":");
 		p2Name.setText(game.getPlayer2DisplayName() + ":");
 		p1Score.setText(Integer.toString(game.getPlayer1Score()));
 		p2Score.setText(Integer.toString(game.getPlayer2Score()));
-		category.setText(game.getCategory());	
+		category.setText(game.getCategory());
 		
 		/*
 		 * Listeners for the sliders
@@ -180,23 +182,30 @@ public class EditActivity extends Activity {
         }
         
 	}
-
+	
 	/**
      * Handle a Color button press
-     * @param view
      */
     public void onColor(View view) {
         // Get a color
         Intent intent = new Intent(this, ColorSelectActivity.class);
-        startActivityForResult(intent, SELECT_COLOR);      
+        startActivityForResult(intent, SELECT_COLOR);
     }
     
+    /**
+     * Handle a Pencil button press
+     */
     public void onPencil(View view) {
-    	drawingView.swtichToPencil();
+    	drawingView.switchToPencil();
+    	colorButton.setEnabled(true);
     }
     
+    /**
+     * Handle an Eraser button press
+     */
     public void onEraser(View view) {
     	drawingView.switchToEraser();
+    	colorButton.setEnabled(false);
     }
     
     /**
@@ -243,6 +252,9 @@ public class EditActivity extends Activity {
     	
     }
     
+    /**
+     * Handle an Ok button press
+     */
     public void onOk() {
     	
     	if (game.checkAnswerAndTip()) {
@@ -254,14 +266,6 @@ public class EditActivity extends Activity {
         	finish();
     	}
 	}
-    
-    public void onStartTrackingTouch(SeekBar seekBar) {
-    	
-    }    
-    
-    public void onStopTrackingTouch(SeekBar seekBar) {
-    	
-    }
     
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) 
@@ -304,7 +308,6 @@ public class EditActivity extends Activity {
 	
     /**
      * Save the view state to a bundle
-     * @param key key name to use in the bundle
      * @param bundle bundle to save to
      */
     public void saveUi(Bundle bundle) {
@@ -314,13 +317,10 @@ public class EditActivity extends Activity {
     
     /**
      * Get the view state from a bundle
-     * @param key key name to use in the bundle
      * @param bundle bundle to load from
      */
     public void loadUi(Bundle bundle) {
     	game = (Game)bundle.getSerializable("GAME");
     }
-    
-    
     
 }
