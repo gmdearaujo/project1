@@ -63,8 +63,6 @@ public class Game implements Serializable {
      * @return true if guess matches the answer
      */
 	public Boolean guessAnswer(String guess) {
-		// change this so that it trims whitespace, etc. from the
-		// ends and is case insensitive
 		if (guess.equalsIgnoreCase(answer))
 			return true;
 		
@@ -72,7 +70,7 @@ public class Game implements Serializable {
 	}
 	
 	/**
-     * Increment a player's score
+     * Increment a player's score by a given amount
      * @param playerNumber the chosen player
      * @param amount to increment player's score
      * @return true if player's score is incremented
@@ -96,11 +94,18 @@ public class Game implements Serializable {
 		return player1Name;
 	}
 
+	/** 
+	 * Sets player 1's name to a given string. Defaults to "Player 1"
+	 * @param player1Name The name of player 1
+	 */
 	public void setPlayer1Name(String player1Name) {
 		if (!player1Name.equals(null) && !player1Name.equals("")) {
 			this.player1Name = player1Name;
 		} else {
 			this.player1Name = "Player 1";
+		}
+		if (player1Name.length() > 8) {
+			this.player1Name = player1Name.substring(0, 6) + "..";
 		}
 		player1DisplayName = "-->" + this.player1Name;
 	}
@@ -109,11 +114,18 @@ public class Game implements Serializable {
 		return player2Name;
 	}
 
+	/** 
+	 * Sets player 2's name to a given string. Defaults to "Player 2"
+	 * @param player2Name The name of player 2
+	 */
 	public void setPlayer2Name(String player2Name) {
 		if (!player2Name.equals(null) && !player2Name.equals("")) {
 			this.player2Name = player2Name;
 		} else {
 			this.player2Name = "Player 2";
+		}
+		if (player2Name.length() > 8) {
+			this.player2Name = player2Name.substring(0, 6) + "..";
 		}
 		player2DisplayName = this.player2Name;
 	}
@@ -158,6 +170,10 @@ public class Game implements Serializable {
 		}
 	}
 	
+	/**
+	 * Check the answer and tip to make sure they are not empty
+	 * @return True if neither is empty
+	 */
 	public boolean checkAnswerAndTip() {
 		if (tip.equals("") || answer.equals("")) {
 			return false;
@@ -173,12 +189,22 @@ public class Game implements Serializable {
 		return guessingPlayer;
 	}
 
+	/**
+	 * Swap the guessing and editing players. Also resets the answer and tip, as
+	 * this indicates the end of a round
+	 */
 	public void swapPlayers() {
 		int temp = guessingPlayer;
 		guessingPlayer = editingPlayer;
 		editingPlayer = temp;
+		answer = "";
+		tip = "";
 	}
 	
+	/**
+	 * Check if there is a winner
+	 * @return True if a player has won
+	 */
 	public boolean checkForWinner() {
 		if (player1Score >= maxScore || player2Score >= maxScore) {
 			return true;
@@ -186,6 +212,10 @@ public class Game implements Serializable {
 		return false;
 	}
 	
+	/**
+	 * Swap between editing and guessing activity. Guessing player gets an arrow
+	 * by their name; this carries over when they become the drawer.
+	 */
 	public void switchRoles() {
 		if (player1Name.length() < player1DisplayName.length()) {
 			player1DisplayName = player1Name;
