@@ -17,7 +17,15 @@ public class GuessActivity extends Activity {
 	/**
      * Tag used for saving bundle
      */
-	private static final String PICTURE = "picture";
+	private static final String PICTURE = "PICTURE";
+	/**
+     * Tag used for saving bundle
+     */
+	private static final String GAME = "GAME";
+	/**
+     * Tag used for saving bundle
+     */
+	private static final String TIME = "TIME";
 	/**
 	 * The game
 	 */
@@ -65,7 +73,7 @@ public class GuessActivity extends Activity {
 	private GameTimer gtimer;
 	
 	/**
-	 * Countdown timer, counts frim time to 0
+	 * Countdown timer, counts from time to 0
 	 */
 	public class GameTimer extends CountDownTimer {
 		public GameTimer (long time) {
@@ -98,7 +106,7 @@ public class GuessActivity extends Activity {
 		
 		Intent intent = getIntent();
 		if (intent != null) {
-			game = (Game)intent.getSerializableExtra("GAME");
+			game = (Game)intent.getSerializableExtra(GAME);
 			drawingView.getDrawings(intent);
 		}
 
@@ -172,7 +180,7 @@ public class GuessActivity extends Activity {
 			
 			if (game.checkForWinner()) {
 	        	Intent intent = new Intent(this, FinalActivity.class);
-	        	intent.putExtra("GAME", game);
+	        	intent.putExtra(GAME, game);
 	    		startActivity(intent);
 	        	finish();
 			} else {
@@ -227,7 +235,7 @@ public class GuessActivity extends Activity {
      */
 	public void onOk() {
     	Intent intent = new Intent(this, EditActivity.class);
-    	intent.putExtra("GAME", game);
+    	intent.putExtra(GAME, game);
 		startActivity(intent);
     	finish();
 	}
@@ -281,8 +289,8 @@ public class GuessActivity extends Activity {
      * @param bundle bundle to save to
      */
     public void saveUi(Bundle bundle) {
-    	bundle.putSerializable("GAME", game);
-    	bundle.putInt("TIME", remainingTime);
+    	bundle.putSerializable(GAME, game);
+    	bundle.putInt(TIME, remainingTime);
     	
     }
     
@@ -291,7 +299,7 @@ public class GuessActivity extends Activity {
      * @param bundle bundle to load from
      */
     public void loadUi(Bundle bundle) {
-    	game = (Game)bundle.getSerializable("GAME");
-    	remainingTime = bundle.getInt("TIME");
+    	game = (Game)bundle.getSerializable(GAME);
+    	remainingTime = bundle.getInt(TIME);
     }
 }
