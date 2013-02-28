@@ -449,7 +449,7 @@ public class DrawingView extends View {
 	public void setEraserWidth(float eraserWidth) {
 		this.eraserWidth = eraserWidth;
 		if (eraserOn)
-			currentPaint.setStrokeWidth(this.eraserWidth);
+			initializePaint(Color.WHITE, eraserWidth);
 	}
     
     public void switchToEraser() {

@@ -83,8 +83,8 @@ public class Drawing implements Serializable {
 	public void ScaleDrawing(final float scaleFactor, final float centerX, final float centerY) {
 		
 		for (int i=0; i<this.points.size(); i++) {
-			this.points.get(i).x = (this.points.get(i).x - centerX) * scaleFactor + centerX; 
-			this.points.get(i).y = (this.points.get(i).y - centerY) * scaleFactor + centerY;
+			this.points.get(i).x += (this.points.get(i).x - centerX) * (scaleFactor - 1); 
+			this.points.get(i).y += (this.points.get(i).y - centerY) * (scaleFactor - 1);
 			
 		}
 	}
