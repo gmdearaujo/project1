@@ -21,7 +21,11 @@ public class EditActivity extends Activity {
 	/**
      * Tag used for saving bundle
      */
-	private static final String PICTURE = "picture";
+	private static final String PICTURE = "PICTURE";
+	/**
+     * Tag used for saving bundle
+     */
+	private static final String GAME = "GAME";
 	
 	/**
      * The color select button
@@ -103,7 +107,7 @@ public class EditActivity extends Activity {
 		setContentView(R.layout.activity_edit);
 
 		Intent intent = getIntent();
-		game = (Game)intent.getSerializableExtra("GAME");
+		game = (Game)intent.getSerializableExtra(GAME);
 		
 		/*
          * Get some of the views we'll keep around
@@ -266,7 +270,7 @@ public class EditActivity extends Activity {
     	if (game.checkAnswerAndTip()) {
     		game.switchRoles();
         	Intent intent = new Intent(this, GuessActivity.class);
-        	intent.putExtra("GAME", game);
+        	intent.putExtra(GAME, game);
         	drawingView.putDrawings(intent);
     		startActivity(intent);
         	finish();
@@ -280,7 +284,7 @@ public class EditActivity extends Activity {
     {
         if (keyCode == KeyEvent.KEYCODE_BACK)
         {
-			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(drawingView.getContext());
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
  
 			// set title
 			alertDialogBuilder.setTitle(R.string.quit);
@@ -319,7 +323,7 @@ public class EditActivity extends Activity {
      * @param bundle bundle to save to
      */
     public void saveUi(Bundle bundle) {
-    	bundle.putSerializable("GAME", game);
+    	bundle.putSerializable(GAME, game);
 
     }
     
@@ -328,7 +332,7 @@ public class EditActivity extends Activity {
      * @param bundle bundle to load from
      */
     public void loadUi(Bundle bundle) {
-    	game = (Game)bundle.getSerializable("GAME");
+    	game = (Game)bundle.getSerializable(GAME);
     }
     
 }

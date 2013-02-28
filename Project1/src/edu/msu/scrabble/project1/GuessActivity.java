@@ -152,12 +152,6 @@ public class GuessActivity extends Activity {
 		categoryText.setText(game.getCategory());
 		p1Score.setText(Integer.toString(game.getPlayer1Score()));
 		p2Score.setText(Integer.toString(game.getPlayer2Score()));
-		
-		/*
-		 * Start the timer
-		 */
-		gtimer = new GameTimer(remainingTime*1000);
-		gtimer.start();
 	}
 	
 	/**
@@ -274,7 +268,28 @@ public class GuessActivity extends Activity {
         return true;
     }
 
-    /**
+    /* (non-Javadoc)
+	 * @see android.app.Activity#onPause()
+	 */
+	@Override
+	protected void onPause() {
+		// TODO Auto-generated method stub
+		gtimer.cancel();
+		super.onPause();
+	}
+
+	/* (non-Javadoc)
+	 * @see android.app.Activity#onResume()
+	 */
+	@Override
+	protected void onResume() {
+		// TODO Auto-generated method stub
+		gtimer = new GameTimer(remainingTime*1000);
+		gtimer.start();
+		super.onResume();
+	}
+
+	/**
      * Handle a saveInstanceState
      */
 	@Override

@@ -92,11 +92,6 @@ public class DrawingView extends View {
     float eraserWidth = (float)4;
     
     Boolean eraserOn = false;
-	
-    //private float pictureAngle = 0;
-    //private float pictureScale = 1;
-    //private float offsetX = 0;
-    //private float offsetY = 0;
     
     private boolean isEditable = true;
 
@@ -201,7 +196,6 @@ public class DrawingView extends View {
             if (currentDrawing != null)
             {
             	picture.AddDrawing(currentDrawing);
-            	//currentDrawing = null;
 	            invalidate();
             }
 	        return true;
@@ -313,7 +307,6 @@ public class DrawingView extends View {
      */
     public void rotate(float dAngle, float x1, float y1) {
         picture.setAngle(picture.getAngle() + dAngle);
-        //pictureAngle += dAngle;
     	
         // Compute the radians angle
         double rAngle = Math.toRadians(dAngle);
@@ -355,7 +348,6 @@ public class DrawingView extends View {
     
     public void scale(float scale, float x1, float y1) {
     	picture.setScale(picture.getScale() * scale);
-    	//pictureScale *= scale;
     	
     	// do the rotation operations to each point in each Drawing in Drawings
         for (Drawing drawing : picture.getDrawings())
@@ -374,7 +366,7 @@ public class DrawingView extends View {
 		return currentPaint.getStrokeWidth();
 	}
 	
-	// fix these!
+	
 	public int getPencilPaintColor() {
 		if (eraserOn) {
 			return tempPaint.getColor();

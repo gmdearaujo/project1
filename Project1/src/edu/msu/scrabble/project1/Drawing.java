@@ -54,7 +54,6 @@ public class Drawing implements Serializable {
 	 */
 	public void DrawLine(Canvas canvas) {
 		
-		//if (linePaint == null) {
 		linePaint = new Paint();
 		linePaint.setColor(params.color);
 		linePaint.setStrokeWidth(params.width);
