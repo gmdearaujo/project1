@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="edu.msu.scrabble.project1"
+    package="edu.msu.scrabble.project2"
     android:versionCode="1"
     android:versionName="1.0" >
 
@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="edu.msu.scrabble.project1.MainActivity"
+            android:name="edu.msu.scrabble.project2.MainActivity"
             android:label="@string/app_name" android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"
@@ -24,40 +24,40 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="edu.msu.scrabble.project1.DrawActivity"
+            android:name="edu.msu.scrabble.project2.DrawActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="edu.msu.scrabble.project1.ColorSelectActivity"
+            android:name="edu.msu.scrabble.project2.ColorSelectActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="edu.msu.scrabble.project1.EditActivity"
+            android:name="edu.msu.scrabble.project2.EditActivity"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="edu.msu.scrabble.project1.GuessActivity"
+            android:name="edu.msu.scrabble.project2.GuessActivity"
             android:windowSoftInputMode="stateHidden|adjustResize"
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="edu.msu.scrabble.project1.CompleteActivity"
+            android:name="edu.msu.scrabble.project2.CompleteActivity"
             android:label="@string/title_activity_complete" >
         </activity>
         <activity
-            android:name="edu.msu.scrabble.project1.DoneActivity"
+            android:name="edu.msu.scrabble.project2.DoneActivity"
             android:label="@string/title_activity_done" >
         </activity>
         <activity
-            android:name="edu.msu.scrabble.project1.DialogDoneActivity"
+            android:name="edu.msu.scrabble.project2.DialogDoneActivity"
             android:label="@string/title_activity_dialog_done" >
         </activity>
         <activity
-            android:name="edu.msu.scrabble.project1.DialogDone"
+            android:name="edu.msu.scrabble.project2.DialogDone"
             android:label="@string/title_activity_dialog_done" >
         </activity>
         <activity
-            android:name="edu.msu.scrabble.project1.FinalActivity"
+            android:name="edu.msu.scrabble.project2.FinalActivity"
             android:label="@string/title_activity_final" >
         </activity>
     </application>

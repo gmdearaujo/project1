@@ -1,4 +1,4 @@
-package edu.msu.scrabble.project1;
+package edu.msu.scrabble.project2;
 
 import android.os.Bundle;
 import android.os.CountDownTimer;

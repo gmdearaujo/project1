@@ -1,4 +1,4 @@
-package edu.msu.scrabble.project1;
+package edu.msu.scrabble.project2;
 
 import android.content.Context;
 import android.content.Intent;
