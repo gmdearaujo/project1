@@ -64,7 +64,7 @@
         android:layout_toLeftOf="@+id/buttonDone"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <edu.msu.scrabble.project1.DrawingView
+    <edu.msu.scrabble.project2.DrawingView
         android:id="@+id/guessingView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

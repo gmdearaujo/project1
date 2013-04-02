@@ -75,7 +75,7 @@
         android:text="@string/text_category"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
-    <edu.msu.scrabble.project1.DrawingView
+    <edu.msu.scrabble.project2.DrawingView
         android:id="@+id/drawingView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
