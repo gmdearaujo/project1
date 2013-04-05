@@ -20,11 +20,12 @@ public class NewUserActivity extends Activity {
     	EditText password = (EditText)findViewById(R.id.editTextPlayer2);
     	EditText comPassword = (EditText)findViewById(R.id.editTextPlayer3);
     	
-    	if(username.length() != 0 && password.length()!=0 && password.getText().toString().equals(comPassword.getText().toString())){
-    		boolean valid = false;
+    	if(username.length()!=0 && password.length()!=0 
+    			&& password.getText().toString().equals(comPassword.getText().toString())){
     		
-    		//check with server if username is valid
-    		
+    		Cloud cloud = new Cloud();
+    		boolean valid = cloud.newUser(username.getText().toString(), password.getText().toString(), comPassword.getText().toString());
+        		
     		if(valid){
     			Toast.makeText(getApplicationContext(), 
     					"User successfully created.", 
@@ -35,11 +36,13 @@ public class NewUserActivity extends Activity {
     					"User creation failed.", 
     					Toast.LENGTH_SHORT).show();
     		}
+    		
     	}else{
     		Toast.makeText(getApplicationContext(), 
-    				"Error. Please fill in both Username and Password fields. Make sure passwords match.", 
-    				Toast.LENGTH_SHORT).show();
+					"Please fill in all fields. Make sure passwords match.", 
+					Toast.LENGTH_SHORT).show();
     	}
+    	
 	}
 	
 	public void onCancel(View view) {

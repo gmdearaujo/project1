@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 
@@ -53,13 +54,26 @@ public class MainActivity extends Activity {
      */
     public void onStartGame(View view) {
     	// gather username
-    	EditText username = (EditText)findViewById(R.id.editTextPlayer1);
-    	EditText password = (EditText)findViewById(R.id.editTextPlayer2);
-    	
+    	final EditText username = (EditText)findViewById(R.id.editTextPlayer1);
+    	final EditText password = (EditText)findViewById(R.id.editTextPlayer2);
+    	new Thread(new Runnable(){
+    		
+    		@Override
+    		public void run(){
+    			Cloud cloud = new Cloud();
+    	    	boolean valid = cloud.loginToGame(username.getText().toString(), password.getText().toString());
+    		}
+    	}).start();
     	boolean valid = false;
-    	//check if login valid
     	if(valid == false){
+    		Toast.makeText(getApplicationContext(), 
+					"Login failed.", 
+					Toast.LENGTH_SHORT).show();
     		return;
+    	}else{
+    		Toast.makeText(getApplicationContext(), 
+					"Welcome!", 
+					Toast.LENGTH_SHORT).show();
     	}
     	
     	boolean inProg = false;

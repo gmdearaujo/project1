@@ -65,8 +65,8 @@
                     android:hint="@string/password"
                     android:inputType="textPersonName"
                     android:maxLength="10"
-                    android:paddingLeft="30dp"
-                    android:paddingRight="30dp" />
+                    android:paddingLeft="35dp"
+                    android:paddingRight="35dp" />
 
                 <Button
                     android:id="@+id/buttonStart"
