@@ -18,8 +18,9 @@ public class NewUserActivity extends Activity {
 		
 		EditText username = (EditText)findViewById(R.id.editTextPlayer1);
     	EditText password = (EditText)findViewById(R.id.editTextPlayer2);
+    	EditText comPassword = (EditText)findViewById(R.id.editTextPlayer3);
     	
-    	if(username.length() != 0 && password.length()!=0){
+    	if(username.length() != 0 && password.length()!=0 && password.getText().toString().equals(comPassword.getText().toString())){
     		boolean valid = false;
     		
     		//check with server if username is valid
@@ -36,7 +37,7 @@ public class NewUserActivity extends Activity {
     		}
     	}else{
     		Toast.makeText(getApplicationContext(), 
-    				"Please fill in both Username and Password fields.", 
+    				"Error. Please fill in both Username and Password fields. Make sure passwords match.", 
     				Toast.LENGTH_SHORT).show();
     	}
 	}

@@ -9,6 +9,7 @@
     <string name="cancel_new_user">Cancel</string>
     <string name="user_name">User Name</string>
     <string name="password">Password</string>
+    <string name="confirm_password">Confirm Password</string>
     <string name="hint_player1">Player 1</string>
     <string name="hint_player2">Player 2</string>
     <string name="title_activity_draw">DrawActivity</string>
