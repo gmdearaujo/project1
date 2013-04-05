@@ -20,29 +20,29 @@
 
         <EditText
             android:id="@+id/editTextPlayer2"
-            android:maxLength="10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/buttonLayout"
             android:layout_alignLeft="@+id/editTextPlayer1"
             android:layout_marginBottom="10dp"
             android:ems="10"
-            android:hint="@string/hint_player2"
+            android:hint="@string/password"
             android:inputType="textPersonName"
+            android:maxLength="10"
             android:paddingLeft="40dp"
             android:paddingRight="40dp" />
 
         <EditText
             android:id="@+id/editTextPlayer1"
-            android:maxLength="10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/editTextPlayer2"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="10dp"
             android:ems="10"
-            android:hint="@string/hint_player1"
+            android:hint="@string/user_name"
             android:inputType="textPersonName"
+            android:maxLength="10"
             android:paddingLeft="40dp"
             android:paddingRight="40dp" >
 
@@ -64,6 +64,14 @@
                 android:layout_weight="1"
                 android:onClick="onStartGame"
                 android:text="@string/start_game" />
+
+            <Button
+                android:id="@+id/buttonNewUser"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@android:drawable/btn_default"
+                android:text="@string/new_user" />
 
             <Button
                 android:id="@+id/buttonHowToPlay"

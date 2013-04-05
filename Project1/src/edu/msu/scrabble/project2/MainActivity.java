@@ -52,21 +52,23 @@ public class MainActivity extends Activity {
      * @param view
      */
     public void onStartGame(View view) {
+    	// gather username
+    	EditText username = (EditText)findViewById(R.id.editTextPlayer1);
+    	EditText password = (EditText)findViewById(R.id.editTextPlayer2);
+    	
+    	//check if login valid
+    		//if not break
+    	
+    	//check if game in progress
+    		//if in progress
+    			//get appropriate game and gamestate
+    	
+    	//if game not in progress
+    		//request new opponent
+    		//create new game
     	Game game = new Game();
-    	
-    	// Get player names, set in game
-    	EditText p1Text = (EditText)findViewById(R.id.editTextPlayer1);
-    	EditText p2Text = (EditText)findViewById(R.id.editTextPlayer2);
-    	
-    	if(p1Text.length() != 0)
-    		game.setPlayer1Name(p1Text.getText().toString());
-    	else
-    		game.setPlayer1Name(getString(R.string.hint_player1));
-    	if(p2Text.length() != 0)
-    		game.setPlayer2Name(p2Text.getText().toString());
-    	else
-    		game.setPlayer2Name(getString(R.string.hint_player2));
-    	
+    	game.setPlayer1Name(username.getText().toString());
+    	//game.setPlayer2Name(________________);
     	
     	// Pick a category
     	game.randomlySelectCategory();
@@ -76,6 +78,10 @@ public class MainActivity extends Activity {
 		startActivity(intent);
 	}
 
+    public void onNewUser(View view) {
+    	
+    }
+    
     /**
      * Handle a How To Play button
      * @param view
