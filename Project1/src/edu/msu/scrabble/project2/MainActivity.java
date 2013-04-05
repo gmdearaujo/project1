@@ -56,30 +56,36 @@ public class MainActivity extends Activity {
     	EditText username = (EditText)findViewById(R.id.editTextPlayer1);
     	EditText password = (EditText)findViewById(R.id.editTextPlayer2);
     	
+    	boolean valid = false;
     	//check if login valid
-    		//if not break
+    	if(valid == false){
+    		return;
+    	}
     	
+    	boolean inProg = false;
     	//check if game in progress
-    		//if in progress
-    			//get appropriate game and gamestate
-    	
-    	//if game not in progress
+    	if(inProg){
+    		//get appropriate game and gamestate
+    		//resume game
+    	}else{
     		//request new opponent
-    		//create new game
-    	Game game = new Game();
-    	game.setPlayer1Name(username.getText().toString());
-    	//game.setPlayer2Name(________________);
-    	
-    	// Pick a category
-    	game.randomlySelectCategory();
-    	
-    	Intent intent = new Intent(this, EditActivity.class);
-    	intent.putExtra("GAME", game);
-		startActivity(intent);
+    		
+    		Game game = new Game();
+        	game.setPlayer1Name(username.getText().toString());
+        	//game.setPlayer2Name(________________);
+        	
+        	// Pick a category
+        	game.randomlySelectCategory();
+        	
+        	Intent intent = new Intent(this, EditActivity.class);
+        	intent.putExtra("GAME", game);
+    		startActivity(intent);
+    	}
 	}
 
     public void onNewUser(View view) {
-    	
+    	Intent intent = new Intent(this, NewUserActivity.class);
+    	startActivity(intent);
     }
     
     /**
