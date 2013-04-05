@@ -142,10 +142,7 @@ public class Cloud {
 	
 	public boolean newUser(String user, String pw, String pwC)
 	{
-		if(pw != pwC)
-		{
-			return false;
-		}
+		
 		// Create an XML packet with the information about the current image
         XmlSerializer xml = Xml.newSerializer();
         StringWriter writer = new StringWriter();

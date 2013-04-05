@@ -18,6 +18,8 @@ public class MainActivity extends Activity {
      * The edit text for entering player 2 name
      */
 	private EditText editTextPlayer2 = null;
+	
+	static boolean logSuccess = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,28 +54,46 @@ public class MainActivity extends Activity {
      * Handle a Start Game button
      * @param view
      */
-    public void onStartGame(View view) {
+    public void onStartGame(final View view) {
     	// gather username
     	final EditText username = (EditText)findViewById(R.id.editTextPlayer1);
     	final EditText password = (EditText)findViewById(R.id.editTextPlayer2);
+ 
     	new Thread(new Runnable(){
     		
     		@Override
     		public void run(){
     			Cloud cloud = new Cloud();
     	    	boolean valid = cloud.loginToGame(username.getText().toString(), password.getText().toString());
+    	    	
+    	    	if(valid == false){
+    	    		view.post(new Runnable(){
+    	    			@Override
+    	    			public void run(){
+    	    				Toast.makeText(view.getContext(), 
+    	    						"Login failed.", 
+    	    						Toast.LENGTH_SHORT).show();
+    	    				logSuccess = false;
+    	    			}
+    	    			
+    	    		});
+    	    	}else{
+    	    		view.post(new Runnable(){
+    	    			@Override
+    	    			public void run(){
+    	    				Toast.makeText(view.getContext(), 
+    	    						"Welcome.", 
+    	    						Toast.LENGTH_SHORT).show();
+    	    				logSuccess = true;
+    	    			}
+    	    			
+    	    		});
+    	    	}
     		}
     	}).start();
-    	boolean valid = false;
-    	if(valid == false){
-    		Toast.makeText(getApplicationContext(), 
-					"Login failed.", 
-					Toast.LENGTH_SHORT).show();
+    	
+    	if(logSuccess == false){
     		return;
-    	}else{
-    		Toast.makeText(getApplicationContext(), 
-					"Welcome!", 
-					Toast.LENGTH_SHORT).show();
     	}
     	
     	boolean inProg = false;
