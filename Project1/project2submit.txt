@@ -1,0 +1,44 @@
+
+Project 2 Submission
+
+Group Name:   TinkerToys
+
+Member 1: Anthony D'Onofrio
+
+Responsiblity: Created activities for log in and new user
+
+
+
+Member 2: Robert Carpenter
+
+Responsiblity: Created Cloud.java file to communicate with server
+
+
+
+Member 3: 
+
+Responsiblity: Created php files to communicate with application
+
+
+
+Instructions:
+Log in using the main activity. Create user is accessed by a button on main. Opens a new activity 
+where you can create a user. Returns to main on success. If not, cancel button will return to 
+main.
+
+User account the server-side communications is running under: 
+dearauj6
+
+Paths to all server-side scripts: 
+http://www.cse.msu.edu/~dearauj6/cse476/
+
+Where in the code the passive connection timeout is set (provide a script name and line number): 
+N/A
+
+Calls in the code to the server (provide a class name and function, or URL used for debugging): 
+Cloud.java
+	logIntoGame()
+	newUser()
+
+
+
