@@ -31,8 +31,7 @@ public class Cloud {
 		// TODO Auto-generated constructor stub
 	}
 	
-	public boolean loginToGame(String user, String pw)
-	{
+	public boolean loginToGame(String user, String pw) {
 		final String userF = user.trim();
 		final String passF = pw.trim();
 		
@@ -122,7 +121,6 @@ public class Cloud {
                 return false;
             }
             
-            
         } catch (MalformedURLException e) {
             return false;
         } catch (IOException ex) {
@@ -142,7 +140,6 @@ public class Cloud {
 	
 	public boolean newUser(String user, String pw, String pwC)
 	{
-		
 		// Create an XML packet with the information about the current image
         XmlSerializer xml = Xml.newSerializer();
         StringWriter writer = new StringWriter();
@@ -158,8 +155,6 @@ public class Cloud {
             xml.attribute(null, "user", user);
             xml.attribute(null, "pw", pw);
             xml.endTag(null, "new_user");
-            
-
             
             xml.endTag(null, "create_user");
             
@@ -217,7 +212,8 @@ public class Cloud {
                 XmlPullParser xmlR = Xml.newPullParser();
                 xmlR.setInput(stream, UTF8);
                 
-                xmlR.nextTag();      // Advance to first tag
+                xmlR.nextTag();
+                // Advance to first tag
                 xmlR.require(XmlPullParser.START_TAG, null, "create_user");
                 
                 String status = xmlR.getAttributeValue(null, "status");
@@ -231,7 +227,6 @@ public class Cloud {
             } catch(IOException ex) {
                 return false;
             }
-            
             
         } catch (MalformedURLException e) {
             return false;
