@@ -1,0 +1,94 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sea_green"
+    tools:context=".NewUserActivity" >
+
+    <ImageView
+        android:id="@+id/planeImage"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_gravity="center"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/plane_description"
+        android:padding="20dp"
+        android:src="@drawable/plane" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/planeImage"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:padding="20dp" >
+
+        <TextView
+            android:id="@+id/textViewPlayers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:text="@string/text_new_user_menu"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <LinearLayout
+            android:id="@+id/buttonLayout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical" >
+
+            <EditText
+                    android:id="@+id/editTextPlayer1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="@string/user_name"
+                    android:inputType="textPersonName"
+                    android:maxLength="10"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp" />
+
+                <EditText
+                    android:id="@+id/editTextPlayer2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:hint="@string/password"
+                    android:inputType="textPersonName"
+                    android:maxLength="10"
+                    android:paddingLeft="30dp"
+                    android:paddingRight="30dp" />
+
+            <Button
+                android:id="@+id/buttonCreate"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingRight="30dp"
+                android:paddingLeft= "30dp"
+                android:background="@android:drawable/btn_default"
+                android:onClick="onCreateUser"
+                android:text="@string/create_new_user" />
+
+            <Button
+                android:id="@+id/buttonCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:paddingRight="30dp"
+                android:paddingLeft= "30dp"
+                android:background="@android:drawable/btn_default"
+                android:onClick="onCancel"
+                android:text="@string/cancel_new_user" />
+
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>
