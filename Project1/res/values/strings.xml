@@ -62,5 +62,9 @@
     <string name="new_game">New game</string>
     <string name="not_available">N/A</string>
     <string name="title_activity_new_user">NewUserActivity</string>
+    <string name="title_activity_lobby">LobbyActivity</string>
+    <string name="lobby_text">Please Wait While Opponent Is Found :)</string>
+    <string name="title_activity_wait_turn">WaitTurnActivity</string>
+    <string name="wait_turn_text">Please Wait Your Turn :)</string>
 
 </resources>

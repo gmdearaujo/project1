@@ -111,7 +111,7 @@ public class MainActivity extends Activity {
         	// Pick a category
         	game.randomlySelectCategory();
         	
-        	Intent intent = new Intent(this, EditActivity.class);
+        	Intent intent = new Intent(this, LobbyActivity.class);
         	intent.putExtra("GAME", game);
     		startActivity(intent);
     	}
