@@ -15,7 +15,7 @@ Responsiblity: Created Cloud.java file to communicate with server
 
 
 
-Member 3: 
+Member 3: Guilherme de Araujo
 
 Responsiblity: Created php files to communicate with application
 
