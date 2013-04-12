@@ -244,7 +244,7 @@ public class Cloud {
         return true;
 	}
 	
-	public boolean pushDrawing() {
+	public boolean writeUserInfo(String p1Name, int p1Score, String p1State, String p2Name,int p2Score, String p2State) {
 		
 		
 		
@@ -259,14 +259,13 @@ public class Cloud {
             
             xml.startTag(null, "tinker");
     
-            /*xml.attribute(null, "magic", MAGIC);
-            xml.attribute(null, "GameId", "id");
-            xml.attribute(null, "Player1", "player1");
-            xml.attribute(null, "P1state", "state");
-            xml.attribute(null, "P1score", "score");
-            xml.attribute(null, "Player2", "player2");
-            xml.attribute(null, "P2state", "state");
-            xml.attribute(null, "P2score", "score");*/
+            xml.attribute(null, "magic", MAGIC);
+            xml.attribute(null, "Player1", p1Name);
+            xml.attribute(null, "P1state", p1State);
+            xml.attribute(null, "P1score", String.valueOf(p1Score));
+            xml.attribute(null, "Player2", p2Name);
+            xml.attribute(null, "P2state", p2State);
+            xml.attribute(null, "P2score", String.valueOf(p2Score));
             
             // xml for drawing. may use function in drawing to make
 
