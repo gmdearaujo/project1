@@ -244,6 +244,118 @@ public class Cloud {
         return true;
 	}
 	
+	public boolean pushDrawing() {
+		
+		
+		
+		 // Create an XML packet with the information about the current image
+        XmlSerializer xml = Xml.newSerializer();
+        StringWriter writer = new StringWriter();
+        
+        try {
+            xml.setOutput(writer);
+            
+            xml.startDocument("UTF-8", true);
+            
+            xml.startTag(null, "tinker");
+    
+            /*xml.attribute(null, "magic", MAGIC);
+            xml.attribute(null, "GameId", "id");
+            xml.attribute(null, "Player1", "player1");
+            xml.attribute(null, "P1state", "state");
+            xml.attribute(null, "P1score", "score");
+            xml.attribute(null, "Player2", "player2");
+            xml.attribute(null, "P2state", "state");
+            xml.attribute(null, "P2score", "score");*/
+            
+            // xml for drawing. may use function in drawing to make
+
+            
+            xml.endTag(null, "tinker");
+            
+            xml.endDocument();
+
+        } catch (IOException e) {
+            // This won't occur when writing to a string
+            return false;
+        }
+        
+        final String xmlStr = writer.toString();
+        /*
+         * Convert the XML into HTTP POST data
+         */
+        String postDataStr;
+        try {
+            postDataStr = "xml=" + URLEncoder.encode(xmlStr, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return false;
+        }
+        
+        /*
+         * Send the data to the server
+         */
+        byte[] postData = postDataStr.getBytes();
+        InputStream stream = null;
+        try {
+            URL url = new URL(LOGIN_URL); //TODO change that to new 
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Length", Integer.toString(postData.length));
+            conn.setUseCaches(false);
+
+            OutputStream out = conn.getOutputStream();
+            out.write(postData);
+            out.close();
+
+            int responseCode = conn.getResponseCode();
+            if(responseCode != HttpURLConnection.HTTP_OK) {
+                return false;
+            } 
+            stream = conn.getInputStream();
+            //logStream(stream);
+            
+            /**
+             * Create an XML parser for the result
+             */
+            try {
+                XmlPullParser xmlR = Xml.newPullParser();
+                xmlR.setInput(stream, UTF8);
+                
+                xmlR.nextTag();      // Advance to first tag
+                xmlR.require(XmlPullParser.START_TAG, null, "tinker");
+                
+                String status = xmlR.getAttributeValue(null, "status");
+                if(status.equals("no")) {
+                    return false;
+                }
+                
+                // We are done
+            } catch(XmlPullParserException ex) {
+                return false;
+            } catch(IOException ex) {
+                return false;
+            }
+            
+        } catch (MalformedURLException e) {
+            return false;
+        } catch (IOException ex) {
+            return false;
+        } finally {
+            if(stream != null) {
+                try {
+                    stream.close();
+                } catch(IOException ex) {
+                    // Fail silently
+                }
+            }
+        }
+        return true;
+		
+	}
+	
 	public static void logStream(InputStream stream) {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(stream));
