@@ -269,6 +269,7 @@ public class EditActivity extends Activity {
     	
     	if (game.checkAnswerAndTip()) {
     		game.switchRoles();
+    		//update server, telling server to switch your role to wait and opponents to guess
         	Intent intent = new Intent(this, GuessActivity.class);
         	intent.putExtra(GAME, game);
         	drawingView.putDrawings(intent);

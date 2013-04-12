@@ -96,25 +96,22 @@ public class MainActivity extends Activity {
     		return;
     	}
     	
-    	boolean inProg = false;
-    	//check if game in progress
-    	if(inProg){
-    		//get appropriate game and gamestate
-    		//resume game
-    	}else{
-    		//request new opponent
-    		
-    		Game game = new Game();
-        	game.setPlayer1Name(username.getText().toString());
-        	//game.setPlayer2Name(________________);
-        	
-        	// Pick a category
-        	game.randomlySelectCategory();
-        	
-        	Intent intent = new Intent(this, LobbyActivity.class);
-        	intent.putExtra("GAME", game);
-    		startActivity(intent);
-    	}
+    	//check game status
+    	//check which activity currently in
+    	//launch particular activity
+    	
+		/*request new opponent
+		
+		Game game = new Game();
+    	game.setPlayer1Name(username.getText().toString());
+    	//game.setPlayer2Name(________________);
+    	
+    	// Pick a category
+    	game.randomlySelectCategory();
+    	
+    	Intent intent = new Intent(this, LobbyActivity.class);
+    	intent.putExtra("GAME", game);
+		startActivity(intent);*/
 	}
 
     public void onNewUser(View view) {

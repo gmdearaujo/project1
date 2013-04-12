@@ -173,6 +173,7 @@ public class GuessActivity extends Activity {
 			timeText.setText(Integer.toString(finalTime));
 			
 			if (game.checkForWinner()) {
+				//update game, change your state and opponent state to final
 	        	Intent intent = new Intent(this, FinalActivity.class);
 	        	intent.putExtra(GAME, game);
 	    		startActivity(intent);
@@ -228,6 +229,7 @@ public class GuessActivity extends Activity {
      * Handle an Ok button press
      */
 	public void onOk() {
+		//update server
     	Intent intent = new Intent(this, EditActivity.class);
     	intent.putExtra(GAME, game);
 		startActivity(intent);
