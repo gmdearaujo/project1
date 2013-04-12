@@ -96,13 +96,8 @@ public class MainActivity extends Activity {
     		return;
     	}
     	
-    	//check game status
-    	//check which activity currently in
-    	//launch particular activity
     	
-		/*request new opponent
-		
-		Game game = new Game();
+    	Game game = new Game();
     	game.setPlayer1Name(username.getText().toString());
     	//game.setPlayer2Name(________________);
     	
@@ -111,7 +106,11 @@ public class MainActivity extends Activity {
     	
     	Intent intent = new Intent(this, LobbyActivity.class);
     	intent.putExtra("GAME", game);
-		startActivity(intent);*/
+		startActivity(intent);
+		
+    	//update game
+    	//check which activity currently in
+    	//launch particular activity
 	}
 
     public void onNewUser(View view) {
