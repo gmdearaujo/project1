@@ -1,9 +1,15 @@
 package edu.msu.scrabble.project2;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.ObjectInput;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
@@ -16,6 +22,7 @@ import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
 import org.xmlpull.v1.XmlSerializer;
 
+import android.util.Base64;
 import android.util.Log;
 import android.util.Xml;
 
@@ -244,10 +251,8 @@ public class Cloud {
         return true;
 	}
 	
-	public boolean writeUserInfo(String p1Name, int p1Score, String p1State, String p2Name,int p2Score, String p2State) {
-		
-		
-		
+	public boolean writeUserInfo(String p1Name, int p1Score, String p1State, String p2Name,int p2Score, String p2State) 
+	{
 		 // Create an XML packet with the information about the current image
         XmlSerializer xml = Xml.newSerializer();
         StringWriter writer = new StringWriter();
@@ -355,6 +360,222 @@ public class Cloud {
 		
 	}
 	
+	public InputStream readUserInfo(String user)
+	{
+		String query = LOGIN_URL+"?user=" + user + "&magic=" + MAGIC;
+        try {
+            URL url = new URL(query);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            int responseCode = conn.getResponseCode();
+            if(responseCode != HttpURLConnection.HTTP_OK) {
+                return null;
+            }
+            
+            InputStream stream = conn.getInputStream();
+            return stream;
+
+        } catch (MalformedURLException e) {
+            // Should never happen
+            return null;
+        } catch (IOException ex) {
+            return null;
+        }
+	}
+	
+	public boolean saveDrawing(Picture pic, String user)
+	{
+		byte[] bytes = convertPicToBytes(pic);
+		String byteString = Base64.encodeToString(bytes, Base64.URL_SAFE);
+		
+		// Create an XML packet with the information about the current image
+        XmlSerializer xml = Xml.newSerializer();
+        StringWriter writer = new StringWriter();
+        
+        try {
+            xml.setOutput(writer);
+            
+            xml.startDocument("UTF-8", true);
+            
+            xml.startTag(null, "tinker");
+    
+            xml.attribute(null, "magic", MAGIC);
+            xml.attribute(null, "player", user);
+            xml.attribute(null, "drawing", byteString);
+
+            
+            xml.endTag(null, "tinker");
+            
+            xml.endDocument();
+
+        } catch (IOException e) {
+            // This won't occur when writing to a string
+            return false;
+        }
+        
+        final String xmlStr = writer.toString();
+        /*
+         * Convert the XML into HTTP POST data
+         */
+        String postDataStr;
+        try {
+            postDataStr = "xml=" + URLEncoder.encode(xmlStr, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return false;
+        }
+        
+        /*
+         * Send the data to the server
+         */
+        byte[] postData = postDataStr.getBytes();
+        InputStream stream = null;
+        try {
+            URL url = new URL(LOGIN_URL); //TODO change that to new 
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setRequestProperty("Content-Length", Integer.toString(postData.length));
+            conn.setUseCaches(false);
+
+            OutputStream out = conn.getOutputStream();
+            out.write(postData);
+            out.close();
+
+            int responseCode = conn.getResponseCode();
+            if(responseCode != HttpURLConnection.HTTP_OK) {
+                return false;
+            } 
+            stream = conn.getInputStream();
+            //logStream(stream);
+            
+            /**
+             * Create an XML parser for the result
+             */
+            try {
+                XmlPullParser xmlR = Xml.newPullParser();
+                xmlR.setInput(stream, UTF8);
+                
+                xmlR.nextTag();      // Advance to first tag
+                xmlR.require(XmlPullParser.START_TAG, null, "tinker");
+                
+                String status = xmlR.getAttributeValue(null, "status");
+                if(status.equals("no")) {
+                    return false;
+                }
+                
+                // We are done
+            } catch(XmlPullParserException ex) {
+                return false;
+            } catch(IOException ex) {
+                return false;
+            }
+            
+        } catch (MalformedURLException e) {
+            return false;
+        } catch (IOException ex) {
+            return false;
+        } finally {
+            if(stream != null) {
+                try {
+                    stream.close();
+                } catch(IOException ex) {
+                    // Fail silently
+                }
+            }
+        }
+        return true;
+		
+		
+	}
+	
+	public InputStream pullDrawing(DrawingView view, String user)
+	{
+		String query = LOGIN_URL+"?user=" + user + "&magic=" + MAGIC;
+        try {
+            URL url = new URL(query);
+
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            int responseCode = conn.getResponseCode();
+            if(responseCode != HttpURLConnection.HTTP_OK) {
+                return null;
+            }
+            
+            InputStream stream = conn.getInputStream();
+            return stream;
+
+        } catch (MalformedURLException e) {
+            // Should never happen
+            return null;
+        } catch (IOException ex) {
+            return null;
+        }
+	}
+	
+	private byte[] convertPicToBytes(Object Serialize)
+	{
+		ByteArrayOutputStream stream = new ByteArrayOutputStream();
+		ObjectOutput output = null;
+		try
+		{
+			output = new ObjectOutputStream(stream);   
+			output.writeObject(Serialize);
+			byte[] result = stream.toByteArray();
+			return result;   
+	    	  
+		}
+		catch(IOException e)
+		{
+			return null;
+		}
+		finally
+		{
+			try
+			{
+				stream.close();
+				output.close();
+			}
+			catch(IOException e)
+			{
+				return null;
+			}
+		}
+		
+	}
+	
+	private Object convertBytesToPic(byte[] bytes)
+	{
+		ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
+		ObjectInput input = null;
+		try 
+		{
+    	  input = new ObjectInputStream(stream);
+    	  Object obj = input.readObject();
+    	  return obj;
+    	}
+		catch(IOException e)
+    	{
+    		return null;
+    	}
+		catch(ClassNotFoundException ce)
+    	{
+    		return null;
+    	}
+    	finally
+    	{
+    		try
+    		{
+	    	  stream.close();
+	    	  input.close();
+    		}
+    		catch(IOException ioe)
+    		{
+        		return null;
+        	}
+    	}
+	}
+	
 	public static void logStream(InputStream stream) {
         BufferedReader reader = new BufferedReader(
                 new InputStreamReader(stream));
@@ -368,6 +589,27 @@ public class Cloud {
         } catch (IOException ex) {
             return;
         }
+    }
+	
+	/**
+     * Skip the XML parser to the end tag for whatever 
+     * tag we are currently within.
+     * @param xml the parser
+     * @throws IOException
+     * @throws XmlPullParserException
+     */
+    public static void skipToEndTag(XmlPullParser xml) 
+            throws IOException, XmlPullParserException {
+        int tag;
+        do
+        {
+            tag = xml.next();
+            if(tag == XmlPullParser.START_TAG) {
+                // Recurse over any start tag
+                skipToEndTag(xml);
+            }
+        } while(tag != XmlPullParser.END_TAG && 
+        tag != XmlPullParser.END_DOCUMENT);
     }
 
 }
