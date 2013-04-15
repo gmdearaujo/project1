@@ -17,6 +17,8 @@ public class Game implements Serializable {
 
 	private final int maxScore = 500;
 	
+	private int gameId = 0;
+	
 	private int editingPlayer = 1;
 	
 	private int guessingPlayer = 2;
@@ -100,6 +102,14 @@ public class Game implements Serializable {
 		}
 		else
 			return false;
+	}
+
+	public int getGameId() {
+		return gameId;
+	}
+
+	public void setGameId(int gameId) {
+		this.gameId = gameId;
 	}
 
 	public String getPlayer1Name() {

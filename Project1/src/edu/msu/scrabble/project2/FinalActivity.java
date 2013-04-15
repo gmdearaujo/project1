@@ -76,7 +76,7 @@ public class FinalActivity extends Activity {
 	    		@Override
 	    		public void run(){
 					Cloud cloud = new Cloud();
-			    	cloud.writeUserInfo(game.getPlayer1Name(), 0, 
+			    	cloud.writeUserInfo(game.getGameId(), game.getPlayer1Name(), 0, 
 			    			"edit", game.getPlayer2Name(), 0, 
 			    			"wait", "", "", "");
 	    		}
@@ -87,7 +87,7 @@ public class FinalActivity extends Activity {
 	    		@Override
 	    		public void run(){
 					Cloud cloud = new Cloud();
-			    	cloud.writeUserInfo(game.getPlayer1Name(), game.getPlayer1Score(), 
+			    	cloud.writeUserInfo(game.getGameId(), game.getPlayer1Name(), game.getPlayer1Score(), 
 			    			"wait", game.getPlayer2Name(), game.getPlayer2Score(), 
 			    			"edit", game.getAnswer(), game.getTip(), game.getCategory());
 	    		}

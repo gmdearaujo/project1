@@ -30,9 +30,12 @@ public class Cloud {
 	
 	private static final String NEW_USER_URL = "http://www.cse.msu.edu/~dearauj6/cse476/tinkertoys-new-user.php";
 	private static final String LOGIN_URL = "http://www.cse.msu.edu/~dearauj6/cse476/tinkertoys-login.php";
+	private static final String SAVE_GAME_URL = "http://www.cse.msu.edu/~dearauj6/cse476/tinkertoys-game-save.php";
+	private static final String LOAD_GAME_URL = "http://www.cse.msu.edu/~dearauj6/cse476/tinkertoys-game-load.php";
+	private static final String SAVE_DRAWING_URL = "http://www.cse.msu.edu/~dearauj6/cse476/tinkertoys-drawing-save.php";
+	private static final String LOAD_DRAWING_URL = "http://www.cse.msu.edu/~dearauj6/cse476/tinkertoys-drawing-load.php";
 	private static final String MAGIC = "NechAtHa6RuzeR8x";
 	private static final String UTF8 = "UTF-8";
-	
 	
 	public Cloud() {
 		// TODO Auto-generated constructor stub
@@ -104,7 +107,7 @@ public class Cloud {
                 return false;
             } 
             stream = conn.getInputStream();
-            //logStream(stream);
+            logStream(stream);
             
             /**
              * Create an XML parser for the result
@@ -162,7 +165,6 @@ public class Cloud {
             xml.attribute(null, "user", user);
             xml.attribute(null, "pw", pw);
             xml.endTag(null, "new_user");
-            
             xml.endTag(null, "create_user");
             
             xml.endDocument();
@@ -251,7 +253,7 @@ public class Cloud {
         return true;
 	}
 	
-	public boolean writeUserInfo(String p1Name, int p1Score, String p1State, String p2Name,int p2Score, String p2State, String answer, String tip, String category) 
+	public boolean writeUserInfo(int gameId, String p1Name, int p1Score, String p1State, String p2Name,int p2Score, String p2State, String answer, String tip, String category) 
 	{
 		 // Create an XML packet with the information about the current image
         XmlSerializer xml = Xml.newSerializer();
@@ -263,8 +265,9 @@ public class Cloud {
             xml.startDocument("UTF-8", true);
             
             xml.startTag(null, "tinker");
-    
+            
             xml.attribute(null, "magic", MAGIC);
+            xml.attribute(null, "GameId", String.valueOf(gameId));
             xml.attribute(null, "Player1", p1Name);
             xml.attribute(null, "P1state", p1State);
             xml.attribute(null, "P1score", String.valueOf(p1Score));
@@ -274,12 +277,11 @@ public class Cloud {
             xml.attribute(null, "Tip", tip);
             xml.attribute(null, "Answer", answer);
             xml.attribute(null, "Category", category);
-
             
             xml.endTag(null, "tinker");
             
             xml.endDocument();
-
+            
         } catch (IOException e) {
             // This won't occur when writing to a string
             return false;
@@ -302,10 +304,10 @@ public class Cloud {
         byte[] postData = postDataStr.getBytes();
         InputStream stream = null;
         try {
-            URL url = new URL(LOGIN_URL); //TODO change that to new 
-
+            URL url = new URL(SAVE_GAME_URL);
+            
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-
+            
             conn.setDoOutput(true);
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Content-Length", Integer.toString(postData.length));
@@ -363,7 +365,7 @@ public class Cloud {
 	
 	public InputStream readUserInfo(String user)
 	{
-		String query = LOGIN_URL+"?user=" + user + "&magic=" + MAGIC;
+		String query = LOAD_GAME_URL+"?user=" + user + "&magic=" + MAGIC;
         try {
             URL url = new URL(query);
 
@@ -431,7 +433,7 @@ public class Cloud {
         byte[] postData = postDataStr.getBytes();
         InputStream stream = null;
         try {
-            URL url = new URL(LOGIN_URL); //TODO change that to new 
+            URL url = new URL(SAVE_DRAWING_URL); //TODO change that to new 
 
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 
@@ -493,7 +495,7 @@ public class Cloud {
 	
 	public InputStream pullDrawing(String user)
 	{
-		String query = LOGIN_URL+"?user=" + user + "&magic=" + MAGIC;
+		String query = LOAD_DRAWING_URL+"?user=" + user + "&magic=" + MAGIC;
         try {
             URL url = new URL(query);
 

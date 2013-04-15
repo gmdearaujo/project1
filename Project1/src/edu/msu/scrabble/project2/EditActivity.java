@@ -346,7 +346,7 @@ public class EditActivity extends Activity {
     		@Override
     		public void run(){
 				Cloud cloud = new Cloud();
-		    	cloud.writeUserInfo(game.getPlayer1Name(), game.getPlayer1Score(), 
+		    	cloud.writeUserInfo(game.getGameId(), game.getPlayer1Name(), game.getPlayer1Score(), 
 		    			"wait", game.getPlayer2Name(), game.getPlayer2Score(), 
 		    			"guess", game.getAnswer(), game.getTip(), game.getCategory());
 		    	cloud.saveDrawing(drawingView.getPicture(), user);

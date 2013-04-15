@@ -397,7 +397,7 @@ public class GuessActivity extends Activity {
     		@Override
     		public void run(){
 				Cloud cloud = new Cloud();
-		    	cloud.writeUserInfo(game.getPlayer1Name(), game.getPlayer1Score(), 
+		    	cloud.writeUserInfo(game.getGameId(), game.getPlayer1Name(), game.getPlayer1Score(), 
 		    			"edit", game.getPlayer2Name(), game.getPlayer2Score(), 
 		    			"wait", game.getAnswer(), game.getTip(), game.getCategory());
     		}
@@ -410,7 +410,7 @@ public class GuessActivity extends Activity {
     		@Override
     		public void run(){
 				Cloud cloud = new Cloud();
-		    	cloud.writeUserInfo(game.getPlayer1Name(), game.getPlayer1Score(), 
+		    	cloud.writeUserInfo(game.getGameId(), game.getPlayer1Name(), game.getPlayer1Score(), 
 		    			"final", game.getPlayer2Name(), game.getPlayer2Score(), 
 		    			"final", game.getAnswer(), game.getTip(), game.getCategory());
     		}

@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
     	final EditText username = (EditText)findViewById(R.id.editTextPlayer1);
     	final EditText password = (EditText)findViewById(R.id.editTextPlayer2);
  
-    	new Thread(new Runnable(){
+    	Thread t = new Thread(new Runnable(){
     		
     		@Override
     		public void run(){
@@ -101,7 +101,14 @@ public class MainActivity extends Activity {
     	    		});
     	    	}
     		}
-    	}).start();
+    	});
+    	
+    	t.start();
+    	try {
+			t.join();
+		} catch (InterruptedException e) {
+			return;
+		}
     	
     	if(logSuccess == false){
     		return;
