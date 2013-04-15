@@ -251,7 +251,7 @@ public class Cloud {
         return true;
 	}
 	
-	public boolean writeUserInfo(String p1Name, int p1Score, String p1State, String p2Name,int p2Score, String p2State) 
+	public boolean writeUserInfo(String p1Name, int p1Score, String p1State, String p2Name,int p2Score, String p2State, String answer, String tip, String category) 
 	{
 		 // Create an XML packet with the information about the current image
         XmlSerializer xml = Xml.newSerializer();
@@ -271,8 +271,9 @@ public class Cloud {
             xml.attribute(null, "Player2", p2Name);
             xml.attribute(null, "P2state", p2State);
             xml.attribute(null, "P2score", String.valueOf(p2Score));
-            
-            // xml for drawing. may use function in drawing to make
+            xml.attribute(null, "Tip", tip);
+            xml.attribute(null, "Answer", answer);
+            xml.attribute(null, "Category", category);
 
             
             xml.endTag(null, "tinker");
@@ -490,7 +491,7 @@ public class Cloud {
 		
 	}
 	
-	public InputStream pullDrawing(DrawingView view, String user)
+	public InputStream pullDrawing(String user)
 	{
 		String query = LOGIN_URL+"?user=" + user + "&magic=" + MAGIC;
         try {
@@ -544,7 +545,7 @@ public class Cloud {
 		
 	}
 	
-	private Object convertBytesToPic(byte[] bytes)
+	public Object convertBytesToPic(byte[] bytes)
 	{
 		ByteArrayInputStream stream = new ByteArrayInputStream(bytes);
 		ObjectInput input = null;

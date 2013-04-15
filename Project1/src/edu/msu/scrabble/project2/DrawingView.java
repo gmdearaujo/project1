@@ -465,4 +465,9 @@ public class DrawingView extends View {
     	}
     	eraserOn = false;
     }
+    
+    public void setPicture(Picture pic)
+    {
+    	picture = pic;
+    }
 }

@@ -1,11 +1,19 @@
 package edu.msu.scrabble.project2;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import org.xmlpull.v1.XmlPullParser;
+import org.xmlpull.v1.XmlPullParserException;
+
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.util.Base64;
+import android.util.Xml;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
@@ -318,5 +326,61 @@ public class GuessActivity extends Activity {
     public void loadUi(Bundle bundle) {
     	game = (Game)bundle.getSerializable(GAME);
     	remainingTime = bundle.getInt(TIME);
+    }
+    
+    public void loadPicture(DrawingView view, String user)
+    {
+    	final DrawingView theView = view;
+    	final String theUser = user;
+    	
+    	new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+            	
+            	Cloud cloud = new Cloud();
+                InputStream stream = cloud.pullDrawing(theUser);
+
+                // Test for an error
+                boolean fail = stream == null;
+                if(!fail) {
+                    try {
+                        XmlPullParser xml = Xml.newPullParser();
+                        xml.setInput(stream, "UTF-8");       
+                        
+                        xml.nextTag();      // Advance to first tag
+                        xml.require(XmlPullParser.START_TAG, null, "tinker");
+                        String status = xml.getAttributeValue(null, "status");
+                        if(status.equals("yes")) {
+                        
+                            while(xml.nextTag() == XmlPullParser.START_TAG) {
+                                if(xml.getName().equals("drawing")) {
+                                    String drawingString = xml.getAttributeValue(null, "picture");
+                                    byte[] picBytes = Base64.decode(drawingString, Base64.URL_SAFE);
+                                    Picture pic = (Picture)cloud.convertBytesToPic(picBytes);
+                                    theView.setPicture(pic);
+                                    break;
+                                }
+                                
+                                Cloud.skipToEndTag(xml);
+                            }
+                        } else {
+                            fail = true;
+                        }
+                        
+                    } catch(IOException ex) {
+                        fail = true;
+                    } catch(XmlPullParserException ex) {
+                        fail = true;
+                    } finally {
+                        try {
+                            stream.close(); 
+                        } catch(IOException ex) {
+                        }
+                    }
+                }
+
+            }
+        }).start();
     }
 }
