@@ -107,7 +107,7 @@ public class Cloud {
                 return false;
             } 
             stream = conn.getInputStream();
-            logStream(stream);
+            //logStream(stream);
             
             /**
              * Create an XML parser for the result
