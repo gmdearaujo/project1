@@ -84,6 +84,7 @@ public class EditActivity extends Activity {
      * The game class
      */
     private Game game;
+    private String user;
     
     
     private class SeekBarListener implements SeekBar.OnSeekBarChangeListener {
@@ -108,6 +109,7 @@ public class EditActivity extends Activity {
 
 		Intent intent = getIntent();
 		game = (Game)intent.getSerializableExtra(GAME);
+		user = (String)intent.getStringExtra("user");
 		
 		/*
          * Get some of the views we'll keep around
@@ -269,9 +271,10 @@ public class EditActivity extends Activity {
     	
     	if (game.checkAnswerAndTip()) {
     		game.switchRoles();
-    		//update server, telling server to switch your role to wait and opponents to guess
+    		updateServer();
         	Intent intent = new Intent(this, WaitTurnActivity.class);
         	intent.putExtra(GAME, game);
+        	intent.putExtra("user",user);
         	drawingView.putDrawings(intent);
     		startActivity(intent);
         	finish();
@@ -334,6 +337,20 @@ public class EditActivity extends Activity {
      */
     public void loadUi(Bundle bundle) {
     	game = (Game)bundle.getSerializable(GAME);
+    }
+    
+    
+    public void updateServer(){
+    	//update server, telling server to switch your role to wait and opponents to guess
+    	new Thread(new Runnable(){
+    		@Override
+    		public void run(){
+				Cloud cloud = new Cloud();
+		    	cloud.writeUserInfo(game.getPlayer1Name(), game.getPlayer1Score(), 
+		    			"wait", game.getPlayer2Name(), game.getPlayer2Score(), 
+		    			"guess", game.getAnswer(), game.getTip(), game.getCategory());
+    		}
+    	}).start();
     }
     
 }

@@ -38,6 +38,7 @@ public class GuessActivity extends Activity {
 	 * The game
 	 */
 	private Game game;
+	private String user;
 	
 	/**
 	 * Time left
@@ -115,6 +116,7 @@ public class GuessActivity extends Activity {
 		Intent intent = getIntent();
 		if (intent != null) {
 			game = (Game)intent.getSerializableExtra(GAME);
+			user = (String)intent.getStringExtra("user");
 			drawingView.getDrawings(intent);
 		}
 
@@ -181,9 +183,10 @@ public class GuessActivity extends Activity {
 			timeText.setText(Integer.toString(finalTime));
 			
 			if (game.checkForWinner()) {
-				//update game, change your state and opponent state to final
+				updateWinServer();
 	        	Intent intent = new Intent(this, FinalActivity.class);
 	        	intent.putExtra(GAME, game);
+	        	intent.putExtra("user", user);
 	    		startActivity(intent);
 	        	finish();
 			} else {
@@ -237,9 +240,10 @@ public class GuessActivity extends Activity {
      * Handle an Ok button press
      */
 	public void onOk() {
-		//update server
+		updateServer();
     	Intent intent = new Intent(this, EditActivity.class);
     	intent.putExtra(GAME, game);
+    	intent.putExtra("user", user);
 		startActivity(intent);
     	finish();
 	}
@@ -382,5 +386,31 @@ public class GuessActivity extends Activity {
 
             }
         }).start();
+    }
+    
+    public void updateServer(){
+    	//update server, telling server to switch your role to edit and opponents to wait
+    	new Thread(new Runnable(){
+    		@Override
+    		public void run(){
+				Cloud cloud = new Cloud();
+		    	cloud.writeUserInfo(game.getPlayer1Name(), game.getPlayer1Score(), 
+		    			"edit", game.getPlayer2Name(), game.getPlayer2Score(), 
+		    			"wait", game.getAnswer(), game.getTip(), game.getCategory());
+    		}
+    	}).start();
+    }
+    
+    public void updateWinServer(){
+    	//update game, change your state and opponent state to final
+    	new Thread(new Runnable(){
+    		@Override
+    		public void run(){
+				Cloud cloud = new Cloud();
+		    	cloud.writeUserInfo(game.getPlayer1Name(), game.getPlayer1Score(), 
+		    			"final", game.getPlayer2Name(), game.getPlayer2Score(), 
+		    			"final", game.getAnswer(), game.getTip(), game.getCategory());
+    		}
+    	}).start();
     }
 }
