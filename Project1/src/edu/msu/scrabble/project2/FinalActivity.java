@@ -58,13 +58,12 @@ public class FinalActivity extends Activity {
 	}
 	
 	public void onNewGame(View view) {
-    	Intent intent = new Intent(this, MainActivity.class);
-    	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-		startActivity(intent);
-		
 		//reset server game
 			//if p1, load edit
 			//if p2, load wait
+    	Intent intent = new Intent(this, MainActivity.class);
+    	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+		startActivity(intent);
 	}
 
 }

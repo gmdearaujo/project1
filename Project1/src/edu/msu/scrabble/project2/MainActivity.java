@@ -1,5 +1,15 @@
 package edu.msu.scrabble.project2;
 
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -20,6 +30,7 @@ public class MainActivity extends Activity {
 	private EditText editTextPlayer2 = null;
 	
 	static boolean logSuccess = false;
+	static Document gameinfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -95,22 +106,59 @@ public class MainActivity extends Activity {
     	if(logSuccess == false){
     		return;
     	}
-    	
-    	
-    	Game game = new Game();
-    	game.setPlayer1Name(username.getText().toString());
-    	//game.setPlayer2Name(________________);
-    	
-    	// Pick a category
-    	game.randomlySelectCategory();
-    	
-    	Intent intent = new Intent(this, LobbyActivity.class);
-    	intent.putExtra("GAME", game);
-		startActivity(intent);
-		
-    	//update game
-    	//check which activity currently in
-    	//launch particular activity
+    	else{
+	    	Game game = new Game();
+	    	game.setPlayer1Name(username.getText().toString());
+	    	//game.setPlayer2Name(________________);
+	    	
+	    	// Pick a category
+	    	game.randomlySelectCategory();
+			
+			new Thread(new Runnable(){
+	    		@Override
+	    		public void run(){
+					Cloud cloud = new Cloud();
+			    	InputStream stream = cloud.readUserInfo(username.getText().toString());
+			    	gameinfo = xmlParserFunc(stream);
+	    		}
+	    	}).start();
+			
+			if(gameinfo != null){
+				updateGame(game);
+				String activity;
+				if(gameinfo.getElementsByTagName("Player1").item(0).toString().equals(game.getPlayer1Name())){
+		    		activity = gameinfo.getElementsByTagName("P1State").item(0).toString();
+		    	}
+		    	else{
+		    		activity = gameinfo.getElementsByTagName("P2State").item(0).toString();
+		    	}
+				if(activity.equals("lobby")){
+					Intent intent = new Intent(this, LobbyActivity.class);
+			    	intent.putExtra("GAME", game);
+					startActivity(intent);
+				}
+				else if(activity.equals("edit")){
+					Intent intent = new Intent(this, EditActivity.class);
+			    	intent.putExtra("GAME", game);
+					startActivity(intent);
+				}
+				else if(activity.equals("wait")){
+					Intent intent = new Intent(this, WaitTurnActivity.class);
+			    	intent.putExtra("GAME", game);
+					startActivity(intent);
+				}
+				else if(activity.equals("guess")){
+					Intent intent = new Intent(this, GuessActivity.class);
+			    	intent.putExtra("GAME", game);
+					startActivity(intent);
+				}
+				else if(activity.equals("final")){
+					Intent intent = new Intent(this, FinalActivity.class);
+			    	intent.putExtra("GAME", game);
+					startActivity(intent);
+				}
+			}
+    	}
 	}
 
     public void onNewUser(View view) {
@@ -147,5 +195,40 @@ public class MainActivity extends Activity {
         // Create the dialog box and show it
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
+    }
+    
+    public static Document xmlParserFunc(InputStream s){
+    	DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    	DocumentBuilder parser;
+    	Document dc;
+		try{
+			parser = factory.newDocumentBuilder();
+		}
+		catch(ParserConfigurationException pce){
+    		return null;
+    	}
+		try{
+			dc = parser.parse(s);
+		}
+    	catch(IOException ioe){
+    		return null;
+    	}
+		catch(SAXException saxe){
+    		return null;
+    	}
+		
+		return dc;
+    }
+    
+    public static void updateGame(Game g){
+    	if(gameinfo.getElementsByTagName("Player1").item(0).toString().equals(g.getPlayer1Name())){
+    		g.setPlayer2Name(gameinfo.getElementsByTagName("Player2").item(0).toString());
+    	}
+    	else{
+    		g.setPlayer2Name(gameinfo.getElementsByTagName("Player1").item(0).toString());
+    	}
+    	g.setAnswer(gameinfo.getElementsByTagName("Answer").item(0).toString());
+    	g.setTip(gameinfo.getElementsByTagName("Tip").item(0).toString());
+    	g.setCategory(gameinfo.getElementsByTagName("Category").item(0).toString());
     }
 }

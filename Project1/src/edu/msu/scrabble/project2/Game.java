@@ -11,6 +11,10 @@ public class Game implements Serializable {
 	 */
 	private static final long serialVersionUID = -5154840961469873261L;
 
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
 	private final int maxScore = 500;
 	
 	private int editingPlayer = 1;
