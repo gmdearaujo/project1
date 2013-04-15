@@ -349,6 +349,7 @@ public class EditActivity extends Activity {
 		    	cloud.writeUserInfo(game.getPlayer1Name(), game.getPlayer1Score(), 
 		    			"wait", game.getPlayer2Name(), game.getPlayer2Score(), 
 		    			"guess", game.getAnswer(), game.getTip(), game.getCategory());
+		    	cloud.saveDrawing(drawingView.getPicture(), user);
     		}
     	}).start();
     }

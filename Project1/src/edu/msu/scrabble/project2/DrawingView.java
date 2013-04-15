@@ -151,6 +151,10 @@ public class DrawingView extends View {
 		canvas.scale(picture.getScale(), picture.getScale());
 	}
 
+	public Picture getPicture() {
+		return picture;
+	}
+
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
 		int id = event.getPointerId(event.getActionIndex());

@@ -119,6 +119,8 @@ public class GuessActivity extends Activity {
 			user = (String)intent.getStringExtra("user");
 			drawingView.getDrawings(intent);
 		}
+		
+		loadPicture(drawingView,user);
 
         /*
          * Restore any state

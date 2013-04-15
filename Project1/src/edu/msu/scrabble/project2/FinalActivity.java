@@ -10,7 +10,7 @@ import android.widget.TextView;
 public class FinalActivity extends Activity {
 
 	private Game game;
-	private String user;
+	//private String user;
 	private String state;
 	
 	private TextView player1Name;
@@ -28,7 +28,7 @@ public class FinalActivity extends Activity {
 
 		Intent intent = getIntent();
 		game = (Game)intent.getSerializableExtra("GAME");
-		user = (String)intent.getStringExtra("user");
+		//user = (String)intent.getStringExtra("user");
 		state = (String)intent.getStringExtra("state"); 
 		
 		int p1Score = game.getPlayer1Score();
