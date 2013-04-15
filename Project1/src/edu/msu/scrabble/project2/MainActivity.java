@@ -126,35 +126,40 @@ public class MainActivity extends Activity {
 			if(gameinfo != null){
 				updateGame(game);
 				String activity;
-				if(gameinfo.getElementsByTagName("Player1").item(0).toString().equals(game.getPlayer1Name())){
-		    		activity = gameinfo.getElementsByTagName("P1State").item(0).toString();
+				if(gameinfo.getElementsByTagName("Player1").item(0).getNodeValue().equals(game.getPlayer1Name())){
+		    		activity = gameinfo.getElementsByTagName("P1State").item(0).getNodeValue();
 		    	}
 		    	else{
-		    		activity = gameinfo.getElementsByTagName("P2State").item(0).toString();
+		    		activity = gameinfo.getElementsByTagName("P2State").item(0).getNodeValue();
 		    	}
 				if(activity.equals("lobby")){
 					Intent intent = new Intent(this, LobbyActivity.class);
 			    	intent.putExtra("GAME", game);
+			    	intent.putExtra("user", username.getText().toString());
 					startActivity(intent);
 				}
 				else if(activity.equals("edit")){
 					Intent intent = new Intent(this, EditActivity.class);
 			    	intent.putExtra("GAME", game);
+			    	intent.putExtra("user", username.getText().toString());
 					startActivity(intent);
 				}
 				else if(activity.equals("wait")){
 					Intent intent = new Intent(this, WaitTurnActivity.class);
 			    	intent.putExtra("GAME", game);
+			    	intent.putExtra("user", username.getText().toString());
 					startActivity(intent);
 				}
 				else if(activity.equals("guess")){
 					Intent intent = new Intent(this, GuessActivity.class);
 			    	intent.putExtra("GAME", game);
+			    	intent.putExtra("user", username.getText().toString());
 					startActivity(intent);
 				}
 				else if(activity.equals("final")){
 					Intent intent = new Intent(this, FinalActivity.class);
 			    	intent.putExtra("GAME", game);
+			    	intent.putExtra("user", username.getText().toString());
 					startActivity(intent);
 				}
 			}
@@ -221,14 +226,18 @@ public class MainActivity extends Activity {
     }
     
     public static void updateGame(Game g){
-    	if(gameinfo.getElementsByTagName("Player1").item(0).toString().equals(g.getPlayer1Name())){
-    		g.setPlayer2Name(gameinfo.getElementsByTagName("Player2").item(0).toString());
+    	if(gameinfo.getElementsByTagName("Player1").item(0).getNodeValue().equals(g.getPlayer1Name())){
+    		g.setPlayer2Name(gameinfo.getElementsByTagName("Player2").item(0).getNodeValue());
+    		g.setPlayer1Score(Integer.parseInt(gameinfo.getElementsByTagName("P1Score").item(0).getNodeValue()));
+    		g.setPlayer2Score(Integer.parseInt(gameinfo.getElementsByTagName("P2Score").item(0).getNodeValue()));
     	}
     	else{
-    		g.setPlayer2Name(gameinfo.getElementsByTagName("Player1").item(0).toString());
+    		g.setPlayer2Name(gameinfo.getElementsByTagName("Player1").item(0).getNodeValue());
+    		g.setPlayer1Score(Integer.parseInt(gameinfo.getElementsByTagName("P1Score").item(0).getNodeValue()));
+    		g.setPlayer2Score(Integer.parseInt(gameinfo.getElementsByTagName("P2Score").item(0).getNodeValue()));
     	}
-    	g.setAnswer(gameinfo.getElementsByTagName("Answer").item(0).toString());
-    	g.setTip(gameinfo.getElementsByTagName("Tip").item(0).toString());
-    	g.setCategory(gameinfo.getElementsByTagName("Category").item(0).toString());
+    	g.setAnswer(gameinfo.getElementsByTagName("Answer").item(0).getNodeValue());
+    	g.setTip(gameinfo.getElementsByTagName("Tip").item(0).getNodeValue());
+    	g.setCategory(gameinfo.getElementsByTagName("Category").item(0).getNodeValue());
     }
 }
