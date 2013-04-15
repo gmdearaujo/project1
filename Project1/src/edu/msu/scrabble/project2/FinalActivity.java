@@ -10,6 +10,8 @@ import android.widget.TextView;
 public class FinalActivity extends Activity {
 
 	private Game game;
+	private String user;
+	private String state;
 	
 	private TextView player1Name;
 	private TextView player2Name;
@@ -26,6 +28,8 @@ public class FinalActivity extends Activity {
 
 		Intent intent = getIntent();
 		game = (Game)intent.getSerializableExtra("GAME");
+		user = (String)intent.getStringExtra("user");
+		state = (String)intent.getStringExtra("state"); 
 		
 		int p1Score = game.getPlayer1Score();
 		int p2Score = game.getPlayer2Score();
@@ -65,5 +69,30 @@ public class FinalActivity extends Activity {
     	intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		startActivity(intent);
 	}
+	
+	public void updateServer(){
+		if(state.equals("wait")){
+	    	new Thread(new Runnable(){
+	    		@Override
+	    		public void run(){
+					Cloud cloud = new Cloud();
+			    	cloud.writeUserInfo(game.getPlayer1Name(), 0, 
+			    			"edit", game.getPlayer2Name(), 0, 
+			    			"wait", "", "", "");
+	    		}
+	    	}).start();
+		}
+		else{
+			new Thread(new Runnable(){
+	    		@Override
+	    		public void run(){
+					Cloud cloud = new Cloud();
+			    	cloud.writeUserInfo(game.getPlayer1Name(), game.getPlayer1Score(), 
+			    			"wait", game.getPlayer2Name(), game.getPlayer2Score(), 
+			    			"edit", game.getAnswer(), game.getTip(), game.getCategory());
+	    		}
+	    	}).start();
+		}
+    }
 
 }

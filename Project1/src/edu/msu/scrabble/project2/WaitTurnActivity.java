@@ -87,6 +87,7 @@ public class WaitTurnActivity extends Activity {
 			Intent intent = new Intent(this, FinalActivity.class);
 	    	intent.putExtra("GAME", game);
 	    	intent.putExtra("user", user);
+	    	intent.putExtra("state", "wait");
 			startActivity(intent);
 		}
 	}

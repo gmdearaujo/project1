@@ -187,6 +187,7 @@ public class GuessActivity extends Activity {
 	        	Intent intent = new Intent(this, FinalActivity.class);
 	        	intent.putExtra(GAME, game);
 	        	intent.putExtra("user", user);
+	        	intent.putExtra("state", "guess");
 	    		startActivity(intent);
 	        	finish();
 			} else {
