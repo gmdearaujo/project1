@@ -361,8 +361,8 @@ public class GuessActivity extends Activity {
                         if(status.equals("yes")) {
                         
                             while(xml.nextTag() == XmlPullParser.START_TAG) {
-                                if(xml.getName().equals("drawing")) {
-                                    String drawingString = xml.getAttributeValue(null, "picture");
+                                if(xml.getName().equals("tinker")) {
+                                    String drawingString = xml.getAttributeValue(null, "drawing");
                                     byte[] picBytes = Base64.decode(drawingString, Base64.URL_SAFE);
                                     Picture pic = (Picture)cloud.convertBytesToPic(picBytes);
                                     theView.setPicture(pic);
