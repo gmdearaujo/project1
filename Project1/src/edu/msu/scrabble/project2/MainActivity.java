@@ -8,6 +8,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.w3c.dom.Document;
+import org.w3c.dom.NamedNodeMap;
 import org.xml.sax.SAXException;
 
 import android.os.Bundle;
@@ -30,7 +31,7 @@ public class MainActivity extends Activity {
 	private EditText editTextPlayer2 = null;
 	
 	static boolean logSuccess = false;
-	static Document gameinfo;
+	static Document gameinfo = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -69,108 +70,97 @@ public class MainActivity extends Activity {
     	// gather username
     	final EditText username = (EditText)findViewById(R.id.editTextPlayer1);
     	final EditText password = (EditText)findViewById(R.id.editTextPlayer2);
- 
-    	Thread t = new Thread(new Runnable(){
-    		
-    		@Override
-    		public void run(){
-    			Cloud cloud = new Cloud();
-    	    	boolean valid = cloud.loginToGame(username.getText().toString(), password.getText().toString());
-    	    	
-    	    	if(valid == false){
-    	    		view.post(new Runnable(){
-    	    			@Override
-    	    			public void run(){
-    	    				Toast.makeText(view.getContext(), 
-    	    						"Login failed.", 
-    	    						Toast.LENGTH_SHORT).show();
-    	    				logSuccess = false;
-    	    			}
-    	    			
-    	    		});
-    	    	}else{
-    	    		view.post(new Runnable(){
-    	    			@Override
-    	    			public void run(){
-    	    				Toast.makeText(view.getContext(), 
-    	    						"Welcome.", 
-    	    						Toast.LENGTH_SHORT).show();
-    	    				logSuccess = true;
-    	    			}
-    	    			
-    	    		});
-    	    	}
-    		}
-    	});
     	
-    	t.start();
-    	try {
-			t.join();
-		} catch (InterruptedException e) {
-			return;
-		}
+    	final Intent lobbyIntent = new Intent(this, LobbyActivity.class);
+    	final Intent editIntent = new Intent(this, EditActivity.class);
+    	final Intent waitIntent = new Intent(this, WaitTurnActivity.class);
+    	final Intent guessIntent = new Intent(this, GuessActivity.class);
+    	final Intent finalIntent = new Intent(this, FinalActivity.class);
     	
-    	if(logSuccess == false){
-    		return;
-    	}
-    	else{
-	    	Game game = new Game();
-	    	game.setPlayer1Name(username.getText().toString());
-	    	//game.setPlayer2Name(________________);
-	    	
-	    	// Pick a category
-	    	game.randomlySelectCategory();
-			
-			new Thread(new Runnable(){
-	    		@Override
-	    		public void run(){
-					Cloud cloud = new Cloud();
+    	new Thread(new Runnable(){
+			@Override
+			public void run(){
+		    	Cloud cloud = new Cloud();
+		    	boolean valid = cloud.loginToGame(username.getText().toString(), password.getText().toString());
+		    	
+		    	if(valid == false){
+		    		view.post(new Runnable(){
+		    			@Override
+		    			public void run(){
+							Toast.makeText(view.getContext(), 
+									"Login failed.", 
+									Toast.LENGTH_SHORT).show();
+		    			}
+		    		});
+					logSuccess = false;
+		    	}else{
+		    		view.post(new Runnable(){
+		    			@Override
+		    			public void run(){
+							Toast.makeText(view.getContext(), 
+									"Welcome.", 
+									Toast.LENGTH_SHORT).show();
+		    			}
+		    		});
+					logSuccess = true;
+		    	}
+		    	
+		    	if(logSuccess == false){
+		    		return;
+		    	}
+		    	
+		    	
+		    	
+		    	else{
+			    	Game game = new Game();
+			    	game.setPlayer1Name(username.getText().toString());
+			    	
+			    	// Pick a category
+			    	game.randomlySelectCategory();
+					
 			    	InputStream stream = cloud.readUserInfo(username.getText().toString());
 			    	gameinfo = xmlParserFunc(stream);
-	    		}
-	    	}).start();
-			
-			if(gameinfo != null){
-				updateGame(game);
-				String activity;
-				if(gameinfo.getElementsByTagName("Player1").item(0).getNodeValue().equals(game.getPlayer1Name())){
-		    		activity = gameinfo.getElementsByTagName("P1State").item(0).getNodeValue();
+					
+					if(gameinfo != null){
+						updateGame(game);
+						String activity;
+						NamedNodeMap tinker = gameinfo.getElementsByTagName("game").item(0).getAttributes();
+						if(tinker.getNamedItem("player1").getNodeValue().equals(username.getText().toString())){
+				    		activity = tinker.getNamedItem("p1state").getNodeValue();
+				    	}
+				    	else{
+				    		activity = tinker.getNamedItem("p2state").getNodeValue();
+				    	}
+						
+						if(activity.equals("lobby")){
+					    	lobbyIntent.putExtra("GAME", game);
+					    	lobbyIntent.putExtra("user", username.getText().toString());
+							startActivity(lobbyIntent);
+						}
+						else if(activity.equals("edit")){
+					    	editIntent.putExtra("GAME", game);
+					    	editIntent.putExtra("user", username.getText().toString());
+							startActivity(editIntent);
+						}
+						else if(activity.equals("wait")){
+					    	waitIntent.putExtra("GAME", game);
+					    	waitIntent.putExtra("user", username.getText().toString());
+							startActivity(waitIntent);
+						}
+						else if(activity.equals("guess")){
+					    	guessIntent.putExtra("GAME", game);
+					    	guessIntent.putExtra("user", username.getText().toString());
+							startActivity(guessIntent);
+						}
+						else if(activity.equals("final")){
+					    	finalIntent.putExtra("GAME", game);
+					    	finalIntent.putExtra("user", username.getText().toString());
+							startActivity(finalIntent);
+						}
+					}
 		    	}
-		    	else{
-		    		activity = gameinfo.getElementsByTagName("P2State").item(0).getNodeValue();
-		    	}
-				if(activity.equals("lobby")){
-					Intent intent = new Intent(this, LobbyActivity.class);
-			    	intent.putExtra("GAME", game);
-			    	intent.putExtra("user", username.getText().toString());
-					startActivity(intent);
-				}
-				else if(activity.equals("edit")){
-					Intent intent = new Intent(this, EditActivity.class);
-			    	intent.putExtra("GAME", game);
-			    	intent.putExtra("user", username.getText().toString());
-					startActivity(intent);
-				}
-				else if(activity.equals("wait")){
-					Intent intent = new Intent(this, WaitTurnActivity.class);
-			    	intent.putExtra("GAME", game);
-			    	intent.putExtra("user", username.getText().toString());
-					startActivity(intent);
-				}
-				else if(activity.equals("guess")){
-					Intent intent = new Intent(this, GuessActivity.class);
-			    	intent.putExtra("GAME", game);
-			    	intent.putExtra("user", username.getText().toString());
-					startActivity(intent);
-				}
-				else if(activity.equals("final")){
-					Intent intent = new Intent(this, FinalActivity.class);
-			    	intent.putExtra("GAME", game);
-			    	intent.putExtra("user", username.getText().toString());
-					startActivity(intent);
-				}
 			}
-    	}
+    	}).start();
 	}
 
     public void onNewUser(View view) {
@@ -233,18 +223,24 @@ public class MainActivity extends Activity {
     }
     
     public static void updateGame(Game g){
-    	if(gameinfo.getElementsByTagName("Player1").item(0).getNodeValue().equals(g.getPlayer1Name())){
-    		g.setPlayer2Name(gameinfo.getElementsByTagName("Player2").item(0).getNodeValue());
-    		g.setPlayer1Score(Integer.parseInt(gameinfo.getElementsByTagName("P1Score").item(0).getNodeValue()));
-    		g.setPlayer2Score(Integer.parseInt(gameinfo.getElementsByTagName("P2Score").item(0).getNodeValue()));
+    	
+    	NamedNodeMap tinker = gameinfo.getElementsByTagName("game").item(0).getAttributes();
+    	
+    	if(tinker.getNamedItem("player1").getNodeValue().equals(g.getPlayer1Name())){
+    		g.setPlayer1Name(g.getPlayer1Name());
+    		g.setPlayer2Name(tinker.getNamedItem("player2").getNodeValue());
+    		g.setPlayer1Score(Integer.parseInt(tinker.getNamedItem("p1score").getNodeValue()));
+    		g.setPlayer2Score(Integer.parseInt(tinker.getNamedItem("p2score").getNodeValue()));
     	}
     	else{
-    		g.setPlayer2Name(gameinfo.getElementsByTagName("Player1").item(0).getNodeValue());
-    		g.setPlayer1Score(Integer.parseInt(gameinfo.getElementsByTagName("P1Score").item(0).getNodeValue()));
-    		g.setPlayer2Score(Integer.parseInt(gameinfo.getElementsByTagName("P2Score").item(0).getNodeValue()));
+    		g.setPlayer1Name(g.getPlayer1Name());
+    		g.setPlayer2Name(tinker.getNamedItem("player1").getNodeValue());
+    		g.setPlayer1Score(Integer.parseInt(tinker.getNamedItem("p2score").getNodeValue()));
+    		g.setPlayer2Score(Integer.parseInt(tinker.getNamedItem("p1score").getNodeValue()));
     	}
-    	g.setAnswer(gameinfo.getElementsByTagName("Answer").item(0).getNodeValue());
-    	g.setTip(gameinfo.getElementsByTagName("Tip").item(0).getNodeValue());
-    	g.setCategory(gameinfo.getElementsByTagName("Category").item(0).getNodeValue());
+    	g.setAnswer(tinker.getNamedItem("answer").getNodeValue());
+    	g.setTip(tinker.getNamedItem("tip").getNodeValue());
+    	g.setCategory(tinker.getNamedItem("category").getNodeValue());
+    	g.setGameId(Integer.parseInt(tinker.getNamedItem("gameId").getNodeValue()));
     }
 }

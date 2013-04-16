@@ -109,6 +109,7 @@ public class EditActivity extends Activity {
 
 		Intent intent = getIntent();
 		game = (Game)intent.getSerializableExtra(GAME);
+		game.randomlySelectCategory();
 		user = (String)intent.getStringExtra("user");
 		
 		/*
@@ -270,7 +271,7 @@ public class EditActivity extends Activity {
     public void onOk() {
     	
     	if (game.checkAnswerAndTip()) {
-    		game.switchRoles();
+    		//game.switchRoles();
     		updateServer();
         	Intent intent = new Intent(this, WaitTurnActivity.class);
         	intent.putExtra(GAME, game);

@@ -2,13 +2,12 @@ package edu.msu.scrabble.project2;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
 public class NewUserActivity extends Activity {
-	
-	static boolean nuSuccess = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -26,7 +25,6 @@ public class NewUserActivity extends Activity {
     			&& password.getText().toString().equals(comPassword.getText().toString())){
     		
     		new Thread(new Runnable(){
-        		
         		@Override
         		public void run(){
 		    		Cloud cloud = new Cloud();
@@ -39,9 +37,7 @@ public class NewUserActivity extends Activity {
 	    	    				Toast.makeText(view.getContext(), 
 	    	    						"User creation failed.", 
 	    	    						Toast.LENGTH_SHORT).show();
-	    	    				nuSuccess = false;
 	    	    			}
-	    	
 	    	    		});
 	    	    		return;
 	    	    	}else{
@@ -51,7 +47,7 @@ public class NewUserActivity extends Activity {
 	    	    				Toast.makeText(view.getContext(), 
 	    	    						"User created successfully.", 
 	    	    						Toast.LENGTH_SHORT).show();
-	    	    				nuSuccess = true;
+	    	    				finish();
 	    	    			}
 	    	    			
 	    	    		});
@@ -63,12 +59,8 @@ public class NewUserActivity extends Activity {
     		Toast.makeText(getApplicationContext(), 
 					"Please fill in all fields. Make sure passwords match.", 
 					Toast.LENGTH_SHORT).show();
-    				nuSuccess = false;
     	}
     	
-    	if(nuSuccess == true){
-    		finish();
-    	}
 	}
 	
 	public void onCancel(View view) {

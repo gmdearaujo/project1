@@ -266,7 +266,6 @@ public class Cloud {
             
             xml.startTag(null, "tinker");
             
-            xml.attribute(null, "magic", MAGIC);
             xml.attribute(null, "GameId", String.valueOf(gameId));
             xml.attribute(null, "Player1", p1Name);
             xml.attribute(null, "P1state", p1State);
@@ -376,6 +375,7 @@ public class Cloud {
             }
             
             InputStream stream = conn.getInputStream();
+            //logStream(stream);
             return stream;
 
         } catch (MalformedURLException e) {
@@ -401,8 +401,7 @@ public class Cloud {
             xml.startDocument("UTF-8", true);
             
             xml.startTag(null, "tinker");
-    
-            xml.attribute(null, "magic", MAGIC);
+            
             xml.attribute(null, "player", user);
             xml.attribute(null, "drawing", byteString);
 
@@ -495,7 +494,7 @@ public class Cloud {
 	
 	public InputStream pullDrawing(String user)
 	{
-		String query = LOAD_DRAWING_URL+"?user=" + user + "&magic=" + MAGIC;
+		String query = LOAD_DRAWING_URL+"?user=" + user;
         try {
             URL url = new URL(query);
 
@@ -506,6 +505,7 @@ public class Cloud {
             }
             
             InputStream stream = conn.getInputStream();
+            //logStream(stream);
             return stream;
 
         } catch (MalformedURLException e) {
