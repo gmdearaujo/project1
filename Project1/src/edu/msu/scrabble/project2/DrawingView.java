@@ -473,5 +473,6 @@ public class DrawingView extends View {
     public void setPicture(Picture pic)
     {
     	picture = pic;
+    	invalidate();
     }
 }
