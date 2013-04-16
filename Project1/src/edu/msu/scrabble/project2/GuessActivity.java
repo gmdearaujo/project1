@@ -174,7 +174,7 @@ public class GuessActivity extends Activity {
 	{
 		if (game.guessAnswer(answerText.getText().toString())) {
 			
-			game.incrementPlayerScore(game.getGuessingPlayer(), remainingTime);
+			game.incrementPlayerScore(user, remainingTime);
 
 			game.swapPlayers();
 			

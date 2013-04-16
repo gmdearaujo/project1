@@ -89,13 +89,13 @@ public class Game implements Serializable {
      * @param amount to increment player's score
      * @return true if player's score is incremented
      */
-	public Boolean incrementPlayerScore(int playerNumber, int amount) {
-		if (playerNumber == 1)
+	public Boolean incrementPlayerScore(String playerName, int amount) {
+		if (playerName.equals(player1Name))
 		{
 			player1Score = player1Score + amount;
 			return true;
 		}
-		else if (playerNumber == 2)
+		else if (playerName.equals(player2Name))
 		{
 			player2Score = player2Score + amount;
 			return true;
